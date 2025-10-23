@@ -1,0 +1,136 @@
+<view class="page-container">
+  <!-- 经验值显示 -->
+  <view class="experience-badge">
+    <text class="star">⭐</text>
+    <text>{{totalExperience}}分</text>
+  </view>
+
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-card card">
+      <view class="card-header">
+        <text>学习中心</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-section">
+    <view class="search-bar">
+      <view class="search-icon">🔍</view>
+      <input
+        class="search-input"
+        placeholder="Search..."
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+      />
+    </view>
+  </view>
+
+  <!-- 快捷操作 -->
+  <view class="quick-actions-section">
+    <view class="quick-actions-card card">
+      <view class="card-header">
+        <text>查看课程回顾和作业回顾</text>
+      </view>
+      <view class="card-content">
+        <view class="quick-buttons">
+          <button class="btn btn-outline" bindtap="goToCourseReview">
+            课程回顾
+          </button>
+          <button class="btn btn-primary" bindtap="goToAssignmentReview">
+            作业回顾
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程列表标题 -->
+  <view class="courses-header">
+    <view class="courses-title-card card">
+      <view class="card-header">
+        <text>课程列表 【14门课程】</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程列表 -->
+  <view class="courses-section">
+    <view
+      class="course-card {{item.status === 'locked' ? 'locked' : ''}}"
+      wx:for="{{filteredCourses}}"
+      wx:key="id"
+      bindtap="onCourseClick"
+      data-course-id="{{item.id}}"
+    >
+      <view class="course-header">
+        <view class="course-icon {{item.status}}">
+          <text wx:if="{{item.status === 'completed'}}">✅</text>
+          <text wx:elif="{{item.status === 'available'}}">⏰</text>
+          <text wx:else>🔒</text>
+        </view>
+
+        <view class="course-info">
+          <text class="course-title">{{item.title}}</text>
+          <view class="course-meta">
+            <text class="course-duration">▶️ {{item.status === 'completed' ? '重播' : '学习'}}</text>
+            <text class="course-time">{{item.duration}}</text>
+          </view>
+        </view>
+
+        <view class="course-actions">
+          <view wx:if="{{item.status === 'completed'}}" class="status-tag status-completed">
+            已完成
+          </view>
+          <view wx:elif="{{item.status === 'available'}}" class="status-tag status-available">
+            可学习
+          </view>
+          <view wx:else class="status-tag status-locked">
+            未解锁
+          </view>
+
+          <view class="course-buttons">
+            <button
+              wx:if="{{item.status !== 'locked'}}"
+              class="btn btn-secondary course-btn"
+              bindtap="startLearning"
+              data-course-id="{{item.id}}"
+              catchtap="true"
+            >
+              {{item.status === 'completed' ? '已完成' : '可学习'}}
+            </button>
+
+            <button
+              wx:if="{{item.status === 'completed'}}"
+              class="btn btn-primary course-btn"
+              bindtap="viewAssignment"
+              data-course-id="{{item.id}}"
+              catchtap="true"
+            >
+              查看作业
+            </button>
+
+            <button
+              wx:if="{{item.status === 'locked'}}"
+              class="btn btn-disabled course-btn"
+              disabled
+            >
+              未解锁
+            </button>
+          </view>
+        </view>
+
+        <view class="course-experience">
+          <text class="experience-text">{{item.experience}}分</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{filteredCourses.length === 0}}" class="empty-state">
+    <view class="empty-icon">📚</view>
+    <text class="empty-text">没有找到相关课程</text>
+  </view>
+</view>

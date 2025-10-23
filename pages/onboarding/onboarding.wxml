@@ -1,0 +1,159 @@
+<view class="page-container">
+  <!-- 经验值显示 -->
+  <view class="experience-badge">
+    <text class="star">⭐</text>
+    <text>30分</text>
+  </view>
+
+  <!-- 引导内容 -->
+  <view wx:if="{{currentStep === 'intro'}}" class="intro-container fade-in">
+    <view class="card">
+      <view class="card-header">
+        <text>欢迎来到DBT技能随身练</text>
+      </view>
+      <view class="card-content">
+        <view class="intro-text">
+          <text class="greeting">Halo，你好，我是DBT小助手静静。</text>
+
+          <text class="description">
+            接下来6周的时间，我将和你一起学习和实践辩证行为治疗（DBT）情绪管理技能。
+          </text>
+
+          <view class="dbt-intro">
+            <text class="section-title">辩证行为治疗是什么？</text>
+            <text class="section-content">
+              DBT是一种认知行为疗法，旨在帮助人们改善情绪调节能力和提高人际关系质量等。
+            </text>
+          </view>
+
+          <view class="skills-intro">
+            <text class="section-title">以下是DBT的四个核心技能模块：</text>
+
+            <view class="skill-item">
+              <text class="skill-title">痛苦耐受技能：</text>
+              <text class="skill-desc">帮助你处理危机，包括应对危机时的技能、自我保护技能等。</text>
+            </view>
+
+            <view class="skill-item">
+              <text class="skill-title">情绪调节技能：</text>
+              <text class="skill-desc">帮助你了解情绪，掌握调节情绪的技能，包括接受和容忍情绪、情绪调节技能和提高正面情绪。</text>
+            </view>
+
+            <view class="skill-item">
+              <text class="skill-title">正念技能：</text>
+              <text class="skill-desc">帮助你提高注意力和正念水平，包括学习冥想、观察身体感受、集中注意力等。</text>
+            </view>
+
+            <view class="skill-item">
+              <text class="skill-title">人际关系技能：</text>
+              <text class="skill-desc">帮助你改善人际交往和沟通技能，包括有效沟通、界定个人界限、理解和应对他人情绪等。</text>
+            </view>
+          </view>
+
+          <text class="conclusion">
+            通过学习和应用这些技能，你可以更好地应对情绪和行为问题，提高自我管理和应对压力的能力，增强对自身和他人的理解和同情心。
+          </text>
+        </view>
+
+        <button class="btn btn-primary" bindtap="nextStep">
+          课程学习开始前，先来个快问快答吧！
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户信息收集 -->
+  <view wx:if="{{currentStep === 'userInfo'}}" class="user-info-container fade-in">
+    <view class="card">
+      <view class="card-header">
+        <text>完善资料</text>
+      </view>
+      <view class="card-content">
+        <form bindsubmit="submitUserInfo">
+          <view class="form-group">
+            <text class="form-label">姓名</text>
+            <input
+              class="form-input"
+              name="name"
+              placeholder="请输入您的姓名"
+              value="{{userInfo.name}}"
+              bindinput="onInputChange"
+              data-field="name"
+            />
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">性别</text>
+            <view class="gender-selector">
+              <view
+                class="gender-option {{userInfo.gender === 'male' ? 'selected' : ''}}"
+                bindtap="selectGender"
+                data-gender="male"
+              >
+                男
+              </view>
+              <view
+                class="gender-option {{userInfo.gender === 'female' ? 'selected' : ''}}"
+                bindtap="selectGender"
+                data-gender="female"
+              >
+                女
+              </view>
+            </view>
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">出生年月</text>
+            <picker
+              mode="date"
+              value="{{userInfo.birthDate}}"
+              bindchange="onDateChange"
+              fields="month"
+            >
+              <view class="form-input picker-input">
+                {{userInfo.birthDate || '请选择出生年月'}}
+              </view>
+            </picker>
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">手机号</text>
+            <input
+              class="form-input"
+              name="phone"
+              type="number"
+              placeholder="请输入手机号"
+              value="{{userInfo.phone}}"
+              bindinput="onInputChange"
+              data-field="phone"
+            />
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">微信号</text>
+            <input
+              class="form-input"
+              name="wechat"
+              placeholder="请输入微信号"
+              value="{{userInfo.wechat}}"
+              bindinput="onInputChange"
+              data-field="wechat"
+            />
+          </view>
+
+          <button
+            class="btn btn-primary start-journey-btn"
+            form-type="submit"
+            disabled="{{!isFormValid}}"
+          >
+            开始你的DBT技能学习之旅吧！
+          </button>
+        </form>
+
+        <view class="contact-info">
+          <text>有任何疑问请联系项目负责人杨老师 18888929709</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

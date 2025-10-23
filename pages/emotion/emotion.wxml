@@ -1,0 +1,76 @@
+<view class="page-container">
+  <!-- 经验值显示 -->
+  <view class="experience-badge">
+    <text class="star">⭐</text>
+    <text>{{totalExperience}}分</text>
+  </view>
+
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-card card">
+      <view class="card-header">
+        <text>我的笔记</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 添加笔记按钮 -->
+  <view class="add-note-section">
+    <view class="add-note-card" bindtap="addNote">
+      <view class="add-note-icon">✏️</view>
+      <text class="add-note-text">添加</text>
+    </view>
+  </view>
+
+  <!-- 笔记列表 -->
+  <view class="notes-list" wx:if="{{notes.length > 0}}">
+    <view
+      class="note-item"
+      wx:for="{{notes}}"
+      wx:key="id"
+    >
+      <view class="note-content">
+        <text class="note-text">{{item.content}}</text>
+      </view>
+      <view class="note-actions">
+        <view class="action-btn edit-btn" bindtap="editNote" data-id="{{item.id}}">
+          <text class="action-icon">✏️</text>
+        </view>
+        <view class="action-btn delete-btn" bindtap="deleteNote" data-id="{{item.id}}">
+          <text class="action-icon">🗑️</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{notes.length === 0}}" class="empty-state">
+    <view class="empty-icon">📝</view>
+    <text class="empty-text">还没有笔记，点击上方添加按钮创建第一条笔记吧！</text>
+  </view>
+</view>
+
+<!-- 笔记编辑弹窗 -->
+<view class="note-modal" wx:if="{{showModal}}" catchtap="closeModal">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">{{isEditing ? '编辑笔记' : '新建笔记'}}</text>
+      <view class="modal-close" bindtap="closeModal">✕</view>
+    </view>
+    <view class="modal-body">
+      <textarea
+        class="note-textarea"
+        placeholder="请输入笔记内容..."
+        value="{{currentNoteContent}}"
+        bindinput="onNoteInput"
+        maxlength="500"
+        auto-focus
+      ></textarea>
+      <view class="char-count">{{currentNoteContent.length}}/500</view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn btn-outline modal-btn" bindtap="closeModal">取消</button>
+      <button class="btn btn-primary modal-btn" bindtap="saveNote">保存</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,129 @@
+<view class="page-container">
+  <!-- 经验值显示 -->
+  <view class="experience-badge">
+    <text class="star">⭐</text>
+    <text>{{totalExperience}}分</text>
+  </view>
+
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-card card">
+      <view class="card-header">
+        <text>作业中心</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 筛选器 -->
+  <view class="filter-section">
+    <view class="filter-tabs">
+      <view
+        class="filter-tab {{currentFilter === 'all' ? 'active' : ''}}"
+        bindtap="setFilter"
+        data-filter="all"
+      >
+        全部 ({{assignments.length}})
+      </view>
+      <view
+        class="filter-tab {{currentFilter === 'available' ? 'active' : ''}}"
+        bindtap="setFilter"
+        data-filter="available"
+      >
+        待完成 ({{availableCount}})
+      </view>
+      <view
+        class="filter-tab {{currentFilter === 'completed' ? 'active' : ''}}"
+        bindtap="setFilter"
+        data-filter="completed"
+      >
+        已完成 ({{completedCount}})
+      </view>
+      <view
+        class="filter-tab {{currentFilter === 'locked' ? 'active' : ''}}"
+        bindtap="setFilter"
+        data-filter="locked"
+      >
+        未解锁 ({{lockedCount}})
+      </view>
+    </view>
+  </view>
+
+  <!-- 作业列表 -->
+  <view class="assignments-section">
+    <view
+      class="assignment-card {{item.status === 'locked' ? 'locked' : ''}}"
+      wx:for="{{filteredAssignments}}"
+      wx:key="id"
+      bindtap="onAssignmentClick"
+      data-assignment-id="{{item.id}}"
+    >
+      <view class="assignment-header">
+        <view class="assignment-icon {{item.status}}">
+          <text wx:if="{{item.status === 'completed'}}">✅</text>
+          <text wx:elif="{{item.status === 'available'}}">📝</text>
+          <text wx:else>🔒</text>
+        </view>
+
+        <view class="assignment-info">
+          <text class="assignment-title">{{item.title}}</text>
+          <text class="assignment-category">{{item.category}}</text>
+        </view>
+
+        <view class="assignment-status">
+          <view wx:if="{{item.status === 'completed'}}" class="status-tag status-completed">
+            已完成
+          </view>
+          <view wx:elif="{{item.status === 'available'}}" class="status-tag status-available">
+            待完成
+          </view>
+          <view wx:else class="status-tag status-locked">
+            未解锁
+          </view>
+        </view>
+      </view>
+
+      <view class="assignment-meta">
+        <text wx:if="{{item.courseId}}" class="related-course">
+          关联课程：{{getCourseTitle(item.courseId)}}
+        </text>
+        <text class="due-date">截止日期：{{item.dueDate}}</text>
+      </view>
+
+      <view class="assignment-actions">
+        <button
+          wx:if="{{item.status === 'available'}}"
+          class="btn btn-primary assignment-btn"
+          bindtap="startAssignment"
+          data-assignment-id="{{item.id}}"
+          catchtap="true"
+        >
+          开始作业
+        </button>
+
+        <button
+          wx:if="{{item.status === 'completed'}}"
+          class="btn btn-outline assignment-btn"
+          bindtap="viewAssignment"
+          data-assignment-id="{{item.id}}"
+          catchtap="true"
+        >
+          查看详情
+        </button>
+
+        <button
+          wx:if="{{item.status === 'locked'}}"
+          class="btn btn-disabled assignment-btn"
+          disabled
+        >
+          未解锁
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{filteredAssignments.length === 0}}" class="empty-state">
+    <view class="empty-icon">📝</view>
+    <text class="empty-text">暂无{{getFilterText(currentFilter)}}作业</text>
+  </view>
+</view>

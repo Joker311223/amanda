@@ -1,0 +1,172 @@
+/* 作业详情页面样式 */
+.assignment-header {
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.assignment-title-card .card-header {
+  text-align: center;
+  font-size: 32rpx;
+}
+
+.assignment-content {
+  padding: 0 20rpx;
+}
+
+.assignment-info {
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 15rpx;
+}
+
+.info-item {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.assignment-description {
+  margin-bottom: 30rpx;
+}
+
+.description-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.description-content {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 作业表单 */
+.assignment-form {
+  margin-top: 30rpx;
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 200rpx;
+  padding: 20rpx;
+  border: 2rpx solid #E9ECEF;
+  border-radius: 15rpx;
+  font-size: 26rpx;
+  line-height: 1.6;
+  box-sizing: border-box;
+  background: white;
+}
+
+.form-textarea:focus {
+  border-color: #6BBF59;
+  outline: none;
+}
+
+.char-count {
+  text-align: right;
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
+.submit-btn {
+  width: 100%;
+  font-size: 30rpx;
+  padding: 25rpx;
+  margin-top: 20rpx;
+}
+
+.submit-btn[disabled] {
+  background: #cccccc !important;
+  color: #999999 !important;
+}
+
+/* 已完成作业显示 */
+.completed-assignment {
+  margin-top: 30rpx;
+}
+
+.completed-section {
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.section-content {
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 15rpx;
+  border-left: 4rpx solid #6BBF59;
+}
+
+.section-content text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.completion-info {
+  text-align: center;
+  padding: 20rpx;
+  background: #E8F5E8;
+  border-radius: 15rpx;
+  margin-top: 20rpx;
+}
+
+.completion-date {
+  font-size: 24rpx;
+  color: #6BBF59;
+  font-weight: bold;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 375px) {
+  .assignment-title-card .card-header {
+    font-size: 28rpx;
+  }
+
+  .info-item {
+    font-size: 22rpx;
+  }
+
+  .description-title {
+    font-size: 26rpx;
+  }
+
+  .description-content {
+    font-size: 24rpx;
+  }
+
+  .form-textarea {
+    min-height: 150rpx;
+    padding: 15rpx;
+  }
+}

@@ -1,0 +1,255 @@
+/* 工具页面样式 */
+.page-header {
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.header-card .card-header {
+  text-align: center;
+  font-size: 36rpx;
+}
+
+/* 分类筛选样式 */
+.category-section {
+  padding: 0 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.category-scroll {
+  white-space: nowrap;
+}
+
+.category-tabs {
+  display: inline-flex;
+  background: white;
+  border-radius: 15rpx;
+  padding: 8rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.category-tab {
+  padding: 15rpx 20rpx;
+  font-size: 24rpx;
+  color: #666;
+  border-radius: 10rpx;
+  white-space: nowrap;
+  margin-right: 8rpx;
+  transition: all 0.3s ease;
+}
+
+.category-tab:last-child {
+  margin-right: 0;
+}
+
+.category-tab.active {
+  background: #6BBF59;
+  color: white;
+  font-weight: bold;
+}
+
+/* 技能卡片网格 */
+.cards-section {
+  padding: 0 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.skill-card {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx 20rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.skill-card:active {
+  transform: scale(0.95);
+}
+
+.skill-card-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin: 0 auto 20rpx;
+}
+
+.theory-icon {
+  background: #E3F2FD;
+}
+
+.mindfulness-icon {
+  background: #E8F5E8;
+}
+
+.distress-icon {
+  background: #FFF3E0;
+}
+
+.emotion-icon {
+  background: #FCE4EC;
+}
+
+.interpersonal-icon {
+  background: #F3E5F5;
+}
+
+.default-icon {
+  background: #F5F5F5;
+}
+
+.skill-card-title {
+  display: block;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+  line-height: 1.3;
+}
+
+.skill-card-category {
+  font-size: 20rpx;
+  color: #666;
+  background: #f0f0f0;
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+  display: inline-block;
+}
+
+/* 快捷入口样式 */
+.quick-entry-section {
+  padding: 0 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.quick-entries {
+  padding: 0;
+}
+
+.quick-entry-item {
+  display: flex;
+  align-items: center;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.quick-entry-item:last-child {
+  border-bottom: none;
+}
+
+.quick-entry-item:active {
+  background: #f8f9fa;
+  margin: 0 -30rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+}
+
+.quick-entry-icon {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  margin-right: 20rpx;
+}
+
+.emotion-icon {
+  background: #FCE4EC;
+}
+
+.practice-icon {
+  background: #E8F5E8;
+}
+
+.breathing-icon {
+  background: #E3F2FD;
+}
+
+.quick-entry-info {
+  flex: 1;
+}
+
+.quick-entry-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.quick-entry-desc {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.quick-entry-arrow {
+  font-size: 32rpx;
+  color: #ccc;
+  font-weight: bold;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 100rpx 20rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 375px) {
+  .category-tab {
+    font-size: 22rpx;
+    padding: 12rpx 16rpx;
+  }
+
+  .cards-grid {
+    gap: 15rpx;
+  }
+
+  .skill-card {
+    padding: 25rpx 15rpx;
+  }
+
+  .skill-card-icon {
+    width: 60rpx;
+    height: 60rpx;
+    font-size: 32rpx;
+  }
+
+  .skill-card-title {
+    font-size: 24rpx;
+  }
+
+  .skill-card-category {
+    font-size: 18rpx;
+  }
+
+  .quick-entry-title {
+    font-size: 26rpx;
+  }
+
+  .quick-entry-desc {
+    font-size: 20rpx;
+  }
+}

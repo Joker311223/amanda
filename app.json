@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/onboarding/onboarding",
+    "pages/index/index",
+    "pages/learning/learning",
+    "pages/assignments/assignments",
+    "pages/tools/tools",
+    "pages/emotion/emotion",
+    "pages/video/video",
+    "pages/assignment-detail/assignment-detail",
+    "pages/skill-card/skill-card"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#6BBF59",
+    "navigationBarTitleText": "DBT技能随身练",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#6BBF59",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/tools/tools",
+        "text": "技能卡片",
+        "iconPath": "images/learning.png",
+        "selectedIconPath": "images/learning-active.png"
+      },
+      {
+        "pagePath": "pages/learning/learning",
+        "text": "学习",
+        "iconPath": "images/tools.png",
+        "selectedIconPath": "images/tools-active.png"
+      },
+      {
+        "pagePath": "pages/emotion/emotion",
+        "text": "我的笔记",
+        "iconPath": "images/emotion.png",
+        "selectedIconPath": "images/emotion-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,155 @@
+<view class="page-container">
+  <!-- 经验值显示 -->
+  <view class="experience-badge">
+    <text class="star">⭐</text>
+    <text>30分</text>
+  </view>
+
+  <!-- 课程标题 -->
+  <view class="course-header">
+    <view class="course-title-card card">
+      <view class="card-header">
+        <text>第二课　正念、智慧心</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学习完成状态 -->
+  <view wx:if="{{isCompleted}}" class="completion-section">
+    <view class="completion-card card">
+      <view class="card-content">
+        <view class="completion-content">
+          <!-- 庆祝图标 -->
+          <view class="celebration-icon">
+            <view class="ice-cream">🍦</view>
+            <view class="sparkles">
+              <text class="sparkle">✨</text>
+              <text class="sparkle">⭐</text>
+              <text class="sparkle">💫</text>
+              <text class="sparkle">🌟</text>
+              <text class="sparkle">✨</text>
+            </view>
+          </view>
+
+          <text class="completion-title">恭喜通关！</text>
+
+          <text class="completion-desc">
+            太棒啦！你已完成DBT情绪技能所有课程，成功get全套情绪管理工具。
+          </text>
+
+          <text class="experience-gained">
+            本次成长累计获得150分快乐经验，每一分都是你用心练习的见证！
+          </text>
+
+          <text class="encouragement">
+            情绪成长没有终点，带着这些技能继续出发吧，你会成为更从容的自己！
+          </text>
+
+          <view class="completion-actions">
+            <button class="btn btn-primary" bindtap="continueJourney">
+              继续
+            </button>
+            <button class="btn btn-outline" bindtap="viewDetails">
+              了解详情
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 经验获得提示 -->
+  <view wx:elif="{{showExperienceGain}}" class="experience-section">
+    <view class="experience-card card">
+      <view class="card-content">
+        <view class="experience-content">
+          <view class="experience-icon">🍦</view>
+          <text class="experience-title">30分</text>
+          <text class="experience-subtitle">恭喜你成功解锁30分经验</text>
+
+          <view class="experience-actions">
+            <button class="btn btn-primary" bindtap="continueJourney">
+              继续
+            </button>
+            <button class="btn btn-outline" bindtap="viewDetails">
+              了解详情
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 视频播放区域 -->
+  <view wx:else class="video-section">
+    <view class="video-container">
+      <!-- 模拟视频播放器 -->
+      <view class="video-player">
+        <view class="video-placeholder">
+          <view class="play-button" bindtap="togglePlay">
+            <text wx:if="{{!isPlaying}}">▶️</text>
+            <text wx:else>⏸️</text>
+          </view>
+          <text class="video-title">{{currentCourse.title}}</text>
+        </view>
+
+        <!-- 视频控制栏 -->
+        <view class="video-controls">
+          <view class="progress-container">
+            <view class="progress-bar">
+              <view class="progress-fill" style="width: {{playProgress}}%"></view>
+            </view>
+            <text class="time-display">{{currentTime}} / {{totalTime}}</text>
+          </view>
+
+          <view class="control-buttons">
+            <button class="control-btn" bindtap="rewind" disabled="{{currentTime === '00:00'}}">
+              ⏪ 后退
+            </button>
+            <button class="control-btn" bindtap="togglePlay">
+              {{isPlaying ? '⏸️ 暂停' : '▶️ 播放'}}
+            </button>
+            <button class="control-btn" disabled>
+              ⏩ 前进
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 笔记功能 -->
+    <view class="notes-section">
+      <view class="notes-card card">
+        <view class="card-header">
+          <text>学习笔记</text>
+        </view>
+        <view class="card-content">
+          <textarea
+            class="notes-textarea"
+            placeholder="记录你的学习心得和感悟..."
+            value="{{notes}}"
+            bindinput="onNotesInput"
+            maxlength="500"
+          ></textarea>
+          <view class="notes-footer">
+            <text class="char-count">{{notes.length}}/500</text>
+            <button class="btn btn-primary save-notes-btn" bindtap="saveNotes">
+              保存笔记
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 完成学习按钮 -->
+    <view class="complete-section">
+      <button
+        class="btn btn-primary complete-btn"
+        bindtap="completeCourse"
+        disabled="{{playProgress < 100}}"
+      >
+        {{playProgress < 100 ? '请完整观看视频' : '完成学习'}}
+      </button>
+    </view>
+  </view>
+</view>

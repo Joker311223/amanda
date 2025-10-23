@@ -1,0 +1,88 @@
+<view class="page-container">
+  <!-- 经验值显示 -->
+  <view class="experience-badge">
+    <text class="star">⭐</text>
+    <text>30分</text>
+  </view>
+
+  <!-- 卡片标题 -->
+  <view class="card-header-section">
+    <view class="card-title-card card">
+      <view class="card-header">
+        <text>{{skillCard.title}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 卡片内容 -->
+  <view class="card-content-section">
+    <view class="content-card card">
+      <view class="card-content">
+        <view class="card-info">
+          <view class="card-category">
+            <text class="category-label">分类</text>
+            <text class="category-value">{{skillCard.category}}</text>
+          </view>
+        </view>
+
+        <view class="card-description">
+          <text class="description-title">技能说明</text>
+          <text class="description-content">{{getSkillDescription(skillCard.title)}}</text>
+        </view>
+
+        <view class="card-tips">
+          <text class="tips-title">使用要点</text>
+          <view class="tips-list">
+            <text class="tip-item" wx:for="{{getSkillTips(skillCard.title)}}" wx:key="*this">
+              • {{item}}
+            </text>
+          </view>
+        </view>
+
+        <view class="card-practice">
+          <text class="practice-title">练习建议</text>
+          <text class="practice-content">{{getPracticeAdvice(skillCard.title)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 相关资源 -->
+  <view class="related-section">
+    <view class="related-card card">
+      <view class="card-header">
+        <text>相关资源</text>
+      </view>
+      <view class="card-content">
+        <view class="related-items">
+          <view class="related-item" bindtap="goToRelatedCourse" wx:if="{{relatedCourse}}">
+            <view class="related-icon course-icon">📚</view>
+            <view class="related-info">
+              <text class="related-title">相关课程</text>
+              <text class="related-desc">{{relatedCourse.title}}</text>
+            </view>
+            <view class="related-arrow">></view>
+          </view>
+
+          <view class="related-item" bindtap="goToRelatedAssignment" wx:if="{{relatedAssignment}}">
+            <view class="related-icon assignment-icon">✍️</view>
+            <view class="related-info">
+              <text class="related-title">相关作业</text>
+              <text class="related-desc">{{relatedAssignment.title}}</text>
+            </view>
+            <view class="related-arrow">></view>
+          </view>
+
+          <view class="related-item" bindtap="goToEmotion">
+            <view class="related-icon emotion-icon">💭</view>
+            <view class="related-info">
+              <text class="related-title">我的笔记</text>
+              <text class="related-desc">记录练习后的情绪变化</text>
+            </view>
+            <view class="related-arrow">></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,129 @@
+/* 引导页面样式 */
+.intro-container {
+  padding: 20rpx;
+}
+
+.intro-text {
+  line-height: 1.6;
+}
+
+.greeting {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+}
+
+.description {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+}
+
+.dbt-intro {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.section-content {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.skills-intro {
+  margin-bottom: 40rpx;
+}
+
+.skill-item {
+  margin-bottom: 25rpx;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 15rpx;
+  border-left: 4rpx solid #6BBF59;
+}
+
+.skill-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #6BBF59;
+  margin-bottom: 10rpx;
+}
+
+.skill-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+.conclusion {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+}
+
+/* 用户信息收集样式 */
+.user-info-container {
+  padding: 20rpx;
+}
+
+.picker-input {
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+
+.picker-input:empty::before {
+  content: attr(placeholder);
+  color: #999;
+}
+
+.start-journey-btn {
+  margin-top: 40rpx;
+  font-size: 30rpx;
+  padding: 25rpx;
+}
+
+.start-journey-btn[disabled] {
+  background: #cccccc !important;
+  color: #999999 !important;
+}
+
+.contact-info {
+  margin-top: 30rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 15rpx;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 375px) {
+  .greeting {
+    font-size: 28rpx;
+  }
+
+  .section-title {
+    font-size: 26rpx;
+  }
+
+  .skill-title {
+    font-size: 24rpx;
+  }
+}

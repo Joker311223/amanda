@@ -1,0 +1,218 @@
+/* 技能卡片详情页面样式 */
+.card-header-section {
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-title-card .card-header {
+  text-align: center;
+  font-size: 32rpx;
+}
+
+.card-content-section {
+  padding: 0 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.card-info {
+  margin-bottom: 30rpx;
+}
+
+.card-category {
+  display: flex;
+  align-items: center;
+  padding: 15rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 15rpx;
+}
+
+.category-label {
+  font-size: 24rpx;
+  color: #666;
+  margin-right: 20rpx;
+}
+
+.category-value {
+  font-size: 24rpx;
+  color: #6BBF59;
+  font-weight: bold;
+  background: #E8F5E8;
+  padding: 8rpx 16rpx;
+  border-radius: 10rpx;
+}
+
+.card-description {
+  margin-bottom: 30rpx;
+}
+
+.description-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.description-content {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.card-tips {
+  margin-bottom: 30rpx;
+}
+
+.tips-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.tips-list {
+  background: #f8f9fa;
+  padding: 20rpx;
+  border-radius: 15rpx;
+  border-left: 4rpx solid #6BBF59;
+}
+
+.tip-item {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 10rpx;
+}
+
+.tip-item:last-child {
+  margin-bottom: 0;
+}
+
+.card-practice {
+  margin-bottom: 20rpx;
+}
+
+.practice-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+
+.practice-content {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  background: #E8F5E8;
+  padding: 20rpx;
+  border-radius: 15rpx;
+}
+
+/* 相关资源 */
+.related-section {
+  padding: 0 20rpx;
+  margin-bottom: 30rpx;
+}
+
+.related-items {
+  padding: 0;
+}
+
+.related-item {
+  display: flex;
+  align-items: center;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.related-item:last-child {
+  border-bottom: none;
+}
+
+.related-item:active {
+  background: #f8f9fa;
+  margin: 0 -30rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+}
+
+.related-icon {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  margin-right: 20rpx;
+}
+
+.course-icon {
+  background: #E3F2FD;
+}
+
+.assignment-icon {
+  background: #FFF3E0;
+}
+
+.emotion-icon {
+  background: #FCE4EC;
+}
+
+.related-info {
+  flex: 1;
+}
+
+.related-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.related-desc {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.related-arrow {
+  font-size: 32rpx;
+  color: #ccc;
+  font-weight: bold;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 375px) {
+  .card-title-card .card-header {
+    font-size: 28rpx;
+  }
+
+  .description-title,
+  .tips-title,
+  .practice-title {
+    font-size: 26rpx;
+  }
+
+  .description-content,
+  .practice-content {
+    font-size: 24rpx;
+  }
+
+  .tip-item {
+    font-size: 22rpx;
+  }
+
+  .related-title {
+    font-size: 26rpx;
+  }
+
+  .related-desc {
+    font-size: 20rpx;
+  }
+}

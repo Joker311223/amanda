@@ -1,0 +1,94 @@
+<view class="page-container">
+  <!-- 经验值显示 -->
+  <view class="experience-badge">
+    <text class="star">⭐</text>
+    <text>30分</text>
+  </view>
+
+  <!-- 作业标题 -->
+  <view class="assignment-header">
+    <view class="assignment-title-card card">
+      <view class="card-header">
+        <text>{{assignment.title}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 作业内容 -->
+  <view class="assignment-content">
+    <view class="content-card card">
+      <view class="card-content">
+        <view class="assignment-info">
+          <text class="info-item">分类：{{assignment.category}}</text>
+          <text class="info-item" wx:if="{{assignment.courseId}}">
+            关联课程：{{getCourseTitle(assignment.courseId)}}
+          </text>
+          <text class="info-item">截止日期：{{assignment.dueDate}}</text>
+        </view>
+
+        <view class="assignment-description">
+          <text class="description-title">作业说明</text>
+          <text class="description-content">
+            这是一个关于{{assignment.category}}的练习作业。请根据所学内容，认真完成以下练习，并记录你的感受和体会。
+          </text>
+        </view>
+
+        <!-- 作业表单 -->
+        <view wx:if="{{!isViewMode && assignment.status !== 'completed'}}" class="assignment-form">
+          <view class="form-group">
+            <text class="form-label">练习记录</text>
+            <textarea
+              class="form-textarea"
+              placeholder="请记录你的练习过程和感受..."
+              value="{{practiceRecord}}"
+              bindinput="onPracticeRecordInput"
+              maxlength="500"
+            ></textarea>
+            <view class="char-count">{{practiceRecord.length}}/500</view>
+          </view>
+
+          <view class="form-group">
+            <text class="form-label">学习心得</text>
+            <textarea
+              class="form-textarea"
+              placeholder="分享你的学习心得和收获..."
+              value="{{learningInsight}}"
+              bindinput="onLearningInsightInput"
+              maxlength="300"
+            ></textarea>
+            <view class="char-count">{{learningInsight.length}}/300</view>
+          </view>
+
+          <button
+            class="btn btn-primary submit-btn"
+            bindtap="submitAssignment"
+            disabled="{{!canSubmit}}"
+          >
+            提交作业
+          </button>
+        </view>
+
+        <!-- 已完成的作业内容 -->
+        <view wx:if="{{assignment.status === 'completed' || isViewMode}}" class="completed-assignment">
+          <view class="completed-section">
+            <text class="section-title">练习记录</text>
+            <view class="section-content">
+              <text>{{completedData.practiceRecord || '暂无记录'}}</text>
+            </view>
+          </view>
+
+          <view class="completed-section">
+            <text class="section-title">学习心得</text>
+            <view class="section-content">
+              <text>{{completedData.learningInsight || '暂无心得'}}</text>
+            </view>
+          </view>
+
+          <view class="completion-info">
+            <text class="completion-date">完成时间：{{completedData.completionDate}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

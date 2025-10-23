@@ -1,0 +1,270 @@
+/* 笔记页面样式 */
+.page-header {
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.header-card .card-header {
+  text-align: center;
+  font-size: 36rpx;
+}
+
+/* 添加笔记按钮区域 */
+.add-note-section {
+  padding: 0 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.add-note-card {
+  background: #E8F5E8;
+  border-radius: 15rpx;
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.add-note-card:active {
+  background: #D4EDD4;
+  transform: scale(0.98);
+}
+
+.add-note-icon {
+  font-size: 40rpx;
+}
+
+.add-note-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #6BBF59;
+}
+
+/* 笔记列表 */
+.notes-list {
+  padding: 0 20rpx;
+}
+
+.note-item {
+  background: white;
+  border-radius: 15rpx;
+  padding: 25rpx;
+  margin-bottom: 15rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15rpx;
+}
+
+.note-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.note-text {
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.6;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.note-actions {
+  display: flex;
+  gap: 10rpx;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background: #E3F2FD;
+}
+
+.edit-btn:active {
+  background: #BBDEFB;
+  transform: scale(0.95);
+}
+
+.delete-btn {
+  background: #FFEBEE;
+}
+
+.delete-btn:active {
+  background: #FFCDD2;
+  transform: scale(0.95);
+}
+
+.action-icon {
+  font-size: 28rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 100rpx 20rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  line-height: 1.5;
+}
+
+/* 笔记编辑弹窗 */
+.note-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 40rpx;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20rpx;
+  width: 100%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  width: 50rpx;
+  height: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  color: #999;
+  border-radius: 50%;
+}
+
+.modal-close:active {
+  background: #f0f0f0;
+}
+
+.modal-body {
+  flex: 1;
+  padding: 30rpx;
+  overflow-y: auto;
+}
+
+.note-textarea {
+  width: 100%;
+  min-height: 300rpx;
+  padding: 20rpx;
+  border: 2rpx solid #E9ECEF;
+  border-radius: 15rpx;
+  font-size: 26rpx;
+  line-height: 1.6;
+  box-sizing: border-box;
+  background: white;
+}
+
+.note-textarea:focus {
+  border-color: #6BBF59;
+  outline: none;
+}
+
+.char-count {
+  text-align: right;
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.modal-btn {
+  flex: 1;
+  font-size: 28rpx;
+  padding: 20rpx;
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 375px) {
+  .add-note-card {
+    padding: 25rpx;
+  }
+
+  .add-note-icon {
+    font-size: 32rpx;
+  }
+
+  .add-note-text {
+    font-size: 26rpx;
+  }
+
+  .note-item {
+    padding: 20rpx;
+  }
+
+  .note-text {
+    font-size: 24rpx;
+  }
+
+  .action-btn {
+    width: 50rpx;
+    height: 50rpx;
+  }
+
+  .action-icon {
+    font-size: 24rpx;
+  }
+
+  .modal-title {
+    font-size: 28rpx;
+  }
+
+  .note-textarea {
+    min-height: 250rpx;
+    padding: 15rpx;
+  }
+}
