@@ -59,15 +59,6 @@
       <view class="action-arrow">></view>
     </view>
 
-    <view class="action-card card" bindtap="goToAssignments">
-      <view class="action-icon assignment-icon">✍️</view>
-      <view class="action-content">
-        <text class="action-title">完成作业</text>
-        <text class="action-desc">提交学习作业</text>
-      </view>
-      <view class="action-arrow">></view>
-    </view>
-
     <view class="action-card card" bindtap="goToTools">
       <view class="action-icon tools-icon">🛠️</view>
       <view class="action-content">
@@ -76,6 +67,15 @@
       </view>
       <view class="action-arrow">></view>
     </view>
+
+    <!-- <view class="action-card card" bindtap="goToAssignments">
+      <view class="action-icon assignment-icon">✍️</view>
+      <view class="action-content">
+        <text class="action-title">完成作业</text>
+        <text class="action-desc">提交学习作业</text>
+      </view>
+      <view class="action-arrow">></view>
+    </view> -->
 
     <view class="action-card card" bindtap="goToEmotion">
       <view class="action-icon emotion-icon">💭</view>

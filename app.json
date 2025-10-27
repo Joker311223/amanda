@@ -2,6 +2,7 @@
   "pages": [
     "pages/onboarding/onboarding",
     "pages/index/index",
+    "pages/router/index",
     "pages/learning/learning",
     "pages/assignments/assignments",
     "pages/tools/tools",
@@ -26,6 +27,12 @@
       {
         "pagePath": "pages/index/index",
         "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/router/index",
+        "text": "学习路线",
         "iconPath": "images/home.png",
         "selectedIconPath": "images/home-active.png"
       },

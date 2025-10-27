@@ -1,0 +1,113 @@
+<view class="page-container">
+  <!-- 可爱的顶部装饰 -->
+  <view class="top-decoration">
+    <view class="cloud cloud-1">☁️</view>
+    <view class="cloud cloud-2">☁️</view>
+    <view class="sun">☀️</view>
+  </view>
+
+  <!-- 进度展示 - 小火箭 -->
+  <view class="progress-rocket">
+    <view class="rocket-container" style="left: {{progressPercent}}%">
+      <view class="rocket">🚀</view>
+      <view class="rocket-fire">🔥</view>
+    </view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{progressPercent}}%"></view>
+      <view class="track-start">🏠</view>
+      <view class="track-end">🏆</view>
+    </view>
+    <view class="progress-text">已完成 {{completedCount}}/{{totalCount}} 关</view>
+  </view>
+
+  <!-- 学习路线图 - 游戏关卡风格 -->
+  <scroll-view class="roadmap-scroll" scroll-y="true">
+    <view class="roadmap-path">
+      <!-- 课程关卡 -->
+      <view
+        class="level-item {{item.courseCompleted ? 'completed' : ''}} {{item.current ? 'current' : ''}} {{item.locked ? 'locked' : ''}}"
+        wx:for="{{courses}}"
+        wx:key="id"
+        style="{{item.position}}"
+      >
+        <!-- 关卡图标 -->
+        <view class="level-icon" bindtap="onCourseClick" data-course="{{item}}">
+          <view class="icon-bg">
+            <text class="level-emoji">{{item.emoji}}</text>
+          </view>
+          <!-- 课程完成标记 -->
+          <view wx:if="{{item.courseCompleted}}" class="complete-badge course-badge">
+            <text class="badge-icon">📚</text>
+          </view>
+          <!-- 作业完成标记 -->
+          <view wx:if="{{item.assignmentCompleted}}" class="complete-badge assignment-badge">
+            <text class="badge-icon">✏️</text>
+          </view>
+          <!-- 锁定标记 -->
+          <view wx:if="{{item.locked}}" class="lock-badge">
+            <text class="lock-icon">🔒</text>
+          </view>
+          <!-- 当前关卡动画 -->
+          <view wx:if="{{item.current}}" class="current-glow"></view>
+        </view>
+
+        <!-- 关卡信息气泡 -->
+        <view class="level-bubble">
+          <view class="bubble-content">
+            <text class="level-number">第{{item.index}}关</text>
+            <text class="level-title">{{item.title}}</text>
+
+            <!-- 课程和作业按钮 -->
+            <view class="action-buttons">
+              <view
+                class="action-btn course-btn {{item.courseCompleted ? 'btn-completed' : ''}}"
+                bindtap="onCourseClick"
+                data-course="{{item}}"
+                catchtap="stopPropagation"
+              >
+                <text class="btn-icon">📚</text>
+                <text class="btn-text">{{item.courseCompleted ? '已学' : '学习'}}</text>
+              </view>
+              <view
+                class="action-btn assignment-btn {{item.assignmentCompleted ? 'btn-completed' : ''}}"
+                bindtap="onAssignmentClick"
+                data-course="{{item}}"
+                catchtap="stopPropagation"
+              >
+                <text class="btn-icon">✏️</text>
+                <text class="btn-text">{{item.assignmentCompleted ? '已做' : '作业'}}</text>
+              </view>
+            </view>
+          </view>
+          <view class="bubble-tail"></view>
+        </view>
+
+        <!-- 星星奖励 -->
+        <view wx:if="{{item.courseCompleted && item.assignmentCompleted}}" class="stars-reward">
+          <text class="star">⭐</text>
+          <text class="star">⭐</text>
+          <text class="star">⭐</text>
+        </view>
+      </view>
+
+      <!-- 终点城堡 -->
+      <view class="finish-castle">
+        <view class="castle-icon">🏰</view>
+        <view class="castle-text">学习王国</view>
+        <view class="castle-stars">
+          <text class="twinkle">✨</text>
+          <text class="twinkle">✨</text>
+          <text class="twinkle">✨</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 鼓励小贴士 -->
+  <view class="encouragement-tip" wx:if="{{showTip}}">
+    <view class="tip-character">{{tipCharacter}}</view>
+    <view class="tip-bubble">
+      <text class="tip-text">{{tipText}}</text>
+    </view>
+  </view>
+</view>

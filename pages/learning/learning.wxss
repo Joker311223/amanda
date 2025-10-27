@@ -172,14 +172,13 @@
 
 .course-experience {
   position: absolute;
-  top: 20rpx;
-  right: 20rpx;
+  top: 0rpx;
+  right: 0rpx;
   background: #FFD700;
   color: #333;
-  padding: 8rpx 15rpx;
-  border-radius: 20rpx;
-  font-size: 20rpx;
-  font-weight: bold;
+  padding: 3rpx 10rpx;
+  border-radius: 0 0 0 20rpx;
+  font-size: 16rpx;
 }
 
 .experience-text {
