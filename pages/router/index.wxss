@@ -1,522 +1,350 @@
-/* 童趣学习路线图 - 游戏关卡风格 */
+/* Duolingo风格学习路径 */
 .page-container {
   min-height: 100vh;
-  background: linear-gradient(180deg, #87CEEB 0%, #98D8C8 50%, #90EE90 100%);
+  background: linear-gradient(180deg, #f7f9fc 0%, #e8f4f8 100%);
   position: relative;
   overflow: hidden;
 }
 
-/* 顶部装饰 */
-.top-decoration {
+/* 顶部积分显示 */
+.header {
   position: relative;
-  height: 120rpx;
-  padding: 20rpx;
+  padding: 30rpx 40rpx 20rpx;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.cloud {
-  position: absolute;
-  font-size: 60rpx;
-  animation: float 3s ease-in-out infinite;
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  background: white;
+  padding: 15rpx 30rpx;
+  border-radius: 50rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  border: 3rpx dashed #e0e0e0;
 }
 
-.cloud-1 {
-  left: 10%;
-  top: 20rpx;
-  animation-delay: 0s;
-}
-
-.cloud-2 {
-  right: 15%;
-  top: 40rpx;
-  animation-delay: 1.5s;
-}
-
-.sun {
-  position: absolute;
-  right: 30rpx;
-  top: 20rpx;
-  font-size: 70rpx;
-  animation: rotate 20s linear infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10rpx); }
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* 进度火箭 */
-.progress-rocket {
-  margin: 20rpx;
-  padding: 30rpx 20rpx;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 25rpx;
-  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.1);
-}
-
-.rocket-container {
-  position: absolute;
-  top: -40rpx;
-  transition: left 0.5s ease;
-  z-index: 10;
-}
-
-.rocket {
+.star-icon {
   font-size: 50rpx;
-  animation: rocket-fly 1s ease-in-out infinite;
+  animation: star-rotate 3s ease-in-out infinite;
 }
 
-.rocket-fire {
-  font-size: 30rpx;
-  margin-top: -10rpx;
-  animation: fire-flicker 0.3s ease-in-out infinite;
+@keyframes star-rotate {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(15deg) scale(1.1); }
 }
 
-@keyframes rocket-fly {
-  0%, 100% { transform: translateY(0) rotate(-45deg); }
-  50% { transform: translateY(-5rpx) rotate(-45deg); }
+.score-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
 }
 
-@keyframes fire-flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
-.progress-track {
+/* 进度条区域 */
+.progress-section {
+  padding: 20rpx 40rpx;
   position: relative;
-  height: 20rpx;
-  background: #E0E0E0;
-  border-radius: 10rpx;
-  overflow: hidden;
-  margin: 0 40rpx;
+}
+
+.progress-label {
+  display: inline-block;
+  background: #58cc02;
+  color: white;
+  font-size: 28rpx;
+  font-weight: bold;
+  padding: 12rpx 30rpx;
+  border-radius: 30rpx 30rpx 30rpx 0;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 10rpx rgba(88, 204, 2, 0.3);
+}
+
+.progress-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 50rpx;
+  background: #e5e5e5;
+  border-radius: 25rpx;
+  position: relative;
+  overflow: visible;
+  border: 3rpx solid white;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #FFD700 0%, #FFA500 100%);
-  border-radius: 10rpx;
+  background: linear-gradient(90deg, #58cc02 0%, #7ed321 100%);
+  border-radius: 25rpx;
   transition: width 0.5s ease;
+  position: relative;
 }
 
-.track-start, .track-end {
+.progress-indicator {
   position: absolute;
-  font-size: 40rpx;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
+  transition: left 0.5s ease;
+  z-index: 10;
 }
 
-.track-start {
-  left: -50rpx;
-}
-
-.track-end {
-  right: -50rpx;
-}
-
-.progress-text {
-  text-align: center;
-  margin-top: 15rpx;
-  font-size: 26rpx;
-  color: #666;
-  font-weight: bold;
-}
-
-/* 路线图滚动区域 */
-.roadmap-scroll {
-  height: calc(100vh - 350rpx);
-  padding: 20rpx;
-}
-
-.roadmap-path {
-  position: relative;
-  min-height: 100%;
-  padding: 40rpx 0 200rpx;
-}
-
-/* 关卡项 */
-.level-item {
-  position: absolute;
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: all 0.3s ease;
-}
-
-.level-item:active {
-  transform: scale(0.95);
-}
-
-/* 关卡图标 */
-.level-icon {
-  position: relative;
-  width: 120rpx;
-  height: 120rpx;
-  margin-bottom: 15rpx;
-}
-
-.icon-bg {
-  width: 100%;
-  height: 100%;
+.indicator-circle {
+  width: 70rpx;
+  height: 70rpx;
+  background: white;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 60rpx;
-  box-shadow: 0 6rpx 15rpx rgba(0, 0, 0, 0.2);
-  border: 6rpx solid white;
-  transition: all 0.3s ease;
+  border: 8rpx solid #58cc02;
+  box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.4);
+  position: relative;
 }
 
-/* 已完成状态 */
-.level-item.completed .icon-bg {
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-  animation: bounce 0.5s ease;
-}
-
-/* 进行中状态 */
-.level-item.current .icon-bg {
-  background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-  animation: pulse-big 1.5s ease-in-out infinite;
-}
-
-/* 未开始状态 */
-.level-item.locked .icon-bg {
-  background: #CCCCCC;
-  opacity: 0.7;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-@keyframes pulse-big {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 6rpx 15rpx rgba(255, 107, 107, 0.3);
-  }
-  50% {
-    transform: scale(1.1);
-    box-shadow: 0 8rpx 25rpx rgba(255, 107, 107, 0.6);
-  }
-}
-
-.level-emoji {
-  font-size: 60rpx;
-}
-
-/* 完成标记 */
-.complete-badge {
+.indicator-circle::before {
+  content: '';
   position: absolute;
-  width: 45rpx;
-  height: 45rpx;
+  width: 30rpx;
+  height: 30rpx;
+  background: #58cc02;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 3rpx solid white;
-  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.2);
-  animation: badge-pop 0.5s ease;
-}
-
-.course-badge {
-  top: -8rpx;
-  right: -8rpx;
-  background: linear-gradient(135deg, #FFD54F 0%, #FFC107 100%);
-}
-
-.assignment-badge {
-  top: -8rpx;
-  left: -8rpx;
-  background: linear-gradient(135deg, #90EE90 0%, #6BBF59 100%);
-}
-
-.badge-icon {
-  font-size: 24rpx;
-}
-
-@keyframes badge-pop {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* 锁定标记 */
-.lock-badge {
-  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 40rpx;
 }
 
-.lock-icon {
-  filter: drop-shadow(0 2rpx 4rpx rgba(0, 0, 0, 0.3));
-}
-
-/* 当前关卡光晕 */
-.current-glow {
-  position: absolute;
-  width: 140rpx;
-  height: 140rpx;
-  top: -10rpx;
-  left: -10rpx;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 107, 107, 0.4) 0%, transparent 70%);
-  animation: glow-pulse 2s ease-in-out infinite;
-}
-
-@keyframes glow-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 0.8; }
-}
-
-/* 关卡信息气泡 */
-.level-bubble {
-  position: relative;
-  background: white;
-  border-radius: 20rpx;
-  padding: 15rpx 20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
-  max-width: 220rpx;
-}
-
-.bubble-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8rpx;
-}
-
-.level-number {
-  font-size: 20rpx;
-  color: #999;
+.progress-text {
+  font-size: 32rpx;
   font-weight: bold;
-}
-
-.level-title {
-  font-size: 24rpx;
   color: #333;
-  font-weight: bold;
-  text-align: center;
-  line-height: 1.3;
-  margin-bottom: 5rpx;
+  min-width: 100rpx;
+  text-align: right;
 }
 
-.bubble-tail {
+/* 路径滚动区域 */
+.roadmap-scroll {
+  height: calc(100vh - 280rpx);
+  padding: 40rpx 0;
+}
+
+.roadmap-container {
+  position: relative;
+  min-height: 100%;
+  padding: 0 40rpx 200rpx;
+}
+
+/* 关卡节点 */
+.level-node {
   position: absolute;
-  top: -10rpx;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 10rpx solid transparent;
-  border-right: 10rpx solid transparent;
-  border-bottom: 10rpx solid white;
-}
-
-/* 操作按钮 */
-.action-buttons {
-  display: flex;
-  gap: 10rpx;
-  margin-top: 8rpx;
-  width: 100%;
-}
-
-.action-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4rpx;
-  padding: 8rpx 12rpx;
-  border-radius: 12rpx;
+  width: 200rpx;
+  height: 200rpx;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, #87CEEB 0%, #98D8C8 100%);
 }
 
-.action-btn:active {
+.level-node:active {
   transform: scale(0.95);
 }
 
-.course-btn {
-  background: linear-gradient(135deg, #FFD54F 0%, #FFC107 100%);
+.node-border {
+  width: 100%;
+  height: 100%;
+  border: 4rpx dashed #d0d0d0;
+  border-radius: 20rpx;
+  padding: 15rpx;
+  background: white;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
 }
 
-.assignment-btn {
-  background: linear-gradient(135deg, #90EE90 0%, #6BBF59 100%);
+.level-node.current .node-border {
+  border-color: #ffc800;
+  border-style: solid;
+  box-shadow: 0 8rpx 20rpx rgba(255, 200, 0, 0.3);
+  animation: pulse-border 2s ease-in-out infinite;
 }
 
-.btn-completed {
-  opacity: 0.7;
-  background: #E0E0E0 !important;
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: #ffc800;
+    box-shadow: 0 8rpx 20rpx rgba(255, 200, 0, 0.3);
+  }
+  50% {
+    border-color: #ffdd00;
+    box-shadow: 0 12rpx 30rpx rgba(255, 200, 0, 0.5);
+  }
 }
 
-.btn-icon {
-  font-size: 24rpx;
+.level-node.completed .node-border {
+  border-color: #58cc02;
+  background: linear-gradient(135deg, #f0fff0 0%, #e8f8e8 100%);
 }
 
-.btn-text {
-  font-size: 20rpx;
-  color: white;
-  font-weight: bold;
-  text-shadow: 0 1rpx 2rpx rgba(0, 0, 0, 0.2);
+.level-node.locked .node-border {
+  opacity: 0.5;
+  background: #f5f5f5;
 }
 
-.btn-completed .btn-text {
-  color: #999;
-  text-shadow: none;
-}
-
-/* 星星奖励 */
-.stars-reward {
+.node-content {
+  width: 100%;
+  height: 100%;
   display: flex;
-  gap: 5rpx;
-  margin-top: 10rpx;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.star {
-  font-size: 28rpx;
-  animation: star-pop 0.5s ease;
+/* 文档类型图标 */
+.lesson-icon {
+  width: 120rpx;
+  height: 120rpx;
+  background: linear-gradient(135deg, #58cc02 0%, #7ed321 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 6rpx 15rpx rgba(88, 204, 2, 0.3);
 }
 
-.star:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-.star:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-@keyframes star-pop {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* 终点城堡 */
-.finish-castle {
-  position: absolute;
-  bottom: 50rpx;
-  left: 50%;
-  transform: translateX(-50%);
+.document-icon {
+  width: 60rpx;
+  height: 70rpx;
+  background: white;
+  border-radius: 8rpx;
+  padding: 12rpx 10rpx;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 15rpx;
+  gap: 8rpx;
+  position: relative;
 }
 
-.castle-icon {
-  font-size: 100rpx;
-  animation: castle-shake 3s ease-in-out infinite;
+.doc-lines {
+  width: 100%;
+  height: 4rpx;
+  background: #58cc02;
+  border-radius: 2rpx;
 }
 
-@keyframes castle-shake {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-5deg); }
-  75% { transform: rotate(5deg); }
-}
-
-.castle-text {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #FF6B6B;
-  text-shadow: 2rpx 2rpx 4rpx rgba(0, 0, 0, 0.2);
-}
-
-.castle-stars {
+.check-mark {
+  position: absolute;
+  bottom: -10rpx;
+  right: -10rpx;
+  width: 50rpx;
+  height: 50rpx;
+  background: white;
+  border-radius: 50%;
   display: flex;
-  gap: 10rpx;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #58cc02;
+  font-weight: bold;
+  border: 4rpx solid #58cc02;
+  box-shadow: 0 4rpx 10rpx rgba(88, 204, 2, 0.3);
 }
 
-.twinkle {
+/* 角色类型图标 */
+.character-icon {
+  width: 150rpx;
+  height: 150rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.character-emoji {
+  font-size: 100rpx;
+  filter: drop-shadow(0 4rpx 8rpx rgba(0, 0, 0, 0.15));
+}
+
+/* 装饰星星 */
+.decoration-stars {
+  position: absolute;
+  width: 200rpx;
+  height: 200rpx;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.deco-star {
+  position: absolute;
   font-size: 30rpx;
-  animation: twinkle 1.5s ease-in-out infinite;
+  animation: twinkle-star 2s ease-in-out infinite;
 }
 
-.twinkle:nth-child(2) {
+.star-1 {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-delay: 0s;
+}
+
+.star-2 {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
   animation-delay: 0.5s;
 }
 
-.twinkle:nth-child(3) {
+.star-3 {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   animation-delay: 1s;
 }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.2); }
+.star-4 {
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  animation-delay: 1.5s;
 }
 
-/* 鼓励小贴士 */
-.encouragement-tip {
-  position: fixed;
-  bottom: 100rpx;
-  left: 50%;
-  transform: translateX(-50%);
+@keyframes twinkle-star {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translate(0, 0) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1.2);
+  }
+}
+
+/* 锁定覆盖层 */
+.lock-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: 15rpx;
-  background: white;
-  padding: 20rpx 30rpx;
-  border-radius: 50rpx;
-  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.2);
-  animation: slide-up 0.5s ease;
-  z-index: 100;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10rpx;
+  z-index: 10;
 }
 
-@keyframes slide-up {
-  from {
-    bottom: -100rpx;
-    opacity: 0;
-  }
-  to {
-    bottom: 100rpx;
-    opacity: 1;
-  }
-}
-
-.tip-character {
-  font-size: 50rpx;
-  animation: wave 1s ease-in-out infinite;
-}
-
-@keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-10deg); }
-  75% { transform: rotate(10deg); }
-}
-
-.tip-bubble {
-  max-width: 400rpx;
-}
-
-.tip-text {
-  font-size: 26rpx;
-  color: #333;
-  line-height: 1.4;
+.lock-icon {
+  font-size: 60rpx;
+  filter: drop-shadow(0 2rpx 4rpx rgba(0, 0, 0, 0.2));
 }
 
 /* 响应式调整 */
 @media screen and (max-width: 375px) {
-  .level-icon {
-    width: 100rpx;
-    height: 100rpx;
+  .level-node {
+    width: 180rpx;
+    height: 180rpx;
   }
 
-  .level-emoji {
-    font-size: 50rpx;
+  .character-emoji {
+    font-size: 90rpx;
   }
 
-  .level-title {
-    font-size: 22rpx;
-  }
-
-  .castle-icon {
-    font-size: 80rpx;
+  .lesson-icon {
+    width: 110rpx;
+    height: 110rpx;
   }
 }

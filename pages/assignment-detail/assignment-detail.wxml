@@ -1,94 +1,174 @@
-<view class="page-container">
-  <!-- 经验值显示 -->
-  <view class="experience-badge">
-    <text class="star">⭐</text>
-    <text>30分</text>
+<view class="assignment-page">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="title">{{assignment.title}}</view>
+    <view class="category">{{assignment.category}}</view>
   </view>
 
-  <!-- 作业标题 -->
-  <view class="assignment-header">
-    <view class="assignment-title-card card">
-      <view class="card-header">
-        <text>{{assignment.title}}</text>
+  <!-- 导语 -->
+  <view wx:if="{{template}}" class="guide-section">
+    <view class="guide-title">📝 导语</view>
+    <view class="guide-content">{{template.guide}}</view>
+  </view>
+
+  <!-- 表单内容 -->
+  <view wx:if="{{template && !completedData}}" class="form-section">
+    <view wx:for="{{template.fields}}" wx:key="id" class="form-item">
+
+      <!-- 文本输入 -->
+      <view wx:if="{{item.type === 'text'}}" class="field-group">
+        <view class="field-label">{{item.label}}</view>
+        <input
+          class="field-input"
+          placeholder="请输入"
+          value="{{formData[item.id]}}"
+          data-field="{{item.id}}"
+          bindinput="onFieldInput"
+        />
+      </view>
+
+      <!-- 数字输入 -->
+      <view wx:elif="{{item.type === 'number'}}" class="field-group">
+        <view class="field-label">{{item.label}}</view>
+        <input
+          class="field-input"
+          type="number"
+          placeholder="{{item.min}}-{{item.max}}"
+          value="{{formData[item.id]}}"
+          data-field="{{item.id}}"
+          bindinput="onFieldInput"
+        />
+      </view>
+
+      <!-- 文本域 -->
+      <view wx:elif="{{item.type === 'textarea'}}" class="field-group">
+        <view class="field-label">{{item.label}}</view>
+        <textarea
+          class="field-textarea"
+          placeholder="请详细描述..."
+          value="{{formData[item.id]}}"
+          data-field="{{item.id}}"
+          bindinput="onFieldInput"
+          maxlength="500"
+        ></textarea>
+      </view>
+
+      <!-- 单选框 -->
+      <view wx:elif="{{item.type === 'radio'}}" class="field-group">
+        <view class="field-label">{{item.label}}</view>
+        <radio-group
+          class="radio-group"
+          data-field="{{item.id}}"
+          bindchange="onRadioChange"
+        >
+          <label wx:for="{{item.options}}" wx:key="*this" wx:for-item="option" class="radio-item">
+            <radio value="{{option}}" checked="{{formData[item.id] === option}}"/>
+            <text>{{option}}</text>
+          </label>
+        </radio-group>
+      </view>
+
+      <!-- 复选框 -->
+      <view wx:elif="{{item.type === 'checkbox'}}" class="field-group">
+        <view class="field-label">{{item.label}}</view>
+        <checkbox-group
+          class="checkbox-group"
+          data-field="{{item.id}}"
+          bindchange="onCheckboxChange"
+        >
+          <label wx:for="{{item.options}}" wx:key="*this" wx:for-item="option" class="checkbox-item">
+            <checkbox value="{{option}}" checked="{{formData[item.id].includes(option)}}"/>
+            <text>{{option}}</text>
+          </label>
+        </checkbox-group>
+      </view>
+
+      <!-- 单选+文本框 -->
+      <view wx:elif="{{item.type === 'radio-text'}}" class="field-group">
+        <view class="field-label">{{item.label}}</view>
+        <radio-group
+          class="radio-group inline"
+          data-field="{{item.id}}"
+          data-type="radio"
+          bindchange="onRadioTextChange"
+        >
+          <label wx:for="{{item.options}}" wx:key="*this" wx:for-item="option" class="radio-item">
+            <radio value="{{option}}" checked="{{formData[item.id].radio === option}}"/>
+            <text>{{option}}</text>
+          </label>
+        </radio-group>
+        <view wx:if="{{formData[item.id].radio === '是'}}" class="sub-input">
+          <input
+            class="field-input"
+            placeholder="{{item.textPlaceholder}}"
+            value="{{formData[item.id].text}}"
+            data-field="{{item.id}}"
+            data-type="text"
+            bindinput="onRadioTextChange"
+          />
+        </view>
+      </view>
+
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="submit-section">
+      <button
+        class="submit-btn {{canSubmit ? 'active' : ''}}"
+        bindtap="submitAssignment"
+        disabled="{{!canSubmit}}"
+      >
+        提交作业 +30经验值
+      </button>
+    </view>
+  </view>
+
+  <!-- 已完成的作业展示 -->
+  <view wx:if="{{completedData}}" class="completed-section">
+    <view class="completed-header">
+      <text class="completed-icon">✅</text>
+      <text class="completed-title">已完成</text>
+    </view>
+    <view class="completed-date">完成时间：{{completedData.completionDate}}</view>
+
+    <view class="completed-content">
+      <view wx:for="{{template.fields}}" wx:key="id" class="completed-item">
+        <view class="completed-label">{{item.label}}</view>
+        <view class="completed-value">
+          <!-- 文本/数字/文本域 -->
+          <text wx:if="{{item.type === 'text' || item.type === 'number' || item.type === 'textarea'}}">
+            {{completedData.formData[item.id] || '未填写'}}
+          </text>
+
+          <!-- 单选 -->
+          <text wx:elif="{{item.type === 'radio'}}">
+            {{completedData.formData[item.id] || '未选择'}}
+          </text>
+
+          <!-- 复选 -->
+          <view wx:elif="{{item.type === 'checkbox'}}">
+            <text wx:for="{{completedData.formData[item.id]}}" wx:key="*this" wx:for-item="opt" class="checkbox-value">
+              • {{opt}}
+            </text>
+            <text wx:if="{{!completedData.formData[item.id] || completedData.formData[item.id].length === 0}}">未选择</text>
+          </view>
+
+          <!-- 单选+文本 -->
+          <view wx:elif="{{item.type === 'radio-text'}}">
+            <text>{{completedData.formData[item.id].radio || '未选择'}}</text>
+            <text wx:if="{{completedData.formData[item.id].text}}" class="sub-text">
+              （{{completedData.formData[item.id].text}}）
+            </text>
+          </view>
+        </view>
       </view>
     </view>
   </view>
 
-  <!-- 作业内容 -->
-  <view class="assignment-content">
-    <view class="content-card card">
-      <view class="card-content">
-        <view class="assignment-info">
-          <text class="info-item">分类：{{assignment.category}}</text>
-          <text class="info-item" wx:if="{{assignment.courseId}}">
-            关联课程：{{getCourseTitle(assignment.courseId)}}
-          </text>
-          <text class="info-item">截止日期：{{assignment.dueDate}}</text>
-        </view>
-
-        <view class="assignment-description">
-          <text class="description-title">作业说明</text>
-          <text class="description-content">
-            这是一个关于{{assignment.category}}的练习作业。请根据所学内容，认真完成以下练习，并记录你的感受和体会。
-          </text>
-        </view>
-
-        <!-- 作业表单 -->
-        <view wx:if="{{!isViewMode && assignment.status !== 'completed'}}" class="assignment-form">
-          <view class="form-group">
-            <text class="form-label">练习记录</text>
-            <textarea
-              class="form-textarea"
-              placeholder="请记录你的练习过程和感受..."
-              value="{{practiceRecord}}"
-              bindinput="onPracticeRecordInput"
-              maxlength="500"
-            ></textarea>
-            <view class="char-count">{{practiceRecord.length}}/500</view>
-          </view>
-
-          <view class="form-group">
-            <text class="form-label">学习心得</text>
-            <textarea
-              class="form-textarea"
-              placeholder="分享你的学习心得和收获..."
-              value="{{learningInsight}}"
-              bindinput="onLearningInsightInput"
-              maxlength="300"
-            ></textarea>
-            <view class="char-count">{{learningInsight.length}}/300</view>
-          </view>
-
-          <button
-            class="btn btn-primary submit-btn"
-            bindtap="submitAssignment"
-            disabled="{{!canSubmit}}"
-          >
-            提交作业
-          </button>
-        </view>
-
-        <!-- 已完成的作业内容 -->
-        <view wx:if="{{assignment.status === 'completed' || isViewMode}}" class="completed-assignment">
-          <view class="completed-section">
-            <text class="section-title">练习记录</text>
-            <view class="section-content">
-              <text>{{completedData.practiceRecord || '暂无记录'}}</text>
-            </view>
-          </view>
-
-          <view class="completed-section">
-            <text class="section-title">学习心得</text>
-            <view class="section-content">
-              <text>{{completedData.learningInsight || '暂无心得'}}</text>
-            </view>
-          </view>
-
-          <view class="completion-info">
-            <text class="completion-date">完成时间：{{completedData.completionDate}}</text>
-          </view>
-        </view>
-      </view>
-    </view>
+  <!-- 无模板提示 -->
+  <view wx:if="{{!template}}" class="no-template">
+    <view class="no-template-icon">📋</view>
+    <view class="no-template-text">该作业暂无练习表单</view>
+    <view class="no-template-desc">请联系管理员添加作业内容</view>
   </view>
 </view>

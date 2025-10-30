@@ -1,172 +1,269 @@
-/* 作业详情页面样式 */
-.assignment-header {
-  padding: 20rpx;
-  margin-bottom: 20rpx;
+/* 作业详情页 - DBT练习表单 */
+.assignment-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
+  padding-bottom: 40rpx;
 }
 
-.assignment-title-card .card-header {
-  text-align: center;
-  font-size: 32rpx;
+/* 头部 */
+.header {
+  background: linear-gradient(135deg, #6BBF59 0%, #5AA84A 100%);
+  padding: 40rpx 30rpx;
+  color: white;
 }
 
-.assignment-content {
-  padding: 0 20rpx;
-}
-
-.assignment-info {
-  margin-bottom: 30rpx;
-  padding: 20rpx;
-  background: #f8f9fa;
-  border-radius: 15rpx;
-}
-
-.info-item {
-  display: block;
-  font-size: 24rpx;
-  color: #666;
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
   margin-bottom: 10rpx;
 }
 
-.info-item:last-child {
-  margin-bottom: 0;
+.category {
+  font-size: 24rpx;
+  opacity: 0.9;
 }
 
-.assignment-description {
+/* 导语部分 */
+.guide-section {
+  margin: 30rpx 20rpx;
+  background: white;
+  border-radius: 20rpx;
+  padding: 25rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.guide-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #6BBF59;
+  margin-bottom: 15rpx;
+}
+
+.guide-content {
+  font-size: 26rpx;
+  line-height: 1.8;
+  color: #666;
+}
+
+/* 表单部分 */
+.form-section {
+  padding: 0 20rpx;
+}
+
+.form-item {
   margin-bottom: 30rpx;
 }
 
-.description-title {
-  display: block;
+.field-group {
+  background: white;
+  border-radius: 16rpx;
+  padding: 25rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.field-label {
   font-size: 28rpx;
   font-weight: bold;
   color: #333;
   margin-bottom: 15rpx;
+  line-height: 1.5;
 }
 
-.description-content {
-  display: block;
+/* 输入框 */
+.field-input {
+  width: 100%;
+  height: 80rpx;
+  background: #F5F5F5;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+  font-size: 26rpx;
+  color: #333;
+}
+
+/* 文本域 */
+.field-textarea {
+  width: 100%;
+  min-height: 150rpx;
+  background: #F5F5F5;
+  border-radius: 12rpx;
+  padding: 15rpx 20rpx;
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* 单选框组 */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+}
+
+.radio-group.inline {
+  flex-direction: row;
+  gap: 30rpx;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
   font-size: 26rpx;
   color: #666;
+  padding: 10rpx 0;
+}
+
+.radio-item radio {
+  transform: scale(1.1);
+}
+
+/* 复选框组 */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10rpx;
+  font-size: 24rpx;
+  color: #666;
+  padding: 8rpx 0;
   line-height: 1.6;
 }
 
-/* 作业表单 */
-.assignment-form {
-  margin-top: 30rpx;
+.checkbox-item checkbox {
+  margin-top: 4rpx;
+  transform: scale(1.1);
 }
 
-.form-group {
-  margin-bottom: 30rpx;
+/* 子输入框 */
+.sub-input {
+  margin-top: 15rpx;
+  padding-left: 10rpx;
+  border-left: 4rpx solid #6BBF59;
 }
 
-.form-label {
-  display: block;
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 15rpx;
-}
-
-.form-textarea {
-  width: 100%;
-  min-height: 200rpx;
-  padding: 20rpx;
-  border: 2rpx solid #E9ECEF;
-  border-radius: 15rpx;
-  font-size: 26rpx;
-  line-height: 1.6;
-  box-sizing: border-box;
-  background: white;
-}
-
-.form-textarea:focus {
-  border-color: #6BBF59;
-  outline: none;
-}
-
-.char-count {
-  text-align: right;
-  font-size: 22rpx;
-  color: #999;
-  margin-top: 10rpx;
+/* 提交按钮 */
+.submit-section {
+  margin: 40rpx 20rpx;
 }
 
 .submit-btn {
   width: 100%;
+  height: 90rpx;
+  background: #CCCCCC;
+  color: white;
+  border-radius: 45rpx;
   font-size: 30rpx;
-  padding: 25rpx;
-  margin-top: 20rpx;
-}
-
-.submit-btn[disabled] {
-  background: #cccccc !important;
-  color: #999999 !important;
-}
-
-/* 已完成作业显示 */
-.completed-assignment {
-  margin-top: 30rpx;
-}
-
-.completed-section {
-  margin-bottom: 30rpx;
-}
-
-.section-title {
-  display: block;
-  font-size: 28rpx;
   font-weight: bold;
-  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.submit-btn.active {
+  background: linear-gradient(135deg, #6BBF59 0%, #5AA84A 100%);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* 已完成部分 */
+.completed-section {
+  margin: 30rpx 20rpx;
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.completed-header {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
   margin-bottom: 15rpx;
 }
 
-.section-content {
-  padding: 20rpx;
-  background: #f8f9fa;
-  border-radius: 15rpx;
-  border-left: 4rpx solid #6BBF59;
+.completed-icon {
+  font-size: 40rpx;
 }
 
-.section-content text {
+.completed-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #6BBF59;
+}
+
+.completed-date {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 25rpx;
+}
+
+.completed-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.completed-item {
+  padding: 20rpx;
+  background: #F8F8F8;
+  border-radius: 12rpx;
+}
+
+.completed-label {
   font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.completed-value {
+  font-size: 24rpx;
   color: #666;
   line-height: 1.6;
 }
 
-.completion-info {
-  text-align: center;
-  padding: 20rpx;
-  background: #E8F5E8;
-  border-radius: 15rpx;
-  margin-top: 20rpx;
+.checkbox-value {
+  display: block;
+  margin: 5rpx 0;
 }
 
-.completion-date {
-  font-size: 24rpx;
+.sub-text {
   color: #6BBF59;
-  font-weight: bold;
+  margin-left: 10rpx;
 }
 
-/* 响应式调整 */
-@media screen and (max-width: 375px) {
-  .assignment-title-card .card-header {
-    font-size: 28rpx;
-  }
+/* 无模板提示 */
+.no-template {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+  text-align: center;
+}
 
-  .info-item {
-    font-size: 22rpx;
-  }
+.no-template-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
 
-  .description-title {
-    font-size: 26rpx;
-  }
+.no-template-text {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
 
-  .description-content {
-    font-size: 24rpx;
-  }
-
-  .form-textarea {
-    min-height: 150rpx;
-    padding: 15rpx;
-  }
+.no-template-desc {
+  font-size: 24rpx;
+  color: #999;
 }

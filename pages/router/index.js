@@ -2,18 +2,15 @@ const app = getApp()
 
 Page({
   data: {
+    totalScore: 0,
     completedCount: 0,
     totalCount: 0,
     progressPercent: 0,
-    courses: [],
-    showTip: true,
-    tipCharacter: '🐻',
-    tipText: '加油！每完成一关就能获得三颗星星哦！'
+    courses: []
   },
 
   onLoad() {
     this.loadCourses()
-    this.showRandomTip()
   },
 
   onShow() {
@@ -26,146 +23,142 @@ Page({
     const allCourses = app.globalData.courses
     const assignments = app.globalData.assignments || []
 
-    // 可爱的emoji图标库
-    const emojiList = ['🌱', '🌸', '🌺', '🌻', '🌼', '🌷', '🍀', '🌿', '🦋', '🐝', '🐞', '🐛', '🦗', '🐌']
+    // 可爱的角色emoji库
+    const characterEmojis = ['🌵', '🍄', '🐣', '🍦', '🌱', '🦔', '🐝', '🍀', '🦋', '🌸']
 
     // 处理课程数据
-    const courses = allCourses.map((course, index) => {
-      const courseCompleted = learningProgress.completedCourses.includes(course.id)
+    const courses = []
+    let nodeIndex = 0
 
-      // 查找该课程的作业
+    allCourses.forEach((course, courseIndex) => {
+      const courseCompleted = learningProgress.completedCourses.includes(course.id)
       const courseAssignments = assignments.filter(a => a.courseId === course.id)
       const assignmentCompleted = courseAssignments.length > 0 &&
         courseAssignments.every(a => learningProgress.completedAssignments.includes(a.id))
 
       // 判断是否是当前课程
-      const isCurrent = !courseCompleted && (index === 0 || learningProgress.completedCourses.includes(allCourses[index - 1].id))
+      const isCurrent = !courseCompleted && (courseIndex === 0 || learningProgress.completedCourses.includes(allCourses[courseIndex - 1].id))
       const locked = !courseCompleted && !isCurrent
 
-      // 计算位置（蛇形路径）
-      const row = Math.floor(index / 3)
-      const col = index % 3
-      const isEvenRow = row % 2 === 0
-      const xPos = isEvenRow ? col * 33 : (2 - col) * 33
-      const yPos = row * 200
+      // 添加1-2个lesson节点
+      const lessonCount = Math.floor(Math.random() * 2) + 1
+      for (let i = 0; i < lessonCount; i++) {
+        const position = this.calculatePosition(nodeIndex)
+        courses.push({
+          id: `${course.id}-lesson-${i}`,
+          courseId: course.id,
+          index: nodeIndex + 1,
+          type: 'lesson',
+          title: course.title,
+          courseCompleted: courseCompleted,
+          assignmentCompleted: assignmentCompleted,
+          current: isCurrent && i === 0,
+          locked: locked,
+          position: position
+        })
+        nodeIndex++
+      }
 
-      return {
-        id: course.id,
-        index: index + 1,
+      // 添加1个character节点
+      const position = this.calculatePosition(nodeIndex)
+      courses.push({
+        id: `${course.id}-character`,
+        courseId: course.id,
+        index: nodeIndex + 1,
+        type: 'character',
+        emoji: characterEmojis[courseIndex % characterEmojis.length],
         title: course.title,
-        category: course.category,
-        duration: course.duration || '30分钟',
-        emoji: emojiList[index % emojiList.length],
         courseCompleted: courseCompleted,
         assignmentCompleted: assignmentCompleted,
-        hasAssignment: courseAssignments.length > 0,
-        current: isCurrent,
+        current: isCurrent && lessonCount === 0,
         locked: locked,
-        progress: isCurrent ? (course.progress || 0) : 0,
-        completedDate: courseCompleted ? this.getCompletedDate(course.id) : null,
-        position: `left: ${xPos}%; top: ${yPos}rpx;`
-      }
+        position: position
+      })
+      nodeIndex++
     })
 
-    // 计算统计数据（课程和作业都完成才算完成）
-    const completedCount = courses.filter(c => c.courseCompleted && c.assignmentCompleted).length
-    const totalCount = courses.length
+    // 计算统计数据
+    const completedCount = allCourses.filter(c => learningProgress.completedCourses.includes(c.id)).length
+    const totalCount = allCourses.length
     const progressPercent = Math.round((completedCount / totalCount) * 100)
+
+    // 计算总积分 (每完成一个课程10分)
+    const totalScore = completedCount * 10
 
     this.setData({
       courses: courses,
       completedCount: completedCount,
       totalCount: totalCount,
-      progressPercent: progressPercent
+      progressPercent: progressPercent,
+      totalScore: totalScore
     })
   },
 
-  // 获取完成日期
-  getCompletedDate(courseId) {
-    // 从本地存储获取完成日期
-    const completedDates = wx.getStorageSync('coursesCompletedDates') || {}
-    if (completedDates[courseId]) {
-      return this.formatDate(new Date(completedDates[courseId]))
+  // 计算节点位置 - 垂直蛇形路径
+  calculatePosition(index) {
+    const rowHeight = 280 // 每行高度
+    const nodeWidth = 200 // 节点宽度
+    const containerWidth = 750 // 容器宽度(rpx)
+    const padding = 40 // 左右padding
+    const availableWidth = containerWidth - padding * 2 - nodeWidth
+
+    // 计算行和列
+    const nodesPerRow = 2 // 每行2个节点
+    const row = Math.floor(index / nodesPerRow)
+    const col = index % nodesPerRow
+
+    // 蛇形路径: 偶数行从左到右,奇数行从右到左
+    const isEvenRow = row % 2 === 0
+    let xPos
+
+    if (nodesPerRow === 1) {
+      // 单列居中
+      xPos = availableWidth / 2
+    } else if (nodesPerRow === 2) {
+      // 两列布局
+      if (isEvenRow) {
+        xPos = col === 0 ? 40 : (availableWidth - 40)
+      } else {
+        xPos = col === 0 ? (availableWidth - 40) : 40
+      }
+    } else {
+      // 多列布局
+      if (isEvenRow) {
+        xPos = col * (availableWidth / (nodesPerRow - 1))
+      } else {
+        xPos = (nodesPerRow - 1 - col) * (availableWidth / (nodesPerRow - 1))
+      }
     }
-    return null
+
+    const yPos = row * rowHeight
+
+    return `left: ${xPos}rpx; top: ${yPos}rpx;`
   },
 
-  // 格式化日期
-  formatDate(date) {
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    return `${month}月${day}日`
-  },
-
-  // 点击课程
-  onCourseClick(e) {
+  // 点击节点
+  onNodeClick(e) {
     const course = e.currentTarget.dataset.course
 
     if (course.locked) {
       wx.showToast({
-        title: '🔒 先完成前面的关卡才能解锁哦！',
+        title: '🔒 先完成前面的关卡才能解锁哦!',
         icon: 'none',
         duration: 2000
       })
       return
     }
 
-    // 跳转到课程视频页面
-    wx.navigateTo({
-      url: `/pages/video/video?courseId=${course.id}`
-    })
-  },
-
-  // 点击作业
-  onAssignmentClick(e) {
-    const course = e.currentTarget.dataset.course
-
-    if (course.locked) {
-      wx.showToast({
-        title: '🔒 先完成前面的关卡才能解锁哦！',
-        icon: 'none',
-        duration: 2000
+    // 根据节点类型跳转
+    if (course.type === 'lesson') {
+      // 跳转到课程视频页面
+      wx.navigateTo({
+        url: `/pages/video/video?courseId=${course.courseId}`
       })
-      return
-    }
-
-    if (!course.hasAssignment) {
-      wx.showToast({
-        title: '这个课程暂时没有作业哦',
-        icon: 'none',
-        duration: 2000
+    } else if (course.type === 'character') {
+      // 跳转到作业页面
+      wx.navigateTo({
+        url: `/pages/assignments/assignments?courseId=${course.courseId}`
       })
-      return
     }
-
-    // 跳转到作业页面
-    wx.navigateTo({
-      url: `/pages/assignments/assignments?courseId=${course.id}`
-    })
-  },
-
-  // 显示随机鼓励提示
-  showRandomTip() {
-    const tips = [
-      { character: '🐻', text: '加油！每完成一关就能获得三颗星星哦！' },
-      { character: '🦊', text: '你真棒！继续努力通关吧！' },
-      { character: '🐰', text: '学习让你变得更聪明啦！' },
-      { character: '🐼', text: '坚持就是胜利，加油加油！' },
-      { character: '🐨', text: '每天进步一点点，你会越来越厉害！' },
-      { character: '🐯', text: '勇敢挑战新关卡，你一定可以的！' }
-    ]
-
-    const randomTip = tips[Math.floor(Math.random() * tips.length)]
-
-    this.setData({
-      showTip: true,
-      tipCharacter: randomTip.character,
-      tipText: randomTip.text
-    })
-
-    // 5秒后隐藏提示
-    setTimeout(() => {
-      this.setData({ showTip: false })
-    }, 5000)
   }
 })

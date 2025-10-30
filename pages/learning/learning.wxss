@@ -1,7 +1,6 @@
 /* 学习页面样式 */
 .page-header {
   padding: 20rpx;
-  margin-bottom: 20rpx;
 }
 
 .header-card .card-header {
