@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36.15 10.6">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-family: MicrosoftYaHei-Bold, 'Microsoft YaHei';
+        font-size: 8px;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1" data-name="Layer 1">
+    <g>
+      <text class="cls-2" transform="translate(1.85 6.88)"><tspan x="0" y="0">了解详情</tspan></text>
+      <line class="cls-1" y1="10.1" x2="36.15" y2="10.1"/>
+    </g>
+  </g>
+</svg>

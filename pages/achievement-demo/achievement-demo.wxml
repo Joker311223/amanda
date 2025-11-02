@@ -1,0 +1,42 @@
+<view class="demo-container">
+  <view class="demo-title">成就插画组件演示</view>
+
+  <!-- 星星插画 -->
+  <view class="demo-section">
+    <view class="section-title">星星 - 第一个成就</view>
+    <achievement-illustration
+      iconType="star"
+      showDocuments="{{false}}"
+    />
+  </view>
+
+  <!-- 仙人掌插画 -->
+  <view class="demo-section">
+    <view class="section-title">仙人掌 - 完成2个任务</view>
+    <achievement-illustration
+      iconType="cactus"
+      showDocuments="{{true}}"
+      documentCount="{{2}}"
+    />
+  </view>
+
+  <!-- 蘑菇插画 -->
+  <view class="demo-section">
+    <view class="section-title">蘑菇 - 完成4个任务</view>
+    <achievement-illustration
+      iconType="mushroom"
+      showDocuments="{{true}}"
+      documentCount="{{2}}"
+    />
+  </view>
+
+  <!-- 太阳插画 -->
+  <view class="demo-section">
+    <view class="section-title">太阳 - 完成6个任务</view>
+    <achievement-illustration
+      iconType="sun"
+      showDocuments="{{true}}"
+      documentCount="{{2}}"
+    />
+  </view>
+</view>

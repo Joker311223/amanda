@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.53 35.86">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #8fc31f;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+
+      .cls-2 {
+        fill: #595757;
+        font-family: MicrosoftYaHei, 'Microsoft YaHei';
+        font-size: 6px;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1" data-name="Layer 1">
+    <g>
+      <rect class="cls-1" x="1" y="9.73" width="62.53" height="25.13" rx="12.56" ry="12.56"/>
+      <text class="cls-2" transform="translate(17.08 5.14)"><tspan x="0" y="0">性别</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -85,35 +85,7 @@
     <view class="video-container">
       <!-- 模拟视频播放器 -->
       <view class="video-player">
-        <view class="video-placeholder">
-          <view class="play-button" bindtap="togglePlay">
-            <text wx:if="{{!isPlaying}}">▶️</text>
-            <text wx:else>⏸️</text>
-          </view>
-          <text class="video-title">{{currentCourse.title}}</text>
-        </view>
-
-        <!-- 视频控制栏 -->
-        <view class="video-controls">
-          <view class="progress-container">
-            <view class="progress-bar">
-              <view class="progress-fill" style="width: {{playProgress}}%"></view>
-            </view>
-            <text class="time-display">{{currentTime}} / {{totalTime}}</text>
-          </view>
-
-          <view class="control-buttons">
-            <button class="control-btn" bindtap="rewind" disabled="{{currentTime === '00:00'}}">
-              ⏪ 后退
-            </button>
-            <button class="control-btn" bindtap="togglePlay">
-              {{isPlaying ? '⏸️ 暂停' : '▶️ 播放'}}
-            </button>
-            <button class="control-btn" disabled>
-              ⏩ 前进
-            </button>
-          </view>
-        </view>
+        <video id='center' controls src="https://www.w3schools.com/html/mov_bbb.mp4" class="video-placeholder" bindended="onVideoEnded"/>
       </view>
     </view>
 
@@ -146,9 +118,9 @@
       <button
         class="btn btn-primary complete-btn"
         bindtap="completeCourse"
-        disabled="{{playProgress < 100}}"
+        disabled="{{!isFinied}}"
       >
-        {{playProgress < 100 ? '请完整观看视频' : '完成学习'}}
+        {{!isFinied? '请完整观看视频' : '完成学习'}}
       </button>
     </view>
   </view>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 124.88 21.2">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient);
+      }
+
+      .cls-2 {
+        fill: url(#radial-gradient-2);
+      }
+
+      .cls-3 {
+        fill: #009a3e;
+      }
+
+      .cls-4 {
+        fill: #fffeee;
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="114.28" cy="10.6" fx="114.28" fy="10.6" r="10.6" gradientUnits="userSpaceOnUse">
+      <stop offset=".77" stop-color="#8fc31f"/>
+      <stop offset=".8" stop-color="#71b023" stop-opacity=".8"/>
+      <stop offset=".82" stop-color="#4f9a28" stop-opacity=".55"/>
+      <stop offset=".85" stop-color="#32882c" stop-opacity=".36"/>
+      <stop offset=".88" stop-color="#1c7a2f" stop-opacity=".2"/>
+      <stop offset=".91" stop-color="#0c7132" stop-opacity=".09"/>
+      <stop offset=".94" stop-color="#036b33" stop-opacity=".02"/>
+      <stop offset=".96" stop-color="#006934" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-2" cx="114.28" cy="10.6" fx="114.28" fy="10.6" r="7.09" gradientUnits="userSpaceOnUse">
+      <stop offset=".25" stop-color="#fffeee" stop-opacity="0"/>
+      <stop offset=".35" stop-color="#fffeee" stop-opacity=".02"/>
+      <stop offset=".44" stop-color="#fffeee" stop-opacity=".06"/>
+      <stop offset=".53" stop-color="#fffeee" stop-opacity=".14"/>
+      <stop offset=".63" stop-color="#fffeee" stop-opacity=".26"/>
+      <stop offset=".72" stop-color="#fffeee" stop-opacity=".4"/>
+      <stop offset=".82" stop-color="#fffeee" stop-opacity=".58"/>
+      <stop offset=".91" stop-color="#fffeee" stop-opacity=".78"/>
+      <stop offset="1" stop-color="#fffeee"/>
+    </radialGradient>
+  </defs>
+  <g id="Layer_1" data-name="Layer 1">
+    <g>
+      <rect class="cls-3" x="0" y="4.03" width="116.59" height="13.26" rx="6.63" ry="6.63"/>
+      <g>
+        <path class="cls-1" d="M124.88,10.6c0,5.85-4.75,10.6-10.6,10.6s-10.6-4.75-10.6-10.6S108.42,0,114.28,0s10.6,4.74,10.6,10.6Z"/>
+        <circle class="cls-2" cx="114.28" cy="10.6" r="5.58"/>
+        <path class="cls-4" d="M117.07,10.6c0,1.54-1.25,2.79-2.79,2.79s-2.79-1.25-2.79-2.79,1.25-2.79,2.79-2.79,2.79,1.25,2.79,2.79Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

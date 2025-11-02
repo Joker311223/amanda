@@ -108,7 +108,7 @@ Page({
   viewAssignment(e) {
     const courseId = e.currentTarget.dataset.courseId;
     wx.navigateTo({
-      url: `/pages/assignments/assignments?courseId=${courseId}`,
+      url: `/pages/assignment-list/assignment-list?courseId=${courseId}`,
     });
   },
 
@@ -123,6 +123,31 @@ Page({
   goToAssignmentReview() {
     this.setData({
       nowPage: "作业回顾",
+    });
+  },
+
+  // 处理课程完成事件（来自course-card组件）
+  onCourseCompleted(e) {
+    const { courseId, status } = e.detail;
+
+    if (status === 'completed') {
+      // 如果已完成，跳转到视频页面重播
+      wx.navigateTo({
+        url: `/pages/video/video?courseId=${courseId}`,
+      });
+    } else if (status === 'available') {
+      // 如果可学习，跳转到视频页面开始学习
+      wx.navigateTo({
+        url: `/pages/video/video?courseId=${courseId}`,
+      });
+    }
+  },
+
+  // 处理查看作业事件（来自course-card组件）
+  onCourseAssignment(e) {
+    const { courseId } = e.detail;
+    wx.navigateTo({
+      url: `/pages/assignment-list/assignment-list?courseId=${courseId}`,
     });
   },
 });

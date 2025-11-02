@@ -5,6 +5,8 @@
     "pages/router/index",
     "pages/learning/learning",
     "pages/assignments/assignments",
+    "pages/assignment-list/assignment-list",
+    "pages/achievement-demo/achievement-demo",
     "pages/tools/tools",
     "pages/emotion/emotion",
     "pages/video/video",

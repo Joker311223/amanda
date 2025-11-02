@@ -5,6 +5,7 @@ Page({
     courseId: null,
     currentCourse: null,
     isPlaying: false,
+    isFinied:false,
     playProgress: 0,
     currentTime: '00:00',
     totalTime: '08:45',
@@ -27,6 +28,13 @@ Page({
     if (this.data.playTimer) {
       clearInterval(this.data.playTimer)
     }
+  },
+
+  onVideoEnded() {
+    console.log('yjc=>', 123123);
+    this.setData({
+      isFinied: true
+    })
   },
 
   // 加载课程信息

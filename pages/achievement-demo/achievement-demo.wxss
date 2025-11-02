@@ -1,0 +1,29 @@
+.demo-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 40rpx 20rpx;
+}
+
+.demo-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 40rpx;
+}
+
+.demo-section {
+  background: white;
+  border-radius: 20rpx;
+  margin-bottom: 40rpx;
+  padding: 30rpx 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20rpx;
+}

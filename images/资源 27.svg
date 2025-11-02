@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 174.23 26.38">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #60b632;
+      }
+
+      .cls-2 {
+        fill: #2fa138;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1" data-name="Layer 1">
+    <g>
+      <rect class="cls-2" x="2" y="2.33" width="172.23" height="24.05" rx="5" ry="5"/>
+      <rect class="cls-1" width="172.23" height="24.05" rx="5" ry="5"/>
+    </g>
+  </g>
+</svg>

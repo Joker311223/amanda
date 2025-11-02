@@ -130,7 +130,13 @@
   word-break: break-all;
 }
 
+.course-image{
+  width: 200rpx;
+  height: 200rpx;
+}
+
 .course-meta {
+  flex-direction: column;
   display: flex;
   align-items: center;
   font-size: 24rpx;

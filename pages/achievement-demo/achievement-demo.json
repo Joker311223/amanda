@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "成就插画演示",
+  "usingComponents": {
+    "achievement-illustration": "/components/achievement-illustration/achievement-illustration"
+  }
+}

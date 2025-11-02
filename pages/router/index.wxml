@@ -1,67 +1,19 @@
 <view class="page-container">
-  <!-- 顶部积分和进度条 -->
-  <view class="header">
-    <view class="score-display">
-      <view class="star-icon">⭐</view>
-      <text class="score-text">{{totalScore}} 分</text>
-    </view>
+  <!-- 经验值显示 -->
+  <view class="experience-badge">
+    <text class="star">⭐</text>
+    <text>{{totalExperience}}分</text>
   </view>
-
-  <view class="progress-section">
-    <view class="progress-label">学习进度</view>
-    <view class="progress-bar-container">
-      <view class="progress-bar">
-        <view class="progress-fill" style="width: {{progressPercent}}%"></view>
-        <view class="progress-indicator" style="left: {{progressPercent}}%">
-          <view class="indicator-circle"></view>
-        </view>
-      </view>
-      <text class="progress-text">{{progressPercent}}%</text>
-    </view>
-  </view>
-
-  <!-- 学习路径 -->
-  <scroll-view class="roadmap-scroll" scroll-y="true">
-    <view class="roadmap-container">
-      <view
-        class="level-node {{item.type}} {{item.courseCompleted ? 'completed' : ''}} {{item.current ? 'current' : ''}} {{item.locked ? 'locked' : ''}}"
-        wx:for="{{courses}}"
-        wx:key="id"
-        style="{{item.position}}"
-        bindtap="onNodeClick"
-        data-course="{{item}}"
-      >
-        <view class="node-border">
-          <view class="node-content">
-            <!-- 文档类型图标 -->
-            <view wx:if="{{item.type === 'lesson'}}" class="lesson-icon">
-              <view class="document-icon">
-                <view class="doc-lines"></view>
-                <view class="doc-lines"></view>
-                <view class="doc-lines"></view>
-              </view>
-              <view wx:if="{{item.courseCompleted}}" class="check-mark">✓</view>
-            </view>
-
-            <!-- 角色类型图标 -->
-            <view wx:if="{{item.type === 'character'}}" class="character-icon">
-              <text class="character-emoji">{{item.emoji}}</text>
-              <!-- 装饰星星 -->
-              <view wx:if="{{item.current}}" class="decoration-stars">
-                <text class="deco-star star-1">✨</text>
-                <text class="deco-star star-2">✨</text>
-                <text class="deco-star star-3">✨</text>
-                <text class="deco-star star-4">✨</text>
-              </view>
-            </view>
-
-            <!-- 锁定图标 -->
-            <view wx:if="{{item.locked}}" class="lock-overlay">
-              <text class="lock-icon">🔒</text>
-            </view>
-          </view>
-        </view>
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-card card">
+      <view class="card-header">
+        <text>学习中心</text>
       </view>
     </view>
-  </scroll-view>
+  </view>
+  <view wx:key="id" wx:for="{{allCourses}}" class="page-line" style="margin-left:20rpx;padding-left: {{item.position}}; height: 100rpx;">
+    <image wx:key="id" wx:for="{{item.asssignIds}}" wx:for-item="subItem" src="{{item.status === 'locked' ?'/images/work-icon-no.svg': '/images/work-icon-done.svg'}}" class="item-image-mini" />
+    <image src="{{item.icon}}" class="item-image" />
+  </view>
 </view>

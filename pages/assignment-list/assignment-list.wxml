@@ -1,0 +1,34 @@
+<view class="page-container">
+  <!-- 顶部导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-back" bindtap="goBack">
+      <text class="back-icon">‹</text>
+    </view>
+    <view class="nav-score">
+      <text class="star">⭐</text>
+      <text class="score-text">{{totalScore}}分</text>
+    </view>
+  </view>
+
+  <!-- 查看作业按钮 -->
+  <view class="view-assignment-btn" bindtap="onViewAssignment">
+    <text>查看作业</text>
+  </view>
+
+  <!-- 作业题目列表 -->
+  <view class="assignment-list">
+    <view
+      class="assignment-item"
+      wx:for="{{assignments}}"
+      wx:key="id"
+      bindtap="onAssignmentItemClick"
+      data-assignment-id="{{item.id}}"
+    >
+      <view class="item-number">{{index + 1}}</view>
+      <view class="item-content">
+        <view class="item-title">{{item.title}}</view>
+        <view class="item-subtitle">{{item.subtitle}}</view>
+      </view>
+    </view>
+  </view>
+</view>

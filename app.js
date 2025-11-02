@@ -11,26 +11,26 @@ App({
     },
     courses: [
       // 正念技能
-      { id: 1, title: '智慧心', category: '正念', duration: '08:45', status: 'locked', experience: 30 },
-      { id: 2, title: '正念"怎样做"技能', category: '正念', duration: '10:30', status: 'locked', experience: 30 },
-      { id: 3, title: '正念"是什么"技能', category: '正念', duration: '09:15', status: 'locked', experience: 30 },
+      { id: 1, title: '智慧心', category: '正念', duration: '08:45', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon1.svg', asssignIds: [1,2], position: '0%' },
+      { id: 2, title: '正念"怎样做"技能', category: '正念', duration: '10:30', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon2.svg', asssignIds: [3,4], position: '40%' },
+      { id: 3, title: '正念"是什么"技能', category: '正念', duration: '09:15', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon3.svg', asssignIds: [5,6], position: '15%'  },
 
       // 痛苦耐受技能
-      { id: 4, title: 'ACCEPT技能', category: '痛苦耐受', duration: '12:20', status: 'locked', experience: 30 },
-      { id: 5, title: 'IMPROVE技能', category: '痛苦耐受', duration: '11:45', status: 'locked', experience: 30 },
-      { id: 6, title: 'TIP技能', category: '痛苦耐受', duration: '08:30', status: 'locked', experience: 30 },
-      { id: 7, title: '全然接纳', category: '痛苦耐受', duration: '13:10', status: 'locked', experience: 30 },
-      { id: 8, title: '自我安抚', category: '痛苦耐受', duration: '09:50', status: 'locked', experience: 30 },
+      { id: 4, title: 'ACCEPT技能', category: '痛苦耐受', duration: '12:20', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon4.svg', asssignIds: [7],  position: '10%'   },
+      { id: 5, title: 'IMPROVE技能', category: '痛苦耐受', duration: '11:45', status: 'locked', experience: 30 , icon: '/images/kechenghuigu-icon5.svg', asssignIds: [8],  position: '40%' },
+      { id: 6, title: 'TIP技能', category: '痛苦耐受', duration: '08:30', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon6.svg', asssignIds: [9],  position: '60%'  },
+      { id: 7, title: '全然接纳', category: '痛苦耐受', duration: '13:10', status: 'locked', experience: 30 ,icon: '/images/kechenghuigu-icon7.svg', asssignIds: [10], position: '50%'},
+      { id: 8, title: '自我安抚', category: '痛苦耐受', duration: '09:50', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon8.svg', asssignIds: [11],position: '30%' },
 
       // 情绪调节技能
-      { id: 9, title: 'PLEASE技能', category: '情绪调节', duration: '10:15', status: 'locked', experience: 30 },
-      { id: 10, title: '相反行为', category: '情绪调节', duration: '11:30', status: 'locked', experience: 30 },
-      { id: 11, title: '对当下情绪保持正念', category: '情绪调节', duration: '09:40', status: 'locked', experience: 30 },
+      { id: 9, title: 'PLEASE技能', category: '情绪调节', duration: '10:15', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon9.svg',  asssignIds: [12], position: '10%'  },
+      { id: 10, title: '相反行为', category: '情绪调节', duration: '11:30', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon10.svg',  asssignIds: [13], position: '35%' },
+      { id: 11, title: '对当下情绪保持正念', category: '情绪调节', duration: '09:40', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon11.svg',  asssignIds: [14], position: '60%'  },
 
       // 人际效能技能
-      { id: 12, title: '维持关系（GIVE）', category: '人际效能', duration: '12:00', status: 'locked', experience: 30 },
-      { id: 13, title: '尊重自己（FAST）', category: '人际效能', duration: '10:45', status: 'locked', experience: 30 },
-      { id: 14, title: '如你所愿（DEAR MAN）', category: '人际效能', duration: '13:25', status: 'locked', experience: 30 }
+      { id: 12, title: '维持关系（GIVE）', category: '人际效能', duration: '12:00', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon12.svg',  asssignIds: [15,16], position: '40%'  },
+      { id: 13, title: '尊重自己（FAST）', category: '人际效能', duration: '10:45', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon13.svg',  asssignIds: [17], position: '25%'  },
+      { id: 14, title: '如你所愿（DEAR MAN）', category: '人际效能', duration: '13:25', status: 'locked', experience: 30, icon: '/images/kechenghuigu-icon14.svg',  asssignIds: [18], position: '60%'  }
     ],
     assignments: [
       // 正念作业

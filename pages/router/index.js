@@ -9,88 +9,54 @@ Page({
     courses: []
   },
 
+  // 加载数据
+  loadData() {
+    const learningProgress = app.globalData.learningProgress
+    const skillCards = app.globalData.skillCards
+
+    this.setData({
+      totalExperience: learningProgress.totalExperience,
+      skillCards: skillCards,
+      filteredCards: skillCards
+    })
+  },
+
   onLoad() {
     this.loadCourses()
+    this.loadData()
   },
 
   onShow() {
     this.loadCourses()
   },
 
+   // 更新课程状态
+  updateCourseStatus(courses, completedCourseIds) {
+    courses.forEach((course, index) => {
+      if (completedCourseIds.includes(course.id)) {
+        course.status = "completed";
+      } else if (
+        index === 0 ||
+        completedCourseIds.includes(courses[index - 1].id)
+      ) {
+        course.status = "available";
+      } else {
+        course.status = "locked";
+      }
+    });
+  },
+
   // 加载课程数据
   loadCourses() {
     const learningProgress = app.globalData.learningProgress
     const allCourses = app.globalData.courses
-    const assignments = app.globalData.assignments || []
-
-    // 可爱的角色emoji库
     const characterEmojis = ['🌵', '🍄', '🐣', '🍦', '🌱', '🦔', '🐝', '🍀', '🦋', '🌸']
-
     // 处理课程数据
     const courses = []
-    let nodeIndex = 0
-
-    allCourses.forEach((course, courseIndex) => {
-      const courseCompleted = learningProgress.completedCourses.includes(course.id)
-      const courseAssignments = assignments.filter(a => a.courseId === course.id)
-      const assignmentCompleted = courseAssignments.length > 0 &&
-        courseAssignments.every(a => learningProgress.completedAssignments.includes(a.id))
-
-      // 判断是否是当前课程
-      const isCurrent = !courseCompleted && (courseIndex === 0 || learningProgress.completedCourses.includes(allCourses[courseIndex - 1].id))
-      const locked = !courseCompleted && !isCurrent
-
-      // 添加1-2个lesson节点
-      const lessonCount = Math.floor(Math.random() * 2) + 1
-      for (let i = 0; i < lessonCount; i++) {
-        const position = this.calculatePosition(nodeIndex)
-        courses.push({
-          id: `${course.id}-lesson-${i}`,
-          courseId: course.id,
-          index: nodeIndex + 1,
-          type: 'lesson',
-          title: course.title,
-          courseCompleted: courseCompleted,
-          assignmentCompleted: assignmentCompleted,
-          current: isCurrent && i === 0,
-          locked: locked,
-          position: position
-        })
-        nodeIndex++
-      }
-
-      // 添加1个character节点
-      const position = this.calculatePosition(nodeIndex)
-      courses.push({
-        id: `${course.id}-character`,
-        courseId: course.id,
-        index: nodeIndex + 1,
-        type: 'character',
-        emoji: characterEmojis[courseIndex % characterEmojis.length],
-        title: course.title,
-        courseCompleted: courseCompleted,
-        assignmentCompleted: assignmentCompleted,
-        current: isCurrent && lessonCount === 0,
-        locked: locked,
-        position: position
-      })
-      nodeIndex++
-    })
-
-    // 计算统计数据
-    const completedCount = allCourses.filter(c => learningProgress.completedCourses.includes(c.id)).length
-    const totalCount = allCourses.length
-    const progressPercent = Math.round((completedCount / totalCount) * 100)
-
-    // 计算总积分 (每完成一个课程10分)
-    const totalScore = completedCount * 10
-
+    this.updateCourseStatus(allCourses, learningProgress.completedCourses)
     this.setData({
+      allCourses: allCourses,
       courses: courses,
-      completedCount: completedCount,
-      totalCount: totalCount,
-      progressPercent: progressPercent,
-      totalScore: totalScore
     })
   },
 

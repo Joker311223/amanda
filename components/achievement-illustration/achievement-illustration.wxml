@@ -1,0 +1,87 @@
+<view class="illustration-container">
+  <!-- 左侧完成文档图标 -->
+  <view class="documents-group" wx:if="{{showDocuments}}">
+    <view class="document-icon" wx:for="{{documentCount}}" wx:key="index">
+      <view class="document-circle">
+        <view class="document-paper">
+          <view class="paper-lines">
+            <view class="line"></view>
+            <view class="line"></view>
+            <view class="line"></view>
+          </view>
+          <view class="check-mark">✓</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 中间主要图标 -->
+  <view class="main-icon-wrapper">
+    <!-- 装饰性粒子 -->
+    <view class="particles">
+      <view class="particle particle-1" style="background: {{particleColors[0]}}"></view>
+      <view class="particle particle-2" style="background: {{particleColors[1]}}"></view>
+      <view class="particle particle-3" style="background: {{particleColors[2]}}"></view>
+      <view class="particle particle-4" style="background: {{particleColors[3]}}"></view>
+      <view class="particle particle-5" style="background: {{particleColors[4]}}"></view>
+      <view class="particle particle-6" style="background: {{particleColors[5]}}"></view>
+    </view>
+
+    <!-- 主图标 -->
+    <view class="main-icon {{iconType}}">
+      <!-- 星星 -->
+      <view wx:if="{{iconType === 'star'}}" class="icon-star">
+        <view class="star-shape">⭐</view>
+        <view class="star-shadow"></view>
+      </view>
+
+      <!-- 仙人掌 -->
+      <view wx:elif="{{iconType === 'cactus'}}" class="icon-cactus">
+        <view class="pot">
+          <view class="pot-face">
+            <view class="eye left">•</view>
+            <view class="eye right">•</view>
+            <view class="mouth">‿</view>
+          </view>
+        </view>
+        <view class="cactus-body">
+          <view class="cactus-main">😊</view>
+          <view class="cactus-arm left">🌵</view>
+          <view class="cactus-arm right">🌵</view>
+        </view>
+        <view class="cactus-shadow"></view>
+      </view>
+
+      <!-- 蘑菇 -->
+      <view wx:elif="{{iconType === 'mushroom'}}" class="icon-mushroom">
+        <view class="mushroom-cap">
+          <view class="cap-spots">
+            <view class="spot spot-1"></view>
+            <view class="spot spot-2"></view>
+          </view>
+        </view>
+        <view class="mushroom-stem">
+          <view class="stem-face">
+            <view class="eye left">•</view>
+            <view class="eye right">•</view>
+            <view class="mouth">‿</view>
+          </view>
+        </view>
+        <view class="mushroom-shadow"></view>
+      </view>
+
+      <!-- 太阳 -->
+      <view wx:elif="{{iconType === 'sun'}}" class="icon-sun">
+        <view class="sun-body">
+          <view class="sun-face">
+            <view class="eye left">•</view>
+            <view class="eye right">•</view>
+            <view class="mouth">‿</view>
+          </view>
+        </view>
+        <view class="sun-reflection"></view>
+        <view class="sun-shadow"></view>
+      </view>
+    </view>
+  </view>
+</view>
