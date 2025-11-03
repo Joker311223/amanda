@@ -74,11 +74,11 @@
         bindtap="viewSkillCard"
         data-card-id="{{item.id}}"
       >
-        <view class="skill-card-icon {{getCategoryClass(item.category)}}">
-          <text>{{getCategoryIcon(item.category)}}</text>
+        <image class="skill-card-bg" src="/images/tool-icon-jineng.svg" mode="aspectFit"></image>
+        <view class="skill-card-content">
+          <text class="skill-card-title">{{item.title}}</text>
+          <text class="skill-card-category">{{item.category}}</text>
         </view>
-        <text class="skill-card-title">{{item.title}}</text>
-        <text class="skill-card-category">{{item.category}}</text>
       </view>
     </view>
   </view>
@@ -124,6 +124,60 @@
             <view class="quick-entry-arrow">></view>
           </view>
         </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 图片预览弹窗 -->
+  <view class="image-preview-modal {{showImagePreview ? 'show' : ''}}" bindtap="closeImagePreview">
+    <view class="preview-container" catchtap="preventTap">
+      <!-- 关闭按钮 -->
+      <view class="close-btn" bindtap="closeImagePreview">
+        <text>✕</text>
+      </view>
+
+      <!-- 图片轮播 -->
+      <swiper
+        class="image-swiper"
+        current="{{currentImageIndex}}"
+        bindchange="onImageChange"
+        indicator-dots="{{currentImages.length > 1}}"
+        indicator-color="rgba(255, 255, 255, 0.5)"
+        indicator-active-color="#ffffff"
+      >
+        <swiper-item wx:for="{{currentImages}}" wx:key="index">
+          <view class="swiper-item-wrapper">
+            <movable-area class="movable-area" scale-area>
+              <movable-view
+                class="movable-view"
+                direction="all"
+                scale
+                scale-min="1"
+                scale-max="3"
+                scale-value="{{imageScale}}"
+                bindscale="onImageScale"
+                x="{{imageX}}"
+                y="{{imageY}}"
+                damping="50"
+                friction="2"
+                bindtap="onImageTap"
+              >
+                <image
+                  class="preview-image"
+                  src="{{item}}"
+                  mode="aspectFit"
+                  show-menu-by-longpress
+                  bindload="onImageLoad"
+                />
+              </movable-view>
+            </movable-area>
+          </view>
+        </swiper-item>
+      </swiper>
+
+      <!-- 图片计数器 -->
+      <view class="image-counter" wx:if="{{currentImages.length > 1}}">
+        <text>{{currentImageIndex + 1}} / {{currentImages.length}}</text>
       </view>
     </view>
   </view>

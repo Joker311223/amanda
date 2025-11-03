@@ -98,14 +98,18 @@ Page({
       return
     }
 
-    let notes = this.data.notes
+    let notes = [...this.data.notes]
+    const isEditing = this.data.isEditing
 
-    if (this.data.isEditing) {
+    if (isEditing) {
       // 编辑现有笔记
       const index = notes.findIndex(n => n.id === this.data.currentNoteId)
       if (index !== -1) {
-        notes[index].content = content
-        notes[index].updateTime = this.formatDate(new Date())
+        notes[index] = {
+          ...notes[index],
+          content: content,
+          updateTime: this.formatDate(new Date())
+        }
       }
     } else {
       // 添加新笔记
@@ -119,30 +123,58 @@ Page({
     }
 
     // 保存到本地存储
-    wx.setStorageSync('userNotes', notes)
+    try {
+      wx.setStorageSync('userNotes', notes)
 
-    this.setData({
-      notes: notes,
-      showModal: false,
-      currentNoteContent: '',
-      currentNoteId: null,
-      isEditing: false
-    })
+      this.setData({
+        notes: notes,
+        showModal: false,
+        currentNoteContent: '',
+        currentNoteId: null,
+        isEditing: false
+      })
 
-    wx.showToast({
-      title: this.data.isEditing ? '修改成功' : '添加成功',
-      icon: 'success'
-    })
+      wx.showToast({
+        title: isEditing ? '修改成功' : '添加成功',
+        icon: 'success'
+      })
+    } catch (error) {
+      console.error('保存笔记失败:', error)
+      wx.showToast({
+        title: '保存失败，请重试',
+        icon: 'none'
+      })
+    }
   },
 
   // 关闭弹窗
   closeModal() {
-    this.setData({
-      showModal: false,
-      currentNoteContent: '',
-      currentNoteId: null,
-      isEditing: false
-    })
+    const content = this.data.currentNoteContent.trim()
+
+    // 如果有内容，提示用户确认
+    if (content) {
+      wx.showModal({
+        title: '提示',
+        content: '确定要放弃编辑吗？',
+        success: (res) => {
+          if (res.confirm) {
+            this.setData({
+              showModal: false,
+              currentNoteContent: '',
+              currentNoteId: null,
+              isEditing: false
+            })
+          }
+        }
+      })
+    } else {
+      this.setData({
+        showModal: false,
+        currentNoteContent: '',
+        currentNoteId: null,
+        isEditing: false
+      })
+    }
   },
 
   // 阻止事件冒泡

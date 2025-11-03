@@ -18,7 +18,7 @@
   <view class="add-note-section">
     <view class="add-note-card" bindtap="addNote">
       <view class="add-note-icon">✏️</view>
-      <text class="add-note-text">添加</text>
+      <text class="add-note-text">添加新笔记</text>
     </view>
   </view>
 
@@ -31,6 +31,7 @@
     >
       <view class="note-content">
         <text class="note-text">{{item.content}}</text>
+        <view class="note-time">{{item.updateTime || item.createTime}}</view>
       </view>
       <view class="note-actions">
         <view class="action-btn edit-btn" bindtap="editNote" data-id="{{item.id}}">
@@ -44,8 +45,37 @@
   </view>
 
   <!-- 空状态 -->
-  <view wx:if="{{emotionHistory.length === 0}}" class="empty-state">
+  <view wx:if="{{notes.length === 0}}" class="empty-state">
     <view class="empty-icon">💭</view>
-    <text class="empty-text">还没有情绪记录，开始记录你的第一个情绪吧！</text>
+    <text class="empty-text">还没有笔记，点击上方按钮添加你的第一条笔记吧！</text>
+  </view>
+
+  <!-- 笔记编辑弹窗 -->
+  <view class="note-modal" wx:if="{{showModal}}" bindtap="closeModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">{{isEditing ? '编辑笔记' : '添加笔记'}}</text>
+        <view class="modal-close" bindtap="closeModal">
+          <text>✕</text>
+        </view>
+      </view>
+
+      <view class="modal-body">
+        <textarea
+          class="note-textarea"
+          placeholder="请输入笔记内容..."
+          value="{{currentNoteContent}}"
+          bindinput="onNoteInput"
+          maxlength="500"
+          auto-focus
+        />
+        <view class="char-count">{{currentNoteContent.length}}/500</view>
+      </view>
+
+      <view class="modal-footer">
+        <button class="modal-btn" bindtap="closeModal">取消</button>
+        <button class="modal-btn" type="primary" bindtap="saveNote">保存</button>
+      </view>
+    </view>
   </view>
 </view>
