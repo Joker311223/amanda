@@ -362,6 +362,7 @@ page {
   font-size: 28rpx;
   background: white;
   box-sizing: border-box;
+  height: 100rpx;
 }
 
 .form-input:focus {
