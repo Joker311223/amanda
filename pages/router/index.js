@@ -1,4 +1,4 @@
-const app = getApp()
+const app = getApp();
 
 Page({
   data: {
@@ -6,31 +6,47 @@ Page({
     completedCount: 0,
     totalCount: 0,
     progressPercent: 0,
-    courses: []
+    courses: [],
   },
 
   // 加载数据
   loadData() {
-    const learningProgress = app.globalData.learningProgress
-    const skillCards = app.globalData.skillCards
+    const learningProgress = app.globalData.learningProgress;
+    const skillCards = app.globalData.skillCards;
 
     this.setData({
       totalExperience: learningProgress.totalExperience,
       skillCards: skillCards,
-      filteredCards: skillCards
-    })
+      filteredCards: skillCards,
+    });
   },
 
   onLoad() {
-    this.loadCourses()
-    this.loadData()
+    this.loadCourses();
+    this.loadData();
   },
 
   onShow() {
-    this.loadCourses()
+    this.loadCourses();
   },
 
-   // 更新课程状态
+  jumpToZuoye(e) {
+    const courseId = e.currentTarget.dataset.id;
+    const subIndex = e.currentTarget.dataset.index;
+    const zuoyeId = app.globalData.courses[courseId - 1].asssignIds[subIndex];
+    wx.navigateTo({
+      url: `/pages/zuoye/index?zuoyeId=${zuoyeId}`,
+    });
+  },
+
+  jumpToCourse(e) {
+    const { id, title, status } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: `/pages/video/video?courseId=${id}`,
+    });
+  },
+
+  // 更新课程状态
   updateCourseStatus(courses, completedCourseIds) {
     courses.forEach((course, index) => {
       if (completedCourseIds.includes(course.id)) {
@@ -48,83 +64,94 @@ Page({
 
   // 加载课程数据
   loadCourses() {
-    const learningProgress = app.globalData.learningProgress
-    const allCourses = app.globalData.courses
-    const characterEmojis = ['🌵', '🍄', '🐣', '🍦', '🌱', '🦔', '🐝', '🍀', '🦋', '🌸']
+    const learningProgress = app.globalData.learningProgress;
+    const allCourses = app.globalData.courses;
+    const characterEmojis = [
+      "🌵",
+      "🍄",
+      "🐣",
+      "🍦",
+      "🌱",
+      "🦔",
+      "🐝",
+      "🍀",
+      "🦋",
+      "🌸",
+    ];
     // 处理课程数据
-    const courses = []
-    this.updateCourseStatus(allCourses, learningProgress.completedCourses)
+    const courses = [];
+    this.updateCourseStatus(allCourses, learningProgress.completedCourses);
     this.setData({
       allCourses: allCourses,
       courses: courses,
-    })
+    });
   },
 
   // 计算节点位置 - 垂直蛇形路径
   calculatePosition(index) {
-    const rowHeight = 280 // 每行高度
-    const nodeWidth = 200 // 节点宽度
-    const containerWidth = 750 // 容器宽度(rpx)
-    const padding = 40 // 左右padding
-    const availableWidth = containerWidth - padding * 2 - nodeWidth
+    const rowHeight = 280; // 每行高度
+    const nodeWidth = 200; // 节点宽度
+    const containerWidth = 750; // 容器宽度(rpx)
+    const padding = 40; // 左右padding
+    const availableWidth = containerWidth - padding * 2 - nodeWidth;
 
     // 计算行和列
-    const nodesPerRow = 2 // 每行2个节点
-    const row = Math.floor(index / nodesPerRow)
-    const col = index % nodesPerRow
+    const nodesPerRow = 2; // 每行2个节点
+    const row = Math.floor(index / nodesPerRow);
+    const col = index % nodesPerRow;
 
     // 蛇形路径: 偶数行从左到右,奇数行从右到左
-    const isEvenRow = row % 2 === 0
-    let xPos
+    const isEvenRow = row % 2 === 0;
+    let xPos;
 
     if (nodesPerRow === 1) {
       // 单列居中
-      xPos = availableWidth / 2
+      xPos = availableWidth / 2;
     } else if (nodesPerRow === 2) {
       // 两列布局
       if (isEvenRow) {
-        xPos = col === 0 ? 40 : (availableWidth - 40)
+        xPos = col === 0 ? 40 : availableWidth - 40;
       } else {
-        xPos = col === 0 ? (availableWidth - 40) : 40
+        xPos = col === 0 ? availableWidth - 40 : 40;
       }
     } else {
       // 多列布局
       if (isEvenRow) {
-        xPos = col * (availableWidth / (nodesPerRow - 1))
+        xPos = col * (availableWidth / (nodesPerRow - 1));
       } else {
-        xPos = (nodesPerRow - 1 - col) * (availableWidth / (nodesPerRow - 1))
+        xPos = (nodesPerRow - 1 - col) * (availableWidth / (nodesPerRow - 1));
       }
     }
 
-    const yPos = row * rowHeight
+    const yPos = row * rowHeight;
 
-    return `left: ${xPos}rpx; top: ${yPos}rpx;`
+    return `left: ${xPos}rpx; top: ${yPos}rpx;`;
   },
 
   // 点击节点
   onNodeClick(e) {
-    const course = e.currentTarget.dataset.course
+    const course = e.currentTarget.dataset.course;
 
     if (course.locked) {
       wx.showToast({
-        title: '🔒 先完成前面的关卡才能解锁哦!',
-        icon: 'none',
-        duration: 2000
-      })
-      return
+        title: "🔒 先完成前面的关卡才能解锁哦!",
+        icon: "none",
+        duration: 2000,
+      });
+      return;
     }
 
     // 根据节点类型跳转
-    if (course.type === 'lesson') {
+    if (course.type === "lesson") {
       // 跳转到课程视频页面
       wx.navigateTo({
-        url: `/pages/video/video?courseId=${course.courseId}`
-      })
-    } else if (course.type === 'character') {
+        url: `/pages/video/video?courseId=${course.courseId}`,
+      });
+    } else if (course.type === "character") {
       // 跳转到作业页面
       wx.navigateTo({
-        url: `/pages/assignments/assignments?courseId=${course.courseId}`
-      })
+        url: `/pages/assignments/assignments?courseId=${course.courseId}`,
+      });
     }
-  }
-})
+  },
+});

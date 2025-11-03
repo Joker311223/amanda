@@ -104,11 +104,10 @@ Page({
     });
   },
 
-  // 查看作业
-  viewAssignment(e) {
-    const courseId = e.currentTarget.dataset.courseId;
+  jumpToZuoye(e) {
+    const zuoyeId = e.currentTarget.dataset.zuoyeId;
     wx.navigateTo({
-      url: `/pages/assignment-list/assignment-list?courseId=${courseId}`,
+      url: `/pages/zuoye/index?zuoyeId=${zuoyeId}`,
     });
   },
 

@@ -1,0 +1,390 @@
+/* 作业打卡页面样式 */
+.page-container {
+  min-height: 100vh;
+  background: #ffffff;
+  padding: 40rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 进度条区域 */
+.progress-section {
+  margin-bottom: 60rpx;
+}
+
+.progress-header {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  margin-bottom: 30rpx;
+  margin-top: 20rpx;
+}
+
+.progress-label {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #386518;
+}
+
+.progress-count-big {
+  font-size: 44rpx;
+  color: #386518;
+  font-weight: 500;
+  margin-right: -13rpx;
+  margin-top: -5rpx;
+}
+
+
+.progress-count {
+  font-size: 32rpx;
+  color: #386518;
+  font-weight: 500;
+}
+
+.progress-bar-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 24rpx;
+  background: #e5f5e0;
+  border-radius: 12rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #58cc02 0%, #7ed321 100%);
+  border-radius: 12rpx;
+  transition: width 0.3s ease;
+}
+
+.progress-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.3s ease;
+}
+
+.indicator-dot {
+  width: 40rpx;
+  height: 40rpx;
+  background: #58cc02;
+  border: 6rpx solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.4);
+}
+
+/* 问题内容区域 */
+.question-section {
+  margin-bottom: 40rpx;
+}
+
+.question-text {
+  font-size: 32rpx;
+  line-height: 1.6;
+  color: #333333;
+  font-weight: 500;
+}
+
+/* 输入区域 */
+.input-section {
+  flex: 1;
+  margin-bottom: 40rpx;
+}
+
+.input-card {
+  background: linear-gradient(135deg, #58cc02 0%, #7ed321 100%);
+  border-radius: 30rpx;
+  padding: 20rpx 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(88, 204, 2, 0.2);
+  min-height: 300rpx;
+}
+
+/* 选择题样式 - 白色背景 */
+.input-card.choice-card {
+  background: #ffffff;
+  padding: 0;
+  min-height: auto;
+  box-shadow: none;
+}
+
+.input-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10rpx;
+  flex: 1;
+}
+
+.input-label {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.input-textarea {
+  width: 100%;
+  min-height: 200rpx;
+  background: transparent;
+  color: #ffffff;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.input-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 选择题选项样式 */
+.radio-item,
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 4rpx solid #58cc02;
+  border-radius: 50rpx;
+  padding: 30rpx 40rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.radio-item:last-child,
+.checkbox-item:last-child {
+  margin-bottom: 0;
+}
+
+/* 选中状态 */
+.radio-item.selected,
+.checkbox-item.selected {
+  background: linear-gradient(135deg, #58cc02 0%, #7ed321 100%);
+  border-color: #58cc02;
+}
+
+.radio-item.selected .option-label,
+.radio-item.selected .option-text,
+.checkbox-item.selected .option-label,
+.checkbox-item.selected .option-text {
+  color: #ffffff;
+}
+
+/* 选项标签 (A, B, C, D, E) */
+.option-label {
+  width: 60rpx;
+  height: 60rpx;
+  background: #ffffff;
+  border: 4rpx solid #58cc02;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #58cc02;
+  margin-right: 30rpx;
+  flex-shrink: 0;
+}
+
+.radio-item.selected .option-label,
+.checkbox-item.selected .option-label {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #58cc02;
+}
+
+/* 选项内容 */
+.option-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.option-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  line-height: 1.4;
+}
+
+.option-text {
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 1.4;
+}
+
+.radio-item.selected .option-title,
+.checkbox-item.selected .option-title {
+  color: #ffffff;
+}
+
+.radio-item.selected .option-text,
+.checkbox-item.selected .option-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 选中图标 */
+.check-icon {
+  position: absolute;
+  right: 40rpx;
+  font-size: 48rpx;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* 隐藏原生radio和checkbox */
+radio,
+checkbox {
+  display: none;
+}
+
+/* 评分滑块样式 */
+.score-section {
+  padding: 40rpx;
+}
+
+.slider-container {
+  position: relative;
+  margin: 60rpx 0 40rpx;
+}
+
+.custom-slider {
+  width: 100%;
+  height: 80rpx;
+  background: #7ed321;
+  border-radius: 40rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 40rpx;
+  box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.3);
+}
+
+.slider-track {
+  position: absolute;
+  left: 40rpx;
+  right: 40rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slider-segment {
+  width: 12rpx;
+  height: 50rpx;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 6rpx;
+}
+
+.slider-segment.active {
+  background: #ffffff;
+}
+
+.slider-label {
+  position: absolute;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ffffff;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.slider-label.left {
+  left: 40rpx;
+}
+
+.slider-label.right {
+  right: 40rpx;
+}
+
+.slider-value {
+  text-align: center;
+  font-size: 72rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-top: 30rpx;
+}
+
+/* 微信原生slider样式覆盖 */
+slider {
+  width: 100%;
+  margin: 40rpx 0;
+}
+
+.score-options {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30rpx;
+  padding: 0 20rpx;
+}
+
+.score-option {
+  font-size: 24rpx;
+  color: #999999;
+  text-align: center;
+  flex: 1;
+}
+
+/* 底部按钮 */
+.bottom-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 80rpx;
+}
+
+.next-btn {
+  background: linear-gradient(135deg, #58cc02 0%, #7ed321 100%);
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: bold;
+  padding: 25rpx 80rpx;
+  border-radius: 50rpx;
+  border: none;
+  box-shadow: 0 8rpx 20rpx rgba(88, 204, 2, 0.3);
+  transition: all 0.3s ease;
+}
+
+.next-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.3);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 375px) {
+  .page-container {
+    padding: 30rpx 20rpx;
+  }
+
+  .progress-label {
+    font-size: 32rpx;
+  }
+
+  .progress-count {
+    font-size: 28rpx;
+  }
+
+  .question-text {
+    font-size: 28rpx;
+  }
+
+  .input-card {
+    padding: 30rpx;
+  }
+
+  .input-label {
+    font-size: 32rpx;
+  }
+
+  .input-textarea {
+    font-size: 26rpx;
+  }
+
+  .next-btn {
+    font-size: 28rpx;
+    padding: 20rpx 60rpx;
+  }
+}

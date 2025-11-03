@@ -13,7 +13,25 @@
     </view>
   </view>
   <view wx:key="id" wx:for="{{allCourses}}" class="page-line" style="margin-left:20rpx;padding-left: {{item.position}}; height: 100rpx;">
-    <image wx:key="id" wx:for="{{item.asssignIds}}" wx:for-item="subItem" src="{{item.status === 'locked' ?'/images/work-icon-no.svg': '/images/work-icon-done.svg'}}" class="item-image-mini" />
-    <image src="{{item.icon}}" class="item-image" />
-  </view>
+    <block wx:for="{{item.asssignIds}}" wx:for-item="subItem" wx:for-index="idx">
+    <image 
+      wx:key="id"
+      src="{{item.status === 'locked' ? '/images/work-icon-no.svg' : '/images/work-icon-done.svg'}}"
+      class="item-image-mini" 
+      data-index="{{idx}}"          
+      data-status="{{item.status}}"     
+      data-id="{{item.id}}"     
+      data-extra="{{item.otherData}}"   
+      bindtap="jumpToZuoye" 
+    />
+    </block>
+
+<image 
+  src="{{item.icon}}" 
+  class="item-image" 
+  data-id="{{item.id}}"         
+  data-title="{{item.title}}"    
+  data-status="{{item.status}}"   
+  bindtap="jumpToCourse" 
+/>  </view>
 </view>

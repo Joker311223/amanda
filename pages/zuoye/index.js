@@ -1,0 +1,217 @@
+const app = getApp();
+
+Page({
+  data: {
+    assignment: null,
+    currentQuestion: 0,
+    totalQuestions: 0,
+    progressPercent: 0,
+    problems: [],
+    currentProblem: null,
+    answer: "",
+    optionLabels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+    sliderSegments: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // 10个分段
+  },
+
+  // 加载数据
+  loadData(props) {
+    const zuoyeId = props.zuoyeId;
+    const assignment = app.globalData.assignments[zuoyeId];
+    const problems = assignment.problems || [];
+    const currentProblem = problems[this.data.currentQuestion];
+    const progressPercent = ((this.data.currentQuestion + 1) / problems.length) * 100;
+
+    // 根据题目类型初始化答案
+    let answer = "";
+    if (currentProblem) {
+      if (currentProblem.type === 'multiple') {
+        answer = [];
+        // 为多选题的每个选项添加selected属性
+        if (currentProblem.options) {
+          currentProblem.options = currentProblem.options.map(option => {
+            if (typeof option === 'object') {
+              return { ...option, selected: false };
+            }
+            return { title: option, selected: false };
+          });
+        }
+      } else if (currentProblem.type === 'score') {
+        answer = currentProblem.min || 0;
+      }
+    }
+
+    this.setData({
+      assignment: assignment,
+      zuoyeId: zuoyeId,
+      progressPercent: progressPercent,
+      totalQuestions: problems.length,
+      problems: problems,
+      currentProblem: currentProblem,
+      answer: answer
+    });
+  },
+
+  // 文本输入变化
+  onInputChange(e) {
+    this.setData({
+      answer: e.detail.value
+    });
+  },
+
+  // 单选题选择
+  onRadioChange(e) {
+    this.setData({
+      answer: e.detail.value
+    });
+  },
+
+  // 单选题点击选项
+  onOptionTap(e) {
+    const value = e.currentTarget.dataset.value;
+    this.setData({
+      answer: value
+    });
+  },
+
+  // 多选题变化
+  onCheckboxChange(e) {
+    this.setData({
+      answer: e.detail.value
+    });
+  },
+
+  // 多选题点击选项
+  onCheckboxTap(e) {
+    const index = e.currentTarget.dataset.index;
+    const value = e.currentTarget.dataset.value;
+    const currentProblem = this.data.currentProblem;
+
+    // 切换选中状态
+    currentProblem.options[index].selected = !currentProblem.options[index].selected;
+
+    // 收集所有选中的选项
+    const answer = currentProblem.options
+      .filter(option => option.selected)
+      .map(option => {
+        // 如果有原始值，返回原始值，否则返回整个对象
+        if (option.originalValue !== undefined) {
+          return option.originalValue;
+        }
+        const { selected, ...rest } = option;
+        return rest;
+      });
+
+    console.log('多选题答案:', answer);
+
+    this.setData({
+      currentProblem: currentProblem,
+      answer: answer
+    });
+  },
+
+  // 评分滑块变化（拖动中）
+  onSliderChanging(e) {
+    this.setData({
+      answer: e.detail.value
+    });
+  },
+
+  // 评分滑块变化（拖动结束）
+  onSliderChange(e) {
+    this.setData({
+      answer: e.detail.value
+    });
+  },
+
+  // 下一题
+  onNextQuestion() {
+    // 验证答案
+    if (!this.validateAnswer()) {
+      wx.showToast({
+        title: '请完成当前题目',
+        icon: 'none'
+      });
+      return;
+    }
+
+    // 保存答案
+    this.saveAnswer();
+
+    if (this.data.currentQuestion < this.data.totalQuestions - 1) {
+      const newQuestion = this.data.currentQuestion + 1;
+      const currentProblem = this.data.problems[newQuestion];
+      const progressPercent = ((newQuestion + 1) / this.data.totalQuestions) * 100;
+
+      // 根据题目类型初始化答案
+      let answer = "";
+      if (currentProblem.type === 'multiple') {
+        answer = [];
+        // 为多选题的每个选项添加selected属性
+        if (currentProblem.options) {
+          currentProblem.options = currentProblem.options.map(option => {
+            if (typeof option === 'object') {
+              return { ...option, selected: false };
+            }
+            return { title: option, selected: false };
+          });
+        }
+      } else if (currentProblem.type === 'score') {
+        answer = currentProblem.min || 0;
+      }
+
+      this.setData({
+        currentQuestion: newQuestion,
+        progressPercent: progressPercent,
+        currentProblem: currentProblem,
+        answer: answer
+      });
+
+      wx.showToast({
+        title: '已保存',
+        icon: 'success'
+      });
+    } else {
+      wx.showToast({
+        title: '已完成所有题目',
+        icon: 'success'
+      });
+
+      // 可以跳转到完成页面
+      setTimeout(() => {
+        wx.navigateBack();
+      }, 1500);
+    }
+  },
+
+  // 验证答案
+  validateAnswer() {
+    const { currentProblem, answer } = this.data;
+
+    if (!currentProblem) return false;
+
+    if (currentProblem.type === 'text') {
+      return answer && answer.trim().length > 0;
+    } else if (currentProblem.type === 'choose') {
+      return answer !== "";
+    } else if (currentProblem.type === 'multiple') {
+      return answer && answer.length > 0;
+    } else if (currentProblem.type === 'score') {
+      return answer !== null && answer !== undefined;
+    }
+
+    return true;
+  },
+
+  // 保存答案
+  saveAnswer() {
+    const { currentQuestion, answer } = this.data;
+    // 这里可以保存到本地存储或发送到服务器
+    console.log(`题目 ${currentQuestion + 1} 的答案:`, answer);
+  },
+
+  onLoad(options) {
+    this.loadData(options);
+  },
+
+  onShow() {}
+});

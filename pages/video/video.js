@@ -12,13 +12,20 @@ Page({
     notes: '',
     isCompleted: false,
     showExperienceGain: false,
-    playTimer: null
+    playTimer: null,
+    videoUrl: ''
   },
 
   onLoad(options) {
     const courseId = parseInt(options.courseId)
+    const courses = app.globalData.courses;
+    const course = courses.find(c => c.id === courseId)
+    const videoUrl = course.url
+    
+    console.log('yjc=>videoUrl', videoUrl);
     this.setData({
-      courseId: courseId
+      courseId: courseId,
+      videoUrl: videoUrl
     })
     this.loadCourse(courseId)
   },

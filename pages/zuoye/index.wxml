@@ -1,0 +1,141 @@
+<view class="page-container">
+  <!-- 进度条区域 -->
+  <view class="progress-section">
+    <view class="progress-header">
+      <text class="progress-label">问题</text>
+      <text class="progress-count-big">{{currentQuestion + 1}}</text>
+      <text class="progress-count">/{{totalQuestions}}</text>
+    </view>
+    <view class="progress-bar-wrapper">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{progressPercent}}%"></view>
+      </view>
+      <view class="progress-indicator" style="left: {{progressPercent}}%">
+        <view class="indicator-dot"></view>
+      </view>
+    </view>
+  </view>
+  <!-- 问题内容区域 -->
+  <!-- <view class="question-section">
+    <text class="question-text">{{assignment.lead}}</text>
+  </view> -->
+  <view class="question-section">
+    <text class="question-text">{{currentProblem.info}}</text>
+  </view>
+  <view class="form-container">
+    <!-- 1. 文本输入类 (type: "text") -->
+    <block wx:if="{{currentProblem.type === 'text'}}">
+      <view class="input-section">
+        <view class="input-card">
+          <view class="input-header">
+            <text class="input-label">请输入</text>
+          </view>
+          <textarea class="input-textarea" placeholder="请在此输入内容" placeholder-style="color: #ffffff;" value="{{answer}}" bindinput="onInputChange" maxlength="500" auto-height />
+        </view>
+      </view>
+    </block>
+    <!-- 2. 单选类 (type: "choose") -->
+    <block wx:elif="{{currentProblem.type === 'choose'}}">
+      <view class="input-section">
+        <view class="input-card choice-card">
+          <radio-group bindchange="onRadioChange">
+            <label
+              wx:for="{{currentProblem.options}}"
+              wx:key="index"
+              class="radio-item {{answer === item ? 'selected' : ''}}"
+              data-value="{{item}}"
+              bindtap="onOptionTap"
+            >
+              <radio value="{{item}}" checked="{{answer === item}}" />
+              <view class="option-label">{{optionLabels[index]}}</view>
+              <view class="option-content">
+                <text class="option-title">{{item.title || item}}</text>
+                <text class="option-text" wx:if="{{item.subtitle}}">{{item.subtitle}}</text>
+              </view>
+              <text class="check-icon" wx:if="{{answer === item}}">✓</text>
+            </label>
+          </radio-group>
+        </view>
+      </view>
+    </block>
+    <!-- 3. 多选类 (type: "multiple") -->
+    <block wx:elif="{{currentProblem.type === 'multiple'}}">
+      <view class="input-section">
+        <view class="input-card choice-card">
+          <checkbox-group bindchange="onCheckboxChange">
+            <label
+              wx:for="{{currentProblem.options}}"
+              wx:key="index"
+              class="checkbox-item {{item.selected ? 'selected' : ''}}"
+              data-value="{{item}}"
+              data-index="{{index}}"
+              bindtap="onCheckboxTap"
+            >
+              <checkbox value="{{item}}" checked="{{item.selected}}" />
+              <view class="option-label">{{optionLabels[index]}}</view>
+              <view class="option-content">
+                <text class="option-title">{{item.title || item}}</text>
+                <text class="option-text" wx:if="{{item.subtitle}}">{{item.subtitle}}</text>
+              </view>
+              <text class="check-icon" wx:if="{{item.selected}}">✓</text>
+            </label>
+          </checkbox-group>
+        </view>
+      </view>
+    </block>
+    <!-- 4. 评分类 (type: "score") -->
+    <block wx:elif="{{currentProblem.type === 'score'}}">
+      <view class="input-section">
+        <view class="score-section">
+          <view class="slider-container">
+            <view class="custom-slider">
+              <text class="slider-label left">0</text>
+              <view class="slider-track">
+                <view
+                  wx:for="{{sliderSegments}}"
+                  wx:key="index"
+                  class="slider-segment {{index < answer ? 'active' : ''}}"
+                ></view>
+              </view>
+              <text class="slider-label right">100</text>
+            </view>
+          </view>
+
+          <slider
+            value="{{answer}}"
+            min="{{currentProblem.min || 0}}"
+            max="{{currentProblem.max || 100}}"
+            step="{{currentProblem.step || 10}}"
+            bindchange="onSliderChange"
+            bindchanging="onSliderChanging"
+            activeColor="#58cc02"
+            backgroundColor="#e5f5e0"
+            block-size="28"
+            block-color="#58cc02"
+          />
+
+          <view class="slider-value">{{answer}}</view>
+
+          <!-- 可选：显示评分选项 -->
+          <view class="score-options" wx:if="{{currentProblem.options}}">
+            <text wx:for="{{currentProblem.options}}" wx:key="index" class="score-option">
+              {{item}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </block>
+    <!-- 5. 未知类型 -->
+    <block wx:else>
+      <view class="input-section">
+        <view class="input-card">
+          <text class="error-text">未知问题类型: {{currentProblem.type}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+  <!-- 底部按钮 -->
+  <view class="bottom-actions">
+    <button class="next-btn" bindtap="onNextQuestion">下一题</button>
+  </view>
+</view>

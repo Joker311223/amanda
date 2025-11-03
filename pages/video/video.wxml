@@ -85,7 +85,7 @@
     <view class="video-container">
       <!-- 模拟视频播放器 -->
       <view class="video-player">
-        <video id='center' controls src="https://www.w3schools.com/html/mov_bbb.mp4" class="video-placeholder" bindended="onVideoEnded"/>
+        <video autoplay wx:if="{{videoUrl}}" id='center' controls src="{{videoUrl}}" class="video-placeholder" bindended="onVideoEnded"/>
       </view>
     </view>
 
