@@ -299,23 +299,32 @@
 
 /* 进度条区域 */
 .progress-section {
-  padding: 20rpx 40rpx;
-  position: relative;
+  padding: 0rpx 30rpx;
+  margin-bottom: 40rpx;
+  margin-top: -20rpx;
+}
+
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+  padding-left: 40rpx;
 }
 
 .progress-label {
   display: inline-block;
-  background: #58cc02;
+  background: linear-gradient(135deg, #2d9f4e 0%, #3db85f 100%);
   color: white;
-  font-size: 28rpx;
+  font-size: 26rpx;
   font-weight: bold;
-  padding: 12rpx 30rpx;
-  border-radius: 30rpx 30rpx 30rpx 0;
-  margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 10rpx rgba(88, 204, 2, 0.3);
+  padding: 10rpx 28rpx;
+  border-radius: 30rpx;
+  align-self: flex-start;
+  box-shadow: 0 4rpx 12rpx rgba(45, 159, 78, 0.3);
+  letter-spacing: 1rpx;
 }
 
-.progress-bar-container {
+.progress-bar-wrapper {
   display: flex;
   align-items: center;
   gap: 20rpx;
@@ -323,59 +332,75 @@
 
 .progress-bar {
   flex: 1;
-  height: 50rpx;
-  background: #e5e5e5;
-  border-radius: 25rpx;
+  height: 48rpx;
+  background: linear-gradient(180deg, #e8e8e8 0%, #d4d4d4 100%);
+  border-radius: 24rpx;
   position: relative;
   overflow: visible;
-  border: 3rpx solid white;
-  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
+  border: 3rpx solid #f5f5f5;
+  box-shadow: inset 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #58cc02 0%, #7ed321 100%);
-  border-radius: 25rpx;
-  transition: width 0.5s ease;
+  background: linear-gradient(90deg, #2d9f4e 0%, #5bc16f 50%, #7ed321 100%);
+  border-radius: 24rpx;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  box-shadow: 0 2rpx 8rpx rgba(45, 159, 78, 0.4);
 }
 
 .progress-indicator {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  transition: left 0.5s ease;
+  transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10;
 }
 
-.indicator-circle {
-  width: 70rpx;
-  height: 70rpx;
+.indicator-outer-ring {
+  width: 68rpx;
+  height: 68rpx;
   background: white;
   border-radius: 50%;
-  border: 8rpx solid #58cc02;
-  box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.4);
+  border: 6rpx solid #7ed321;
+  box-shadow: 0 4rpx 16rpx rgba(126, 211, 33, 0.5),
+              0 0 0 4rpx rgba(126, 211, 33, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
+  animation: pulse-ring 2s ease-in-out infinite;
 }
 
-.indicator-circle::before {
-  content: '';
-  position: absolute;
-  width: 30rpx;
-  height: 30rpx;
-  background: #58cc02;
+@keyframes pulse-ring {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4rpx 16rpx rgba(126, 211, 33, 0.5),
+                0 0 0 4rpx rgba(126, 211, 33, 0.2);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6rpx 20rpx rgba(126, 211, 33, 0.6),
+                0 0 0 6rpx rgba(126, 211, 33, 0.3);
+  }
+}
+
+.indicator-inner-circle {
+  width: 32rpx;
+  height: 32rpx;
+  background: linear-gradient(135deg, #5bc16f 0%, #7ed321 100%);
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  box-shadow: inset 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
 }
 
 .progress-text {
-  font-size: 32rpx;
+  font-size: 40rpx;
   font-weight: bold;
-  color: #333;
-  min-width: 100rpx;
+  color: #2d9f4e;
+  min-width: 110rpx;
   text-align: right;
+  letter-spacing: -1rpx;
 }
 
 /* 路径滚动区域 */
@@ -590,6 +615,35 @@
 
 /* 响应式调整 */
 @media screen and (max-width: 375px) {
+  .progress-section {
+    padding: 15rpx 20rpx;
+  }
+
+  .progress-label {
+    font-size: 24rpx;
+    padding: 8rpx 24rpx;
+  }
+
+  .progress-bar {
+    height: 42rpx;
+  }
+
+  .indicator-outer-ring {
+    width: 60rpx;
+    height: 60rpx;
+    border: 5rpx solid #7ed321;
+  }
+
+  .indicator-inner-circle {
+    width: 28rpx;
+    height: 28rpx;
+  }
+
+  .progress-text {
+    font-size: 36rpx;
+    min-width: 100rpx;
+  }
+
   .level-node {
     width: 180rpx;
     height: 180rpx;

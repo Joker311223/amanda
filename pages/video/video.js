@@ -21,7 +21,7 @@ Page({
     const courses = app.globalData.courses;
     const course = courses.find(c => c.id === courseId)
     const videoUrl = course.url
-    
+
     console.log('yjc=>videoUrl', videoUrl);
     this.setData({
       courseId: courseId,
@@ -163,14 +163,6 @@ Page({
 
   // 完成课程
   completeCourse() {
-    if (this.data.playProgress < 100) {
-      wx.showToast({
-        title: '请完整观看视频',
-        icon: 'none'
-      })
-      return
-    }
-
     // 标记课程为已完成
     app.completeCourse(this.data.courseId)
 

@@ -10,7 +10,9 @@ Page({
     currentProblem: null,
     answer: "",
     optionLabels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
-    sliderSegments: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] // 10个分段
+    sliderSegments: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], // 10个分段
+    showCompletionModal: false, // 完成弹窗显示状态
+    earnedPoints: 0 // 获得的经验值
   },
 
   // 加载数据
@@ -171,15 +173,17 @@ Page({
         icon: 'success'
       });
     } else {
-      wx.showToast({
-        title: '已完成所有题目',
-        icon: 'success'
-      });
+      // 完成所有题目
+      app.finishWork(this.data.zuoyeId);
 
-      // 可以跳转到完成页面
-      setTimeout(() => {
-        wx.navigateBack();
-      }, 1500);
+      // 计算获得的经验值（可以根据作业配置或默认值）
+      const earnedPoints = this.data.assignment.points || 30;
+
+      // 显示完成弹窗
+      this.setData({
+        showCompletionModal: true,
+        earnedPoints: earnedPoints
+      });
     }
   },
 
@@ -207,6 +211,23 @@ Page({
     const { currentQuestion, answer } = this.data;
     // 这里可以保存到本地存储或发送到服务器
     console.log(`题目 ${currentQuestion + 1} 的答案:`, answer);
+  },
+
+  // 关闭完成弹窗并返回
+  onCloseCompletionModal() {
+    this.setData({
+      showCompletionModal: false
+    });
+
+    // 返回上一页
+    setTimeout(() => {
+      wx.navigateBack();
+    }, 300);
+  },
+
+  // 继续按钮点击
+  onContinue() {
+    this.onCloseCompletionModal();
   },
 
   onLoad(options) {

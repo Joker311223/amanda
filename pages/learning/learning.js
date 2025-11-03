@@ -7,6 +7,7 @@ Page({
     filteredCourses: [],
     searchKeyword: "",
     nowPage: "课程回顾",
+    assignments: app.globalData.assignments
   },
 
   onLoad() {
@@ -24,11 +25,12 @@ Page({
 
     // 更新课程状态
     this.updateCourseStatus(courses, learningProgress.completedCourses);
-
+console.log('yjc=>app.globalData.assignments', app.globalData.assignments);
     this.setData({
       totalExperience: learningProgress.totalExperience,
       courses: courses,
       filteredCourses: courses,
+      assignments: app.globalData.assignments
     });
   },
 

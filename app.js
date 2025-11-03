@@ -38,7 +38,7 @@ App({
       id: 1,
       title: "正念觉察",
       category: "正念",
-      courseId: null,
+      courseId: 1,
       status: "locked",
       dueDate: "2024-01-15",
       lead: "正念核心技能的练习·描述在什么情况下您决定练习正念技能。",
@@ -503,28 +503,42 @@ App({
 
   // 完成课程
   completeCourse(courseId) {
+    console.log('yjc=>courseId',courseId );
     const progress = this.globalData.learningProgress
     if (!progress.completedCourses.includes(courseId)) {
       progress.completedCourses.push(courseId)
       progress.totalExperience += 30
-
-      // 解锁对应作业
+    }
+     // 解锁对应作业
       this.unlockAssignmentsByCourse(courseId)
-
       // 解锁下一个课程
       this.unlockNextCourse()
-
       this.saveUserData()
-    }
   },
 
   // 根据课程解锁作业
   unlockAssignmentsByCourse(courseId) {
     const assignments = this.globalData.assignments
     assignments.forEach(assignment => {
+      console.log('yjc=>assignment', assignment);
       if (assignment.courseId === courseId) {
         assignment.status = 'available'
       }
+    })
+    console.log('yjc=>assignments',assignments );
+  },
+
+  finishWork(workId) {
+    console.log('yjc=>workId',workId );
+    const assignments = this.globalData.assignments
+    const courses = this.globalData.courses
+    assignments.forEach(assignment => {
+      if (assignment.id == workId) {
+        assignment.status = 'completed'
+      }
+      // if(assignment.id == +workId+1){
+      //   assignment.status = 'available'
+      // }
     })
   }
 })

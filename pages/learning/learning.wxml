@@ -74,7 +74,7 @@
   </view>
   <!-- 作业列表 -->
   <view wx:if="{{nowPage==='作业回顾'}}" class="courses-section">
-    <view class="course-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{filteredCourses}}" wx:key="id" bindtap="jumpToZuoye" data-zuoye-id="{{item.id}}">
+    <view class="course-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{assignments}}" wx:key="id" bindtap="jumpToZuoye" data-zuoye-id="{{item.id}}">
       <view class="course-header">
         <view class="course-icon {{item.status}}">
           <text wx:if="{{item.status === 'completed'}}">✅</text>

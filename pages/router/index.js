@@ -7,17 +7,20 @@ Page({
     totalCount: 0,
     progressPercent: 0,
     courses: [],
+    assignments:getApp().globalData.assignments,
   },
 
   // 加载数据
   loadData() {
     const learningProgress = app.globalData.learningProgress;
     const skillCards = app.globalData.skillCards;
+    const assignments = app.globalData.assignments;
 
     this.setData({
       totalExperience: learningProgress.totalExperience,
       skillCards: skillCards,
       filteredCards: skillCards,
+      assignments
     });
   },
 
@@ -81,9 +84,19 @@ Page({
     // 处理课程数据
     const courses = [];
     this.updateCourseStatus(allCourses, learningProgress.completedCourses);
+
+    // 计算学习进度
+    const totalCount = allCourses.length;
+    const completedCount = learningProgress.completedCourses.length;
+    const progressPercent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+
     this.setData({
       allCourses: allCourses,
       courses: courses,
+      totalCount: totalCount,
+      completedCount: completedCount,
+      progressPercent: progressPercent,
+      assignments:getApp().globalData.assignments,
     });
   },
 

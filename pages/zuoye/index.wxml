@@ -138,4 +138,52 @@
   <view class="bottom-actions">
     <button class="next-btn" bindtap="onNextQuestion">下一题</button>
   </view>
+
+  <!-- 完成弹窗 -->
+  <view class="completion-modal" wx:if="{{showCompletionModal}}" bindtap="onCloseCompletionModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <!-- 冰淇淋插图 -->
+      <view class="celebration-icon">
+        <view class="ice-cream">
+          <view class="ice-cream-cone">
+            <view class="cone-face">
+              <view class="cone-eye left">•</view>
+              <view class="cone-eye right">•</view>
+              <view class="cone-mouth">ᴗ</view>
+            </view>
+          </view>
+          <view class="ice-cream-scoops">
+            <view class="scoop yellow"></view>
+            <view class="scoop blue"></view>
+            <view class="scoop orange"></view>
+          </view>
+        </view>
+        <!-- 装饰元素 -->
+        <view class="decoration-particles">
+          <view class="particle star" style="top: 20rpx; left: 80rpx; color: #FFD700;">✦</view>
+          <view class="particle star" style="top: 60rpx; right: 100rpx; color: #7ed321;">✦</view>
+          <view class="particle circle" style="top: 100rpx; left: 60rpx; background: #FF6B6B;"></view>
+          <view class="particle circle" style="top: 40rpx; right: 80rpx; background: #4ECDC4;"></view>
+          <view class="particle plus" style="bottom: 120rpx; left: 100rpx; color: #FFD700;">+</view>
+          <view class="particle plus" style="bottom: 140rpx; right: 120rpx; color: #FF6B6B;">+</view>
+          <view class="particle dot" style="top: 80rpx; left: 120rpx; background: #7ed321;"></view>
+          <view class="particle dot" style="bottom: 160rpx; right: 100rpx; background: #FFD700;"></view>
+        </view>
+      </view>
+
+      <!-- 分数显示 -->
+      <view class="points-display">
+        <text class="points-number">{{earnedPoints}}</text>
+        <text class="points-unit">分</text>
+      </view>
+
+      <!-- 提示文字 -->
+      <view class="completion-message">
+        <text>恭喜你成功解锁{{earnedPoints}}分经验</text>
+      </view>
+
+      <!-- 继续按钮 -->
+      <button class="continue-btn" bindtap="onContinue">继续</button>
+    </view>
+  </view>
 </view>

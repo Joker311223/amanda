@@ -353,6 +353,334 @@ slider {
   box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.3);
 }
 
+/* 完成弹窗 */
+.completion-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  width: 600rpx;
+  background: linear-gradient(135deg, #58cc02 0%, #7ed321 100%);
+  border-radius: 40rpx;
+  padding: 80rpx 60rpx 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  overflow: visible;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 庆祝图标区域 */
+.celebration-icon {
+  width: 100%;
+  height: 300rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40rpx;
+  position: relative;
+}
+
+/* 冰淇淋 */
+.ice-cream {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* 冰淇淋球 */
+.ice-cream-scoops {
+  position: relative;
+  width: 180rpx;
+  height: 180rpx;
+  margin-bottom: -20rpx;
+}
+
+.scoop {
+  position: absolute;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  border: 6rpx solid #333;
+  animation: scoopBounce 0.6s ease infinite alternate;
+}
+
+.scoop.yellow {
+  background: linear-gradient(135deg, #FFD93D 0%, #FFC107 100%);
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  animation-delay: 0s;
+}
+
+.scoop.blue {
+  background: linear-gradient(135deg, #6DD5FA 0%, #2980B9 100%);
+  top: 40rpx;
+  left: 0;
+  z-index: 2;
+  animation-delay: 0.1s;
+}
+
+.scoop.orange {
+  background: linear-gradient(135deg, #FF9A56 0%, #FF6B6B 100%);
+  top: 40rpx;
+  right: 0;
+  z-index: 2;
+  animation-delay: 0.2s;
+}
+
+@keyframes scoopBounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10rpx);
+  }
+}
+
+/* 冰淇淋筒 */
+.ice-cream-cone {
+  width: 120rpx;
+  height: 140rpx;
+  background: linear-gradient(135deg, #FFF 0%, #F5F5F5 100%);
+  border: 6rpx solid #333;
+  border-radius: 0 0 60rpx 60rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 -20rpx 30rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 冰淇淋筒的表情 */
+.cone-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15rpx;
+  margin-top: 20rpx;
+}
+
+.cone-eye {
+  width: 12rpx;
+  height: 12rpx;
+  background: #333;
+  border-radius: 50%;
+  position: absolute;
+  top: 40rpx;
+}
+
+.cone-eye.left {
+  left: 30rpx;
+}
+
+.cone-eye.right {
+  right: 30rpx;
+}
+
+.cone-mouth {
+  font-size: 32rpx;
+  color: #333;
+  margin-top: 30rpx;
+}
+
+/* 装饰粒子 */
+.decoration-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  animation: float 3s ease-in-out infinite;
+}
+
+.particle.star {
+  font-size: 40rpx;
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+.particle.circle {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.particle.plus {
+  font-size: 36rpx;
+  font-weight: bold;
+  animation: rotate 4s linear infinite;
+}
+
+.particle.dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20rpx) rotate(180deg);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+/* 分数显示 */
+.points-display {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 30rpx;
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.points-number {
+  font-size: 140rpx;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.2);
+}
+
+.points-unit {
+  font-size: 60rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-left: 10rpx;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+
+/* 完成消息 */
+.completion-message {
+  margin-bottom: 50rpx;
+  animation: fadeInUp 0.5s ease 0.4s backwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.completion-message text {
+  font-size: 32rpx;
+  color: #ffffff;
+  font-weight: 500;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 继续按钮 */
+.continue-btn {
+  width: 100%;
+  background: #ffffff;
+  color: #58cc02;
+  font-size: 36rpx;
+  font-weight: bold;
+  padding: 28rpx;
+  border-radius: 50rpx;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.5s ease 0.5s backwards;
+}
+
+.continue-btn::after {
+  border: none;
+}
+
+.continue-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
 /* 响应式调整 */
 @media screen and (max-width: 375px) {
   .page-container {
@@ -386,5 +714,47 @@ slider {
   .next-btn {
     font-size: 28rpx;
     padding: 20rpx 60rpx;
+  }
+
+  /* 完成弹窗响应式 */
+  .modal-content {
+    width: 540rpx;
+    padding: 60rpx 40rpx 50rpx;
+  }
+
+  .celebration-icon {
+    height: 260rpx;
+  }
+
+  .ice-cream-scoops {
+    width: 160rpx;
+    height: 160rpx;
+  }
+
+  .scoop {
+    width: 90rpx;
+    height: 90rpx;
+  }
+
+  .ice-cream-cone {
+    width: 110rpx;
+    height: 130rpx;
+  }
+
+  .points-number {
+    font-size: 120rpx;
+  }
+
+  .points-unit {
+    font-size: 50rpx;
+  }
+
+  .completion-message text {
+    font-size: 28rpx;
+  }
+
+  .continue-btn {
+    font-size: 32rpx;
+    padding: 24rpx;
   }
 }
