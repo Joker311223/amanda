@@ -30,6 +30,10 @@
       wx:key="id"
     >
       <view class="note-content">
+        <view class="note-course-tag" wx:if="{{item.courseTitle}}">
+          <text class="tag-icon">📚</text>
+          <text class="tag-text">{{item.courseTitle}}</text>
+        </view>
         <text class="note-text">{{item.content}}</text>
         <view class="note-time">{{item.updateTime || item.createTime}}</view>
       </view>

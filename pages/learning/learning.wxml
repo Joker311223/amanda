@@ -42,9 +42,9 @@
     <view class="course-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{filteredCourses}}" wx:key="id" bindtap="onCourseClick" data-course-id="{{item.id}}">
       <view class="course-header">
         <view class="course-icon {{item.status}}">
-          <text wx:if="{{item.status === 'completed'}}">✅</text>
-          <text wx:elif="{{item.status === 'available'}}">⏰</text>
-          <text wx:else>🔒</text>
+          <image wx:if="{{item.status === 'completed'}}" src="/images/xuexi-wancheng.svg"/>
+          <image wx:elif="{{item.status === 'available'}}" src="/images/xuexi-daikaifa.svg"/>
+          <image wx:else src="/images/xuexi-suoding.svg"/>
         </view>
         <view class="course-info">
           <view class="course-meta">
@@ -61,8 +61,14 @@
           </view>
           <view wx:else class="status-tag status-locked">未解锁</view>
           <view class="course-buttons">
-            <button wx:if="{{item.status !== 'locked'}}" class="btn btn-secondary course-btn" bindtap="startLearning" data-course-id="{{item.id}}" catchtap="true">
-              {{item.status === 'completed' ? '已完成' : '可学习'}}
+            <button wx:if="{{item.status === 'completed'}}" class="btn course-btn btn-completed" bindtap="startLearning" data-course-id="{{item.id}}" catchtap="true">
+              已完成
+            </button>
+            <button wx:elif="{{item.status === 'available'}}" class="btn course-btn btn-available" bindtap="startLearning" data-course-id="{{item.id}}" catchtap="true">
+              可学习
+            </button>
+            <button wx:else class="btn course-btn btn-locked" bindtap="startLearning" data-course-id="{{item.id}}" catchtap="true">
+              待解锁
             </button>
           </view>
         </view>

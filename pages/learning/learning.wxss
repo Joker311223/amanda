@@ -93,8 +93,9 @@
 }
 
 .course-icon {
-  width: 80rpx;
-  height: 80rpx;
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
   border-radius: 40rpx;
   display: flex;
   align-items: center;
@@ -118,6 +119,7 @@
 
 .course-info {
   flex: 1;
+  width: 200rpx;
   min-width: 0;
 }
 
@@ -173,6 +175,47 @@
   padding: 12rpx 20rpx;
   min-width: 120rpx;
   white-space: nowrap;
+}
+
+/* 已完成按钮 - 绿色 */
+.btn-completed {
+  background: linear-gradient(135deg, #58cc02 0%, #5ead09 100%);
+  color: white;
+  border: none;
+}
+
+.btn-completed::after {
+  border: none;
+}
+
+.btn-completed:active {
+  opacity: 0.8;
+}
+
+/* 可学习按钮 - 橙色 */
+.btn-available {
+  background: linear-gradient(135deg, #2e9bee 0%, #294ddc 100%);
+  color: white;
+  border: none;
+}
+
+.btn-available::after {
+  border: none;
+}
+
+.btn-available:active {
+  opacity: 0.8;
+}
+
+/* 待解锁按钮 - 灰色 */
+.btn-locked {
+  background: #E0E0E0;
+  color: #999;
+  border: none;
+}
+
+.btn-locked::after {
+  border: none;
 }
 
 .course-experience {

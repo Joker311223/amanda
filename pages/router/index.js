@@ -7,20 +7,17 @@ Page({
     totalCount: 0,
     progressPercent: 0,
     courses: [],
-    assignments:getApp().globalData.assignments,
   },
 
   // 加载数据
   loadData() {
     const learningProgress = app.globalData.learningProgress;
     const skillCards = app.globalData.skillCards;
-    const assignments = app.globalData.assignments;
 
     this.setData({
       totalExperience: learningProgress.totalExperience,
       skillCards: skillCards,
       filteredCards: skillCards,
-      assignments
     });
   },
 
@@ -96,7 +93,6 @@ Page({
       totalCount: totalCount,
       completedCount: completedCount,
       progressPercent: progressPercent,
-      assignments:getApp().globalData.assignments,
     });
   },
 

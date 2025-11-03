@@ -155,10 +155,62 @@ Page({
 
   // 保存笔记
   saveNotes() {
-    wx.showToast({
-      title: '笔记已保存',
-      icon: 'success'
-    })
+    const content = this.data.notes.trim()
+
+    if (!content) {
+      wx.showToast({
+        title: '请输入笔记内容',
+        icon: 'none'
+      })
+      return
+    }
+
+    try {
+      // 获取现有笔记列表
+      let notes = wx.getStorageSync('userNotes') || []
+
+      // 创建新笔记对象
+      const newNote = {
+        id: Date.now(),
+        content: content,
+        courseTitle: this.data.currentCourse ? this.data.currentCourse.title : '视频课程',
+        createTime: this.formatDate(new Date()),
+        updateTime: this.formatDate(new Date())
+      }
+
+      // 添加到笔记列表开头
+      notes.unshift(newNote)
+
+      // 保存到本地存储
+      wx.setStorageSync('userNotes', notes)
+
+      // 清空输入框
+      this.setData({
+        notes: ''
+      })
+
+      wx.showToast({
+        title: '笔记已保存',
+        icon: 'success'
+      })
+    } catch (error) {
+      console.error('保存笔记失败:', error)
+      wx.showToast({
+        title: '保存失败，请重试',
+        icon: 'none'
+      })
+    }
+  },
+
+  // 格式化日期
+  formatDate(date) {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hours = String(date.getHours()).padStart(2, '0')
+    const minutes = String(date.getMinutes()).padStart(2, '0')
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`
   },
 
   // 完成课程

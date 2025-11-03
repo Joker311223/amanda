@@ -63,6 +63,27 @@
   min-width: 0;
 }
 
+.note-course-tag {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #E8F5E8 0%, #D4EDD4 100%);
+  border: 1rpx solid #6BBF59;
+  border-radius: 8rpx;
+  padding: 6rpx 12rpx;
+  margin-bottom: 12rpx;
+  gap: 6rpx;
+}
+
+.tag-icon {
+  font-size: 20rpx;
+}
+
+.tag-text {
+  font-size: 20rpx;
+  color: #6BBF59;
+  font-weight: 500;
+}
+
 .note-text {
   font-size: 26rpx;
   color: #333;

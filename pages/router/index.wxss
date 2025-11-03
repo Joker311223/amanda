@@ -299,16 +299,14 @@
 
 /* 进度条区域 */
 .progress-section {
-  padding: 0rpx 30rpx;
-  margin-bottom: 40rpx;
-  margin-top: -20rpx;
+  padding: 20rpx 30rpx;
+  margin-bottom: 20rpx;
 }
 
 .progress-container {
   display: flex;
   flex-direction: column;
   gap: 15rpx;
-  padding-left: 40rpx;
 }
 
 .progress-label {
@@ -328,6 +326,7 @@
   display: flex;
   align-items: center;
   gap: 20rpx;
+  margin-left: 40rpx;
 }
 
 .progress-bar {
