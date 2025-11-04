@@ -9,7 +9,7 @@ Page({
     problems: [],
     currentProblem: null,
     answer: "",
-    optionLabels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+    optionLabels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
     sliderSegments: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], // 10个分段
     showCompletionModal: false, // 完成弹窗显示状态
     earnedPoints: 0 // 获得的经验值

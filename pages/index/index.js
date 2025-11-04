@@ -129,7 +129,7 @@ Page({
   // 跳转到学习页面
   goToLearning() {
     wx.switchTab({
-      url: '/pages/learning/learning'
+      url: '/pages/router/index'
     })
   },
 
