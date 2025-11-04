@@ -21,10 +21,65 @@
   height: 90rpx;
 }
 
+.item-image-mini.available {
+  animation: shake-mini 2s ease-in-out infinite;
+}
+
 .item-image{
     margin-left: 20rpx;
   width: 120rpx;
   height: 120rpx;
+}
+
+.item-image.available {
+  animation: shake-bounce 2.5s ease-in-out infinite;
+}
+
+/* 作业图标抖动动画 - 轻微摇摆 */
+@keyframes shake-mini {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  10% {
+    transform: rotate(-8deg) scale(1.05);
+  }
+  20% {
+    transform: rotate(8deg) scale(1.05);
+  }
+  30% {
+    transform: rotate(-8deg) scale(1.05);
+  }
+  40% {
+    transform: rotate(8deg) scale(1.05);
+  }
+  50% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* 课程图标抖动动画 - 弹跳+摇摆 */
+@keyframes shake-bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  5% {
+    transform: translateY(-8rpx) rotate(-5deg) scale(1.05);
+  }
+  10% {
+    transform: translateY(-12rpx) rotate(5deg) scale(1.08);
+  }
+  15% {
+    transform: translateY(-8rpx) rotate(-5deg) scale(1.05);
+  }
+  20% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-4rpx) rotate(3deg) scale(1.02);
+  }
+  30% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
 }
 
 .page-line {

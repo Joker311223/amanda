@@ -21,30 +21,10 @@
       </view>
     </view>
   </view>
-
   <view wx:key="id" wx:for="{{allCourses}}" class="page-line" style="margin-left:20rpx;padding-left: {{item.position}}; height: 100rpx;">
     <block wx:for="{{item.asssignIds}}" wx:for-item="subItem" wx:for-index="idx">
-      <text>{{assignments[subItem-1].status}}</text>
-      <image 
-        style="opacity: {{ (subItem >= 0 && assignments[subItem-1].status === 'locked') ? 0.4 : 1 }};"
-        wx:key="id"
-        src="{{ assignments[subItem-1].status === 'locked' || assignments[subItem-1].status === 'available' ? '/images/work-icon-no.svg' : '/images/work-icon-done.svg'}}"
-        class="item-image-mini" 
-        data-index="{{idx}}"          
-        data-status="{{item.status}}"     
-        data-id="{{item.id}}"     
-        data-extra="{{item.otherData}}"   
-        bindtap="jumpToZuoye" 
-      />
+      <image style="opacity: {{ (subItem >= 0 && assignments[subItem-1].status === 'locked') ? 0.4 : 1 }};" wx:key="id" src="{{ assignments[subItem-1].status === 'locked' || assignments[subItem-1].status === 'available' ? '/images/work-icon-no.svg' : '/images/work-icon-done.svg'}}" class="item-image-mini {{assignments[subItem-1].status === 'available' ? 'available' : ''}}" data-index="{{idx}}" data-status="{{item.status}}" data-id="{{item.id}}" data-extra="{{item.otherData}}" bindtap="jumpToZuoye" />
     </block>
-
-<image 
-  style="opacity: {{ (item.status === 'locked') ? 0.2 : 1 }};"
-  src="{{item.icon}}" 
-  class="item-image" 
-  data-id="{{item.id}}"         
-  data-title="{{item.title}}"    
-  data-status="{{item.status}}"   
-  bindtap="jumpToCourse" 
-/>  </view>
+    <image style="opacity: {{ (item.status === 'locked') ? 0.2 : 1 }};" src="{{item.icon}}" class="item-image" data-id="{{item.id}}" data-title="{{item.title}}" data-status="{{item.status}}" bindtap="jumpToCourse" />
+  </view>
 </view>

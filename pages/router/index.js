@@ -12,6 +12,7 @@ Page({
 
   // 加载数据
   loadData() {
+    console.log('yjc=>app.globalData.learningProgress',app.globalData.learningProgress );
     const learningProgress = app.globalData.learningProgress;
     const skillCards = app.globalData.skillCards;
     const assignments = app.globalData.assignments;
@@ -37,6 +38,18 @@ Page({
     const courseId = e.currentTarget.dataset.id;
     const subIndex = e.currentTarget.dataset.index;
     const zuoyeId = app.globalData.courses[courseId - 1].asssignIds[subIndex];
+
+    // 检查作业状态，如果是 locked 则不允许跳转
+    const assignment = this.data.assignments[zuoyeId - 1];
+    if (assignment && assignment.status === 'locked') {
+      wx.showToast({
+        title: '该作业尚未解锁',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+
     wx.navigateTo({
       url: `/pages/zuoye/index?zuoyeId=${zuoyeId}`,
     });
@@ -44,6 +57,17 @@ Page({
 
   jumpToCourse(e) {
     const { id, title, status } = e.currentTarget.dataset;
+
+    // 检查课程状态，如果是 locked 则不允许跳转
+    if (status === 'locked') {
+      wx.showToast({
+        title: '该课程尚未解锁',
+        icon: 'none',
+        duration: 2000
+      });
+      return;
+    }
+
     wx.navigateTo({
       url: `/pages/video/video?courseId=${id}`,
     });
@@ -65,9 +89,41 @@ Page({
     });
   },
 
+  // 更新课程状态
+  updateCourseStatus(courses, completedCourseIds) {
+    courses.forEach((course, index) => {
+      if (completedCourseIds.includes(course.id)) {
+        course.status = "completed";
+      } else if (
+        index === 0 ||
+        completedCourseIds.includes(courses[index - 1].id)
+      ) {
+        course.status = "available";
+      } else {
+        course.status = "locked";
+      }
+    });
+  },
+
+  // 更新课程状态
+  updateAssigmentsStatus(assignments, assignmentIds) {
+    assignments.forEach((assignment, index) => {
+      if (assignmentIds.includes(assignment.id)) {
+        assignment.status = "completed";
+      } else if (
+        app.globalData.courses[assignment.id-1].status === "completed"
+      ) {
+        assignment.status = "available";
+      } else {
+        assignment.status = "locked";
+      }
+    });
+  },
+
   // 加载课程数据
   loadCourses() {
     const learningProgress = app.globalData.learningProgress;
+    const assignments = app.globalData.assignments;
     const allCourses = app.globalData.courses;
     const characterEmojis = [
       "🌵",
@@ -84,6 +140,7 @@ Page({
     // 处理课程数据
     const courses = [];
     this.updateCourseStatus(allCourses, learningProgress.completedCourses);
+    this.updateAssigmentsStatus(allCourses, learningProgress.completedCourses);
 
     // 计算学习进度
     const totalCount = allCourses.length;
@@ -96,7 +153,7 @@ Page({
       totalCount: totalCount,
       completedCount: completedCount,
       progressPercent: progressPercent,
-      assignments:getApp().globalData.assignments,
+      assignments:assignments,
     });
   },
 
