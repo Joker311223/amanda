@@ -113,6 +113,14 @@ console.log('yjc=>app.globalData.assignments', app.globalData.assignments);
     });
   },
 
+  // 查看作业
+  viewAssignment(e) {
+    const zuoyeId = e.currentTarget.dataset.zuoyeId;
+    wx.navigateTo({
+      url: `/pages/assignment-review/assignment-review?assignmentId=${zuoyeId}`,
+    });
+  },
+
   // 跳转到课程回顾
   goToCourseReview() {
     this.setData({

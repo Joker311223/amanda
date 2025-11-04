@@ -1,0 +1,34 @@
+<view class="page-container">
+  <!-- 顶部导航栏 -->
+  <view class="header">
+    <view class="back-button" bindtap="goBack">
+      <text class="back-icon">‹</text>
+    </view>
+    <view class="points-badge">
+      <text class="star-icon">⭐</text>
+      <text class="points-text">{{assignment.points || 30}}分</text>
+    </view>
+  </view>
+
+  <!-- 标题卡片 -->
+  <view class="title-card">
+    <text class="title-text">查看作业</text>
+  </view>
+
+  <!-- 题目列表 -->
+  <view class="problems-list">
+    <view
+      class="problem-item"
+      wx:for="{{problems}}"
+      wx:key="index"
+      bindtap="viewProblemDetail"
+      data-index="{{index}}"
+    >
+      <view class="problem-number">{{index + 1}}</view>
+      <view class="problem-content">
+        <text class="problem-title">{{item.info}}</text>
+        <text class="problem-subtitle">{{item.info}}</text>
+      </view>
+    </view>
+  </view>
+</view>

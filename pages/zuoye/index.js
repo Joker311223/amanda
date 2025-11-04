@@ -208,9 +208,23 @@ Page({
 
   // 保存答案
   saveAnswer() {
-    const { currentQuestion, answer } = this.data;
-    // 这里可以保存到本地存储或发送到服务器
-    console.log(`题目 ${currentQuestion + 1} 的答案:`, answer);
+    const { currentQuestion, answer, zuoyeId } = this.data;
+
+    try {
+      // 从本地存储获取已有答案
+      const key = `assignment_answers_${zuoyeId}`;
+      let answers = wx.getStorageSync(key) || {};
+
+      // 保存当前题目的答案
+      answers[currentQuestion] = answer;
+
+      // 保存到本地存储
+      wx.setStorageSync(key, answers);
+
+      console.log(`题目 ${currentQuestion + 1} 的答案已保存:`, answer);
+    } catch (error) {
+      console.error('保存答案失败:', error);
+    }
   },
 
   // 关闭完成弹窗并返回
