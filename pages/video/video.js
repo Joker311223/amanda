@@ -218,21 +218,10 @@ Page({
     // 标记课程为已完成
     app.completeCourse(this.data.courseId)
 
-    // 检查是否完成所有课程
-    const totalCourses = app.globalData.courses.length
-    const completedCourses = app.globalData.learningProgress.completedCourses.length
-
-    if (completedCourses >= totalCourses) {
-      // 显示全部完成界面
-      this.setData({
-        isCompleted: true
-      })
-    } else {
-      // 显示经验获得界面
-      this.setData({
-        showExperienceGain: true
-      })
-    }
+    // 显示完成弹窗
+    this.setData({
+      showExperienceGain: true
+    })
   },
 
   // 继续学习之旅

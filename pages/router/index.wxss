@@ -301,6 +301,7 @@
 .progress-section {
   padding: 20rpx 30rpx;
   margin-bottom: 20rpx;
+  margin-top: 30rpx;
 }
 
 .progress-container {

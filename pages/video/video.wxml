@@ -14,74 +14,8 @@
     </view>
   </view>
 
-  <!-- 学习完成状态 -->
-  <view wx:if="{{isCompleted}}" class="completion-section">
-    <view class="completion-card card">
-      <view class="card-content">
-        <view class="completion-content">
-          <!-- 庆祝图标 -->
-          <view class="celebration-icon">
-            <view class="ice-cream">🍦</view>
-            <view class="sparkles">
-              <text class="sparkle">✨</text>
-              <text class="sparkle">⭐</text>
-              <text class="sparkle">💫</text>
-              <text class="sparkle">🌟</text>
-              <text class="sparkle">✨</text>
-            </view>
-          </view>
-
-          <text class="completion-title">恭喜通关！</text>
-
-          <text class="completion-desc">
-            太棒啦！你已完成DBT情绪技能所有课程，成功get全套情绪管理工具。
-          </text>
-
-          <text class="experience-gained">
-            本次成长累计获得150分快乐经验，每一分都是你用心练习的见证！
-          </text>
-
-          <text class="encouragement">
-            情绪成长没有终点，带着这些技能继续出发吧，你会成为更从容的自己！
-          </text>
-
-          <view class="completion-actions">
-            <button class="btn btn-primary" bindtap="continueJourney">
-              继续
-            </button>
-            <button class="btn btn-outline" bindtap="viewDetails">
-              了解详情
-            </button>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <!-- 经验获得提示 -->
-  <view wx:elif="{{showExperienceGain}}" class="experience-section">
-    <view class="experience-card card">
-      <view class="card-content">
-        <view class="experience-content">
-          <view class="experience-icon">🍦</view>
-          <text class="experience-title">30分</text>
-          <text class="experience-subtitle">恭喜你成功解锁30分经验</text>
-
-          <view class="experience-actions">
-            <button class="btn btn-primary" bindtap="continueJourney">
-              继续
-            </button>
-            <button class="btn btn-outline" bindtap="viewDetails">
-              了解详情
-            </button>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
-
   <!-- 视频播放区域 -->
-  <view wx:else class="video-section">
+  <view class="video-section">
     <view class="video-container">
       <!-- 模拟视频播放器 -->
       <view class="video-player">
@@ -122,6 +56,54 @@
       >
         {{!isFinied? '请完整观看视频' : '完成学习'}}
       </button>
+    </view>
+  </view>
+
+  <!-- 完成弹窗 -->
+  <view class="completion-modal" wx:if="{{showExperienceGain}}" bindtap="continueJourney">
+    <view class="modal-content" catchtap="stopPropagation">
+      <!-- 冰淇淋插图 -->
+      <view class="celebration-icon">
+        <view class="ice-cream">
+          <view class="ice-cream-cone">
+            <view class="cone-face">
+              <view class="cone-eye left">•</view>
+              <view class="cone-eye right">•</view>
+              <view class="cone-mouth">ᴗ</view>
+            </view>
+          </view>
+          <view class="ice-cream-scoops">
+            <view class="scoop yellow"></view>
+            <view class="scoop blue"></view>
+            <view class="scoop orange"></view>
+          </view>
+        </view>
+        <!-- 装饰元素 -->
+        <view class="decoration-particles">
+          <view class="particle star" style="top: 20rpx; left: 80rpx; color: #FFD700;">✦</view>
+          <view class="particle star" style="top: 60rpx; right: 100rpx; color: #7ed321;">✦</view>
+          <view class="particle circle" style="top: 100rpx; left: 60rpx; background: #FF6B6B;"></view>
+          <view class="particle circle" style="top: 40rpx; right: 80rpx; background: #4ECDC4;"></view>
+          <view class="particle plus" style="bottom: 120rpx; left: 100rpx; color: #FFD700;">+</view>
+          <view class="particle plus" style="bottom: 140rpx; right: 120rpx; color: #FF6B6B;">+</view>
+          <view class="particle dot" style="top: 80rpx; left: 120rpx; background: #7ed321;"></view>
+          <view class="particle dot" style="bottom: 160rpx; right: 100rpx; background: #FFD700;"></view>
+        </view>
+      </view>
+
+      <!-- 分数显示 -->
+      <view class="points-display">
+        <text class="points-number">{{currentCourse.experience || 30}}</text>
+        <text class="points-unit">分</text>
+      </view>
+
+      <!-- 提示文字 -->
+      <view class="completion-message">
+        <text>恭喜你成功解锁{{currentCourse.experience || 30}}分经验</text>
+      </view>
+
+      <!-- 继续按钮 -->
+      <button class="continue-btn" bindtap="continueJourney">继续</button>
     </view>
   </view>
 </view>

@@ -13,6 +13,7 @@
 .add-note-section {
   padding: 0 20rpx;
   margin-bottom: 20rpx;
+  margin-top: 20rpx;
 }
 
 .add-note-card {

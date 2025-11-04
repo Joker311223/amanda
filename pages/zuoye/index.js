@@ -177,7 +177,7 @@ Page({
       app.finishWork(this.data.zuoyeId);
 
       // 计算获得的经验值（可以根据作业配置或默认值）
-      const earnedPoints = this.data.assignment.points || 30;
+      const earnedPoints = this.data.assignment.points || 20;
 
       // 显示完成弹窗
       this.setData({

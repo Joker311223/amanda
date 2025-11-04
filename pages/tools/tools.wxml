@@ -5,18 +5,9 @@
     <text>{{totalExperience}}分</text>
   </view>
 
-  <!-- 页面标题 -->
-  <view class="page-header">
-    <view class="header-card card">
-      <view class="card-header">
-        <text>技能工具箱</text>
-      </view>
-    </view>
-  </view>
-
   <!-- 分类筛选 -->
   <view class="category-section">
-    <scroll-view class="category-scroll" scroll-x="true">
+    <scroll-view class="category-scroll" scroll-x="true" >
       <view class="category-tabs">
         <view
           class="category-tab {{currentCategory === 'all' ? 'active' : ''}}"
