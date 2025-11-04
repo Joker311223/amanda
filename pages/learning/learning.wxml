@@ -72,7 +72,7 @@
   </view>
   <!-- 作业列表 -->
   <view wx:if="{{nowPage==='作业回顾'}}" class="courses-section">
-    <view class="course-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{assignments}}" wx:key="id" bindtap="jumpToZuoye" data-zuoye-id="{{item.id}}">
+    <view class="course-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{assignments}}" wx:key="id" data-zuoye-id="{{item.id}}">
       <view class="course-header">
         <view class="course-icon {{item.status}}">
           <text wx:if="{{item.status === 'completed'}}">✅</text>
@@ -98,10 +98,10 @@
             <button wx:if="{{item.status !== 'locked'}}" class="btn btn-secondary course-btn" >
               {{item.status === 'completed' ? '已完成' : '可学习'}}
             </button>
-            <button wx:if="{{item.status === 'completed'}}" class="btn btn-primary course-btn" bindtap="viewAssignment" data-zuoye-id="{{item.id}}" catchtap="true">
+            <button wx:if="{{item.status === 'completed'}}" class="btn btn-primary course-btn" bindtap="viewAssignment" data-zuoye-id="{{item.id}}" >
               查看作业
             </button>
-             <button wx:if="{{item.status === 'available'}}" class="btn btn-primary course-btn" bindtap="jumpToZuoye" data-zuoye-id="{{item.id}}" catchtap="true">
+             <button wx:if="{{item.status === 'available'}}" class="btn btn-primary course-btn" bindtap="jumpToZuoye" data-zuoye-id="{{item.id}}" >
               开始作业
             </button>
             <button wx:if="{{item.status === 'locked'}}" class="btn btn-disabled course-btn" disabled>

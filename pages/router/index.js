@@ -8,6 +8,10 @@ Page({
     progressPercent: 0,
     courses: [],
     assignments:getApp().globalData.assignments,
+    showDialog: false,
+    dialogData: {},
+    dialogType: '', // 'course' 或 'assignment'
+    dialogParams: {}, // 存储跳转参数
   },
 
   // 加载数据
@@ -33,6 +37,150 @@ Page({
   onShow() {
     this.loadCourses();
   },
+
+  // 显示作业弹窗
+  showAssignmentDialog(e) {
+    const courseId = e.currentTarget.dataset.id;
+    const subIndex = e.currentTarget.dataset.index;
+    const zuoyeId = app.globalData.courses[courseId - 1].asssignIds[subIndex];
+    const assignment = this.data.assignments[zuoyeId - 1];
+
+    // 检查作业状态，如果是 locked 则显示锁定弹窗
+    if (assignment && assignment.status === 'locked') {
+      // 找到需要完成的前置课程
+      const course = app.globalData.courses[courseId - 1];
+      this.setData({
+        showDialog: true,
+        dialogType: 'locked',
+        dialogParams: {},
+        dialogData: {
+          emoji: '🔒',
+          title: '作业尚未解锁',
+          desc: `需要先完成「${course.title}」课程才能解锁这个作业哦！`,
+          info: '继续加油，完成前面的课程吧！',
+          confirmText: '我知道了',
+          showCancel: false
+        }
+      });
+      return;
+    }
+
+    // 如果已完成，直接跳转不显示弹窗
+    if (assignment && assignment.status === 'completed') {
+      wx.navigateTo({
+        url: `/pages/zuoye/index?zuoyeId=${zuoyeId}`,
+      });
+      return;
+    }
+
+    // 显示确认弹窗
+    this.setData({
+      showDialog: true,
+      dialogType: 'assignment',
+      dialogParams: { zuoyeId },
+      dialogData: {
+        emoji: '📝',
+        title: assignment.title || '开始作业',
+        desc: '准备好开始这个作业了吗？完成后可以获得经验值奖励！',
+        info: assignment.experience ? `完成可获得 ${assignment.experience} 经验值` : '',
+        confirmText: '开始作业',
+        showCancel: true
+      }
+    });
+  },
+
+  // 显示课程弹窗
+  showCourseDialog(e) {
+    const { id, title, status } = e.currentTarget.dataset;
+
+    // 检查课程状态，如果是 locked 则显示锁定弹窗
+    if (status === 'locked') {
+      // 找到前一个课程
+      const courseIndex = app.globalData.courses.findIndex(c => c.id === id);
+      const prevCourse = courseIndex > 0 ? app.globalData.courses[courseIndex - 1] : null;
+
+      this.setData({
+        showDialog: true,
+        dialogType: 'locked',
+        dialogParams: {},
+        dialogData: {
+          emoji: '🔒',
+          title: '课程尚未解锁',
+          desc: prevCourse
+            ? `需要先完成「${prevCourse.title}」才能解锁这门课程哦！`
+            : '需要先完成前面的课程才能解锁哦！',
+          info: '按顺序学习效果更好！',
+          confirmText: '我知道了',
+          showCancel: false
+        }
+      });
+      return;
+    }
+
+    // 如果已完成，直接跳转不显示弹窗
+    if (status === 'completed') {
+      wx.navigateTo({
+        url: `/pages/video/video?courseId=${id}`,
+      });
+      return;
+    }
+
+    // 获取课程信息
+    const course = app.globalData.courses.find(c => c.id === id);
+
+    // 显示确认弹窗
+    this.setData({
+      showDialog: true,
+      dialogType: 'course',
+      dialogParams: { courseId: id },
+      dialogData: {
+        emoji: '🎓',
+        title: title || '开始学习',
+        desc: '准备好开始这门课程了吗？让我们一起学习新知识！',
+        info: course?.experience ? `完成可获得 ${course.experience} 经验值` : '',
+        confirmText: '开始学习',
+        showCancel: true
+      }
+    });
+  },
+
+  // 隐藏弹窗
+  hideDialog() {
+    this.setData({
+      showDialog: false
+    });
+  },
+
+  // 确认弹窗
+  confirmDialog() {
+    const { dialogType, dialogParams } = this.data;
+
+    // 如果是锁定状态，只关闭弹窗
+    if (dialogType === 'locked') {
+      this.hideDialog();
+      return;
+    }
+
+    if (dialogType === 'assignment') {
+      // 跳转到作业页面
+      wx.navigateTo({
+        url: `/pages/zuoye/index?zuoyeId=${dialogParams.zuoyeId}`,
+      });
+    } else if (dialogType === 'course') {
+      // 跳转到课程页面
+      wx.navigateTo({
+        url: `/pages/video/video?courseId=${dialogParams.courseId}`,
+      });
+    }
+
+    this.hideDialog();
+  },
+
+  // 阻止事件冒泡
+  stopPropagation() {},
+
+  // 阻止滚动穿透
+  preventTouchMove() {},
 
   jumpToZuoye(e) {
     const courseId = e.currentTarget.dataset.id;
@@ -75,6 +223,8 @@ Page({
 
   // 更新课程状态
   updateCourseStatus(courses, completedCourseIds) {
+    console.log('yjc=>completedCourseIds',completedCourseIds );
+    
     courses.forEach((course, index) => {
       if (completedCourseIds.includes(course.id)) {
         course.status = "completed";
@@ -87,22 +237,7 @@ Page({
         course.status = "locked";
       }
     });
-  },
-
-  // 更新课程状态
-  updateCourseStatus(courses, completedCourseIds) {
-    courses.forEach((course, index) => {
-      if (completedCourseIds.includes(course.id)) {
-        course.status = "completed";
-      } else if (
-        index === 0 ||
-        completedCourseIds.includes(courses[index - 1].id)
-      ) {
-        course.status = "available";
-      } else {
-        course.status = "locked";
-      }
-    });
+    console.log('yjc=>coursecourse',courses );
   },
 
   // 更新课程状态
@@ -111,7 +246,7 @@ Page({
       if (assignmentIds.includes(assignment.id)) {
         assignment.status = "completed";
       } else if (
-        app.globalData.courses[assignment.id-1].status === "completed"
+        app.globalData.courses[assignment.courseId-1]?.status === "completed"
       ) {
         assignment.status = "available";
       } else {
@@ -122,6 +257,7 @@ Page({
 
   // 加载课程数据
   loadCourses() {
+    console.log('yjc=>loadCourses', );
     const learningProgress = app.globalData.learningProgress;
     const assignments = app.globalData.assignments;
     const allCourses = app.globalData.courses;
@@ -140,7 +276,7 @@ Page({
     // 处理课程数据
     const courses = [];
     this.updateCourseStatus(allCourses, learningProgress.completedCourses);
-    this.updateAssigmentsStatus(allCourses, learningProgress.completedCourses);
+    this.updateAssigmentsStatus(assignments, learningProgress.completedAssignments);
 
     // 计算学习进度
     const totalCount = allCourses.length;

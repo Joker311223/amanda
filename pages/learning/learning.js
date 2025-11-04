@@ -21,11 +21,12 @@ Page({
   // 加载数据
   loadData() {
     const learningProgress = app.globalData.learningProgress;
+    const assignments = app.globalData.assignments;
     const courses = app.globalData.courses;
 
     // 更新课程状态
     this.updateCourseStatus(courses, learningProgress.completedCourses);
-console.log('yjc=>app.globalData.assignments', app.globalData.assignments);
+    this.updateAssigmentsStatus(assignments, learningProgress.completedAssignments);
     this.setData({
       totalExperience: learningProgress.totalExperience,
       courses: courses,
@@ -48,8 +49,23 @@ console.log('yjc=>app.globalData.assignments', app.globalData.assignments);
         course.status = "locked";
       }
     });
+    console.log('yjc=>courses',courses );
   },
 
+  // 更新课程状态
+  updateAssigmentsStatus(assignments, assignmentIds) {
+    assignments.forEach((assignment, index) => {
+      if (assignmentIds.includes(assignment.id)) {
+        assignment.status = "completed";
+      } else if (
+        app.globalData.courses[assignment.courseId-1]?.status === "completed"
+      ) {
+        assignment.status = "available";
+      } else {
+        assignment.status = "locked";
+      }
+    });
+  },
   // 搜索输入
   onSearchInput(e) {
     const keyword = e.detail.value.toLowerCase();
@@ -115,6 +131,7 @@ console.log('yjc=>app.globalData.assignments', app.globalData.assignments);
 
   // 查看作业
   viewAssignment(e) {
+    console.log('yjc=>viewAssignment', );
     const zuoyeId = e.currentTarget.dataset.zuoyeId;
     wx.navigateTo({
       url: `/pages/assignment-review/assignment-review?assignmentId=${zuoyeId}`,

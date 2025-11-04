@@ -21,10 +21,53 @@
       </view>
     </view>
   </view>
+
+  <view wx:key="id"  class="page-line" style="margin-left:20rpx;padding-left: 38% ; height: 100rpx;">
+   <image style="opacity: {{ (item.status === 'locked') ? 0.2 : 1 }};" src="/images/star-shaing.svg" class="item-image"  />
+   </view>
+  
   <view wx:key="id" wx:for="{{allCourses}}" class="page-line" style="margin-left:20rpx;padding-left: {{item.position}}; height: 100rpx;">
     <block wx:for="{{item.asssignIds}}" wx:for-item="subItem" wx:for-index="idx">
-      <image style="opacity: {{ (subItem >= 0 && assignments[subItem-1].status === 'locked') ? 0.4 : 1 }};" wx:key="id" src="{{ assignments[subItem-1].status === 'locked' || assignments[subItem-1].status === 'available' ? '/images/work-icon-no.svg' : '/images/work-icon-done.svg'}}" class="item-image-mini {{assignments[subItem-1].status === 'available' ? 'available' : ''}}" data-index="{{idx}}" data-status="{{item.status}}" data-id="{{item.id}}" data-extra="{{item.otherData}}" bindtap="jumpToZuoye" />
+      <image style="opacity: {{ (subItem >= 0 && assignments[subItem-1].status === 'locked') ? 0.4 : 1 }};" wx:key="id" src="{{ assignments[subItem-1].status === 'locked' || assignments[subItem-1].status === 'available' ? '/images/work-icon-no.svg' : '/images/work-icon-done.svg'}}" class="item-image-mini {{assignments[subItem-1].status === 'available' ? 'available' : ''}}" data-index="{{idx}}" data-status="{{item.status}}" data-id="{{item.id}}" data-extra="{{item.otherData}}" bindtap="showAssignmentDialog" />
     </block>
-    <image style="opacity: {{ (item.status === 'locked') ? 0.2 : 1 }};" src="{{item.icon}}" class="item-image" data-id="{{item.id}}" data-title="{{item.title}}" data-status="{{item.status}}" bindtap="jumpToCourse" />
+    <image style="opacity: {{ (item.status === 'locked') ? 0.2 : 1 }};" src="{{item.icon}}" class="item-image {{item.status === 'available' ? 'available' : ''}}" data-id="{{item.id}}" data-title="{{item.title}}" data-status="{{item.status}}" bindtap="showCourseDialog" />
+  </view>
+
+  <!-- 确认弹窗 -->
+  <view class="dialog-mask" wx:if="{{showDialog}}" bindtap="hideDialog" catchtouchmove="preventTouchMove">
+    <view class="dialog-container" catchtap="stopPropagation">
+      <!-- 顶部装饰三角形 -->
+      <view class="dialog-triangle"></view>
+
+      <!-- 弹窗内容 -->
+      <view class="dialog-content">
+        <!-- 图标 -->
+        <view class="dialog-icon">
+          <text class="dialog-emoji">{{dialogData.emoji}}</text>
+        </view>
+
+        <!-- 标题 -->
+        <view class="dialog-title">{{dialogData.title}}</view>
+
+        <!-- 描述 -->
+        <view class="dialog-desc">{{dialogData.desc}}</view>
+
+        <!-- 额外信息 -->
+        <view class="dialog-info" wx:if="{{dialogData.info}}">
+          <text class="info-icon">ℹ️</text>
+          <text class="info-text">{{dialogData.info}}</text>
+        </view>
+
+        <!-- 按钮 -->
+        <view class="dialog-buttons {{dialogData.showCancel === false ? 'single-button' : ''}}">
+          <view class="dialog-btn dialog-btn-cancel" wx:if="{{dialogData.showCancel !== false}}" bindtap="hideDialog">
+            <text>取消</text>
+          </view>
+          <view class="dialog-btn dialog-btn-confirm" bindtap="confirmDialog">
+            <text>{{dialogData.confirmText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </view>

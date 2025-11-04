@@ -118,13 +118,13 @@ page {
   align-items: center;
   background: #FFD700;
   color: #333;
-  padding: 10rpx 20rpx;
-  border-radius: 30rpx;
+  padding: 5rpx 20rpx;
+  border-radius: 0 0 0 30rpx;
   font-size: 24rpx;
   font-weight: bold;
   position: fixed;
-  top: 20rpx;
-  left: 20rpx;
+  top: 0rpx;
+  right: 0rpx;
   z-index: 1000;
 }
 

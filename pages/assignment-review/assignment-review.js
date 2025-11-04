@@ -32,11 +32,52 @@ Page({
     // 从本地存储加载答案
     const answers = this.loadAnswersFromStorage(assignmentId);
 
+    // 处理题目数据，添加格式化的答案
+    const problems = (assignment.problems || []).map((problem, index) => {
+      const answer = answers[index];
+      return {
+        ...problem,
+        formattedAnswer: this.formatAnswer(answer)
+      };
+    });
+
     this.setData({
       assignment: assignment,
-      problems: assignment.problems || [],
+      problems: problems,
       answers: answers
     });
+  },
+
+  // 格式化答案显示
+  formatAnswer(answer) {
+    if (answer === undefined || answer === null || answer === '') {
+      return '暂无答案';
+    }
+
+    // 如果是数组
+    if (Array.isArray(answer)) {
+      return answer.length > 0 ? answer.join('、') : '暂无答案';
+    }
+
+    // 如果是对象
+    if (typeof answer === 'object') {
+      // 尝试提取常见的字段
+      if (answer.text) return answer.text;
+      if (answer.value) return answer.value;
+      if (answer.content) return answer.content;
+      if (answer.answer) return answer.answer;
+
+      // 如果对象有多个键值对，格式化显示
+      const entries = Object.entries(answer);
+      if (entries.length > 0) {
+        return entries.map(([key, value]) => `${key}: ${value}`).join('\n');
+      }
+
+      return JSON.stringify(answer);
+    }
+
+    // 其他类型直接转字符串
+    return String(answer);
   },
 
   // 从本地存储加载答案
@@ -54,34 +95,5 @@ Page({
   // 返回上一页
   goBack() {
     wx.navigateBack();
-  },
-
-  // 查看题目详情（可选功能，如果需要查看单个题目的详细答案）
-  viewProblemDetail(e) {
-    const index = e.currentTarget.dataset.index;
-    const problem = this.data.problems[index];
-    const answer = this.data.answers[index];
-
-    // 显示答案详情
-    let content = `题目：${problem.info}\n\n`;
-
-    if (answer !== undefined && answer !== null && answer !== '') {
-      if (Array.isArray(answer)) {
-        content += `答案：${answer.join(', ')}`;
-      } else if (typeof answer === 'object') {
-        content += `答案：${JSON.stringify(answer)}`;
-      } else {
-        content += `答案：${answer}`;
-      }
-    } else {
-      content += '暂无答案';
-    }
-
-    wx.showModal({
-      title: `第 ${index + 1} 题`,
-      content: content,
-      showCancel: false,
-      confirmText: '知道了'
-    });
   }
 });
