@@ -86,37 +86,6 @@
       <view class="action-arrow">></view>
     </view>
   </view>
-
-  <!-- 最近学习 -->
-  <view class="recent-section" wx:if="{{recentCourses.length > 0}}">
-    <view class="section-header">
-      <text class="section-title">最近学习</text>
-    </view>
-
-    <view class="recent-courses">
-      <view
-        class="recent-course-item"
-        wx:for="{{recentCourses}}"
-        wx:key="id"
-        bindtap="goToCourse"
-        data-course-id="{{item.id}}"
-      >
-        <view class="course-thumbnail">
-          <text class="course-category-icon">{{item.categoryIcon}}</text>
-        </view>
-        <view class="course-info">
-          <text class="course-title">{{item.title}}</text>
-          <text class="course-category">{{item.category}}</text>
-        </view>
-        <view class="course-status">
-          <text class="status-tag {{item.status === 'completed' ? 'status-completed' : 'status-available'}}">
-            {{item.status === 'completed' ? '已完成' : '继续学习'}}
-          </text>
-        </view>
-      </view>
-    </view>
-  </view>
-
   <!-- 激励信息 -->
   <view class="motivation-section">
     <view class="motivation-card card">
