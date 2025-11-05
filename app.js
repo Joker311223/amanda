@@ -193,7 +193,7 @@ App({
         title: "正念觉察",
         category: "正念",
         courseId: 1,
-        status: "locked",
+        status: "available",
         dueDate: "2024-01-15",
         lead: "正念核心技能的练习·描述在什么情况下您决定练习正念技能。",
         problems: [

@@ -58,7 +58,7 @@ Page({
       if (assignmentIds.includes(assignment.id)) {
         assignment.status = "completed";
       } else if (
-        app.globalData.courses[assignment.courseId-1]?.status === "completed"
+        app.globalData.courses[assignment.courseId-1]?.status === "completed" || assignment.id === 1
       ) {
         assignment.status = "available";
       } else {
