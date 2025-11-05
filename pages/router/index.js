@@ -12,6 +12,8 @@ Page({
     dialogData: {},
     dialogType: '', // 'course' 或 'assignment'
     dialogParams: {}, // 存储跳转参数
+    showGuide: false, // 是否显示导引
+    guideSteps: [], // 导引步骤
   },
 
   // 加载数据
@@ -36,6 +38,84 @@ Page({
 
   onShow() {
     this.loadCourses();
+
+    // 检查是否需要显示导引
+    if (!app.globalData.hasSeenGuide && !app.globalData.isFirstTime) {
+      // 延迟显示导引，确保页面已完全渲染
+      setTimeout(() => {
+        this.showNewUserGuide();
+      }, 800);
+    }
+  },
+
+  // 显示新手导引
+  showNewUserGuide() {
+    const guideSteps = [
+      {
+        icon: '👋',
+        title: '欢迎来到学习路线',
+        desc: '这里是你的DBT学习之旅的起点！让我带你快速了解如何使用这个页面。',
+        selector: null, // 无选择器，居中显示
+        padding: 10
+      },
+      {
+        icon: '📚',
+        title: '课程学习',
+        desc: '点击这些课程图标可以观看视频课程。完成课程后可以获得经验值，并解锁下一个课程！',
+        selector: '.item-image.available', // 高亮第一个可用课程
+        padding: 15
+      },
+      {
+        icon: '✍️',
+        title: '作业练习',
+        desc: '这些是配套的作业练习。完成课程后，相关作业会自动解锁。通过作业巩固所学知识！',
+        selector: '.item-image-mini.available', // 高亮第一个可用作业
+        padding: 10
+      },
+      {
+        icon: '⭐',
+        title: '经验值系统',
+        desc: '完成课程和作业都能获得经验值。积累经验值，见证自己的成长！',
+        selector: '.experience-badge', // 高亮经验值显示
+        padding: 10
+      },
+      {
+        icon: '🎯',
+        title: '开始你的学习之旅',
+        desc: '现在你已经了解了基本功能，点击第一个课程开始学习吧！记得完成配套作业哦～',
+        selector: null,
+        padding: 10
+      }
+    ];
+
+    this.setData({
+      showGuide: true,
+      guideSteps: guideSteps
+    });
+  },
+
+  // 导引完成
+  onGuideComplete() {
+    this.setData({
+      showGuide: false
+    });
+
+    // 标记已看过导引
+    app.globalData.hasSeenGuide = true;
+    app.saveUserData();
+
+    // 显示提示
+    wx.showToast({
+      title: '开始学习吧！',
+      icon: 'success',
+      duration: 1500
+    });
+  },
+
+  // 导引步骤变化
+  onGuideStepChange(e) {
+    const step = e.detail.step;
+    console.log('当前导引步骤:', step);
   },
 
   // 显示作业弹窗

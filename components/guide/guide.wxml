@@ -1,0 +1,44 @@
+<view wx:if="{{show}}" class="guide-container">
+  <!-- 遮罩层 -->
+  <view class="guide-mask" bindtap="onMaskTap">
+    <!-- 高亮区域（通过透明镂空实现） -->
+    <view
+      class="guide-highlight"
+      style="top: {{highlightTop}}px; left: {{highlightLeft}}px; width: {{highlightWidth}}px; height: {{highlightHeight}}px;"
+    ></view>
+  </view>
+
+  <!-- 提示框 -->
+  <view
+    class="guide-tip {{tipPosition}}"
+    style="top: {{tipTop}}px; left: {{tipLeft}}px;"
+  >
+    <view class="guide-tip-content">
+      <view class="guide-tip-icon">{{currentStep.icon}}</view>
+      <view class="guide-tip-title">{{currentStep.title}}</view>
+      <view class="guide-tip-desc">{{currentStep.desc}}</view>
+
+      <view class="guide-tip-footer">
+        <text class="guide-step-indicator">{{currentStepIndex + 1}}/{{totalSteps}}</text>
+        <view class="guide-tip-buttons">
+          <button
+            wx:if="{{currentStepIndex > 0}}"
+            class="guide-btn guide-btn-prev"
+            bindtap="onPrevStep"
+          >
+            上一步
+          </button>
+          <button
+            class="guide-btn guide-btn-next"
+            bindtap="onNextStep"
+          >
+            {{currentStepIndex < totalSteps - 1 ? '下一步' : '开始学习'}}
+          </button>
+        </view>
+      </view>
+    </view>
+
+    <!-- 箭头指示器 -->
+    <view class="guide-arrow {{arrowPosition}}"></view>
+  </view>
+</view>

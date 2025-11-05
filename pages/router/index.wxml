@@ -70,4 +70,12 @@
       </view>
     </view>
   </view>
+
+  <!-- 新手导引组件 -->
+  <guide
+    show="{{showGuide}}"
+    steps="{{guideSteps}}"
+    bind:complete="onGuideComplete"
+    bind:stepchange="onGuideStepChange"
+  />
 </view>

@@ -84,6 +84,7 @@ Page({
     // 保存用户信息到全局数据
     app.globalData.userInfo = this.data.userInfo
     app.globalData.isFirstTime = false
+    app.globalData.hasSeenGuide = false // 标记还未看过导引
 
     // 初始化第一个课程为可用状态
     if (app.globalData.courses.length > 0) {
@@ -100,10 +101,10 @@ Page({
       duration: 2000
     })
 
-    // 延迟跳转到首页
+    // 延迟跳转到router页面（学习路线页面）并触发导引
     setTimeout(() => {
-      wx.reLaunch({
-        url: '/pages/index/index'
+      wx.switchTab({
+        url: '/pages/router/index'
       })
     }, 2000)
   }

@@ -1,0 +1,193 @@
+/* 导引容器 */
+.guide-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+/* 遮罩层 */
+.guide-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 高亮区域 */
+.guide-highlight {
+  position: absolute;
+  border-radius: 20rpx;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+  animation: pulse 2s ease-in-out infinite;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+/* 提示框 */
+.guide-tip {
+  position: absolute;
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  max-width: 600rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease-out;
+  z-index: 10000;
+}
+
+.guide-tip-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.guide-tip-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.guide-tip-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+  text-align: center;
+}
+
+.guide-tip-desc {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.guide-tip-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.guide-step-indicator {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.guide-tip-buttons {
+  display: flex;
+  gap: 20rpx;
+  width: 100%;
+  justify-content: center;
+}
+
+.guide-btn {
+  padding: 20rpx 40rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  border: none;
+  min-width: 160rpx;
+}
+
+.guide-btn-prev {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.guide-btn-next {
+  background: linear-gradient(135deg, #6BBF59 0%, #5AAF49 100%);
+  color: white;
+}
+
+/* 箭头指示器 */
+.guide-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.guide-arrow.arrow-top {
+  top: -20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 0 20rpx 20rpx 20rpx;
+  border-color: transparent transparent white transparent;
+}
+
+.guide-arrow.arrow-bottom {
+  bottom: -20rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 20rpx 20rpx 0 20rpx;
+  border-color: white transparent transparent transparent;
+}
+
+.guide-arrow.arrow-left {
+  left: -20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 20rpx 20rpx 20rpx 0;
+  border-color: transparent white transparent transparent;
+}
+
+.guide-arrow.arrow-right {
+  right: -20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 20rpx 0 20rpx 20rpx;
+  border-color: transparent transparent transparent white;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.3), 0 0 20rpx 10rpx rgba(107, 191, 89, 0.5);
+  }
+}
+
+/* 提示框位置调整 */
+.guide-tip.tip-top {
+  /* 提示框在高亮区域上方 */
+}
+
+.guide-tip.tip-bottom {
+  /* 提示框在高亮区域下方 */
+}
+
+.guide-tip.tip-center {
+  /* 提示框居中 */
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%);
+}

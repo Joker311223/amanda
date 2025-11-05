@@ -946,6 +946,7 @@ App({
       wx.setStorageSync("userInfo", this.globalData.userInfo);
       wx.setStorageSync("learningProgress", this.globalData.learningProgress);
       wx.setStorageSync("isFirstTime", false);
+      wx.setStorageSync("hasSeenGuide", this.globalData.hasSeenGuide);
     } catch (e) {
       console.error("保存用户数据失败", e);
     }
