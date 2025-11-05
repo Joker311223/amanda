@@ -36,7 +36,7 @@
       },
       {
         "pagePath": "pages/router/index",
-        "text": "核心学习进入口",
+        "text": "学习中心",
         "iconPath": "images/xuexi-icon-luxian.png",
         "selectedIconPath": "images/xuexi-icon-luxian.png"
       },
@@ -48,7 +48,7 @@
       },
       {
         "pagePath": "pages/learning/learning",
-        "text": "课程/作业回顾",
+        "text": "课程复习",
         "iconPath": "images/tools.png",
         "selectedIconPath": "images/tools-active.png"
       },

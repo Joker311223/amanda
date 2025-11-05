@@ -31,9 +31,9 @@
     </view>
   </view>
 
-  <view wx:key="id"  class="page-line" style="margin-left:20rpx;padding-left: 38% ; height: 100rpx;">
+  <!-- <view wx:key="id"  class="page-line" style="margin-left:20rpx;padding-left: 38% ; height: 100rpx;">
    <image style="opacity: {{ (item.status === 'locked') ? 0.2 : 1 }};" src="/images/star-shaing.svg" class="item-image"  />
-   </view>
+   </view> -->
   
   <view wx:key="id" wx:for="{{allCourses}}" class="page-line" style="margin-left:20rpx;padding-left: {{item.position}}; height: 100rpx;">
     <block wx:for="{{utils.reverseArray(item.asssignIds)}}" wx:for-item="subItem" wx:for-index="idx">
