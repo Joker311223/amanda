@@ -108,7 +108,7 @@
   padding: 25rpx 30rpx;
   margin-bottom: 15rpx;
   background: white;
-  border-radius: 20rpx;
+  border-radius: 10rpx;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
 }
 
