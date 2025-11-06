@@ -1,12 +1,3 @@
-<wxs module="utils">
-  function reverseArray(array) {
-    if (!array || !array.length) return [];
-    return array.slice().reverse(); // 使用 slice() 创建副本并反转
-  }
-  module.exports = {
-    reverseArray: reverseArray
-  }
-</wxs>
 <view class="page-container">
   <!-- 经验值显示 -->
   <view class="experience-badge">
@@ -30,13 +21,9 @@
       </view>
     </view>
   </view>
-
-  <!-- <view wx:key="id"  class="page-line" style="margin-left:20rpx;padding-left: 38% ; height: 100rpx;">
-   <image style="opacity: {{ (item.status === 'locked') ? 0.2 : 1 }};" src="/images/star-shaing.svg" class="item-image"  />
-   </view> -->
   
   <view wx:key="id" wx:for="{{allCourses}}" class="page-line" style="margin-left:20rpx;padding-left: {{item.position}}; height: 100rpx;">
-    <block wx:for="{{utils.reverseArray(item.asssignIds)}}" wx:for-item="subItem" wx:for-index="idx">
+    <block wx:for="{{item.asssignIds}}" wx:for-item="subItem" wx:for-index="idx">
       <image style="opacity: {{ (subItem >= 0 && assignments[subItem-1].status === 'locked') ? 0.4 : 1 }};" wx:key="id" src="{{ assignments[subItem-1].status === 'locked' || assignments[subItem-1].status === 'available' ? '/images/work-icon-no.svg' : '/images/work-icon-done.svg'}}" class="item-image-mini {{assignments[subItem-1].status === 'available' ? 'available' : ''}}" data-index="{{idx}}" data-status="{{item.status}}" data-id="{{item.id}}" data-extra="{{item.otherData}}" bindtap="showAssignmentDialog" />
     </block>
     <image style="opacity: {{ (item.status === 'locked') ? 0.2 : 1 }};" src="{{item.icon}}" class="item-image {{item.status === 'available' ? 'available' : ''}}" data-id="{{item.id}}" data-title="{{item.title}}" data-status="{{item.status}}" bindtap="showCourseDialog" />
