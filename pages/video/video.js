@@ -10,6 +10,8 @@ Page({
     currentTime: '00:00',
     totalTime: '08:45',
     notes: '',
+    courseNotesList: [], // 当前课程的笔记列表
+    editingNoteId: null, // 正在编辑的笔记ID
     isCompleted: false,
     showExperienceGain: false,
     playTimer: null,
@@ -28,6 +30,7 @@ Page({
       videoUrl: videoUrl
     })
     this.loadCourse(courseId)
+    this.loadCourseNotes(courseId)
   },
 
   onUnload() {
@@ -68,6 +71,25 @@ Page({
         currentTime: course.duration,
         isCompleted: false // 可以重新观看
       })
+    }
+  },
+
+  // 加载课程笔记
+  loadCourseNotes(courseId) {
+    try {
+      // 获取所有笔记
+      let allNotes = wx.getStorageSync('userNotes') || []
+
+      // 筛选出当前课程的笔记，按时间倒序排列
+      const courseNotes = allNotes
+        .filter(note => note.courseId === courseId)
+        .sort((a, b) => b.id - a.id)
+
+      this.setData({
+        courseNotesList: courseNotes
+      })
+    } catch (error) {
+      console.error('加载笔记失败:', error)
     }
   },
 
@@ -169,17 +191,31 @@ Page({
       // 获取现有笔记列表
       let notes = wx.getStorageSync('userNotes') || []
 
-      // 创建新笔记对象
-      const newNote = {
-        id: Date.now(),
-        content: content,
-        courseTitle: this.data.currentCourse ? this.data.currentCourse.title : '视频课程',
-        createTime: this.formatDate(new Date()),
-        updateTime: this.formatDate(new Date())
-      }
+      if (this.data.editingNoteId) {
+        // 编辑模式：更新现有笔记
+        const noteIndex = notes.findIndex(note => note.id === this.data.editingNoteId)
+        if (noteIndex !== -1) {
+          notes[noteIndex].content = content
+          notes[noteIndex].updateTime = this.formatDate(new Date())
+        }
 
-      // 添加到笔记列表开头
-      notes.unshift(newNote)
+        this.setData({
+          editingNoteId: null
+        })
+      } else {
+        // 新增模式：创建新笔记
+        const newNote = {
+          id: Date.now(),
+          courseId: this.data.courseId,
+          content: content,
+          courseTitle: this.data.currentCourse ? this.data.currentCourse.title : '视频课程',
+          createTime: this.formatDate(new Date()),
+          updateTime: this.formatDate(new Date())
+        }
+
+        // 添加到笔记列表开头
+        notes.unshift(newNote)
+      }
 
       // 保存到本地存储
       wx.setStorageSync('userNotes', notes)
@@ -188,6 +224,9 @@ Page({
       this.setData({
         notes: ''
       })
+
+      // 重新加载笔记列表
+      this.loadCourseNotes(this.data.courseId)
 
       wx.showToast({
         title: '笔记已保存',
@@ -236,6 +275,66 @@ Page({
       content: `恭喜完成《${this.data.currentCourse.title}》课程！\n\n获得经验：${this.data.currentCourse.experience}分\n课程时长：${this.data.currentCourse.duration}\n\n继续保持学习的热情，每一步都是成长！`,
       showCancel: false,
       confirmText: '知道了'
+    })
+  },
+
+  // 编辑笔记
+  editNote(e) {
+    const noteId = e.currentTarget.dataset.id
+    const note = this.data.courseNotesList.find(n => n.id === noteId)
+
+    if (note) {
+      this.setData({
+        notes: note.content,
+        editingNoteId: noteId
+      })
+
+      // 滚动到输入框
+      wx.pageScrollTo({
+        selector: '.notes-textarea',
+        duration: 300
+      })
+    }
+  },
+
+  // 取消编辑
+  cancelEdit() {
+    this.setData({
+      notes: '',
+      editingNoteId: null
+    })
+  },
+
+  // 删除笔记
+  deleteNote(e) {
+    const noteId = e.currentTarget.dataset.id
+
+    wx.showModal({
+      title: '确认删除',
+      content: '确定要删除这条笔记吗？',
+      success: (res) => {
+        if (res.confirm) {
+          try {
+            let notes = wx.getStorageSync('userNotes') || []
+            notes = notes.filter(note => note.id !== noteId)
+            wx.setStorageSync('userNotes', notes)
+
+            // 重新加载笔记列表
+            this.loadCourseNotes(this.data.courseId)
+
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success'
+            })
+          } catch (error) {
+            console.error('删除笔记失败:', error)
+            wx.showToast({
+              title: '删除失败',
+              icon: 'none'
+            })
+          }
+        }
+      }
     })
   }
 })

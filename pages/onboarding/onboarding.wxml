@@ -7,46 +7,42 @@
       </view>
       <view class="card-content">
         <view class="intro-text">
-          <text class="greeting">Halo，你好，我是DBT小助手静静。</text>
+          <text class="greeting">Halo，你好！我是DBT小助手静静。</text>
 
           <text class="description">
-            接下来6周的时间，我将和你一起学习和实践辩证行为治疗（DBT）情绪管理技能。
+            接下来8周，我会陪你学习实践辩证行为治疗（Dialectical Behavior Therapy）情绪管理技能，简称DBT。
           </text>
 
           <view class="dbt-intro">
-            <text class="section-title">辩证行为治疗是什么？</text>
+            <text class="section-title">辩证行为疗法是什么？</text>
             <text class="section-content">
-              DBT是一种认知行为疗法，旨在帮助人们改善情绪调节能力和提高人际关系质量等。
+              DBT是一种认知行为疗法，旨在帮助人们调节情绪、改善人际关系，增强压力适应与自我接纳能力。
             </text>
           </view>
 
           <view class="skills-intro">
-            <text class="section-title">以下是DBT的四个核心技能模块：</text>
+            <text class="section-title">以下是DBT的四个核心技能模块</text>
 
             <view class="skill-item">
-              <text class="skill-title">痛苦耐受技能：</text>
-              <text class="skill-desc">帮助你处理危机，包括应对危机时的技能、自我保护技能等。</text>
+              <text class="skill-title">正念技能：</text>
+              <text class="skill-desc">DBT基础，锚定当下、觉察身心状态，培养不评判的接纳态度。</text>
             </view>
 
             <view class="skill-item">
               <text class="skill-title">情绪调节技能：</text>
-              <text class="skill-desc">帮助你了解情绪，掌握调节情绪的技能，包括接受和容忍情绪、情绪调节技能和提高正面情绪。</text>
+              <text class="skill-desc">识别情绪信号与来源，掌握降低情绪强度、积累正面情绪的方法。</text>
             </view>
 
             <view class="skill-item">
-              <text class="skill-title">正念技能：</text>
-              <text class="skill-desc">帮助你提高注意力和正念水平，包括学习冥想、观察身体感受、集中注意力等。</text>
+              <text class="skill-title">痛苦耐受技能：</text>
+              <text class="skill-desc">危机或痛苦中，用健康方式耐受不适，避免冲动行为。</text>
             </view>
 
             <view class="skill-item">
-              <text class="skill-title">人际关系技能：</text>
-              <text class="skill-desc">帮助你改善人际交往和沟通技能，包括有效沟通、界定个人界限、理解和应对他人情绪等。</text>
+              <text class="skill-title">人际效能技能：</text>
+              <text class="skill-desc">提升沟通质量与边界感，包括表达需求、合理拒绝、应对冲突。</text>
             </view>
           </view>
-
-          <text class="conclusion">
-            通过学习和应用这些技能，你可以更好地应对情绪和行为问题，提高自我管理和应对压力的能力，增强对自身和他人的理解和同情心。
-          </text>
         </view>
 
         <button class="btn btn-primary" bindtap="nextStep">
@@ -138,6 +134,7 @@
           <button
             class="btn btn-primary start-journey-btn"
             form-type="submit"
+            style="width:600rpx"
             disabled="{{!isFormValid}}"
           >
             开始你的DBT技能学习之旅吧！

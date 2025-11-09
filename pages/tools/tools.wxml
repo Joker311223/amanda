@@ -17,11 +17,25 @@
           全部 ({{skillCards.length}})
         </view>
         <view
-          class="category-tab {{currentCategory === '情绪管理-生物社会理论' ? 'active' : ''}}"
+          class="category-tab {{currentCategory === '人际效能' ? 'active' : ''}}"
           bindtap="setCategory"
-          data-category="情绪管理-生物社会理论"
+          data-category="人际效能"
         >
-          生物社会理论 (3)
+          人际效能 (5)
+        </view>
+        <view
+          class="category-tab {{currentCategory === '情绪管理' ? 'active' : ''}}"
+          bindtap="setCategory"
+          data-category="情绪管理"
+        >
+          情绪管理 (3)
+        </view>
+        <view
+          class="category-tab {{currentCategory === '情绪调节' ? 'active' : ''}}"
+          bindtap="setCategory"
+          data-category="情绪调节"
+        >
+          情绪调节 (3)
         </view>
         <view
           class="category-tab {{currentCategory === '正念' ? 'active' : ''}}"
@@ -36,20 +50,6 @@
           data-category="痛苦耐受"
         >
           痛苦耐受 (13)
-        </view>
-        <view
-          class="category-tab {{currentCategory === '情绪调节' ? 'active' : ''}}"
-          bindtap="setCategory"
-          data-category="情绪调节"
-        >
-          情绪调节 (3)
-        </view>
-        <view
-          class="category-tab {{currentCategory === '人际效能' ? 'active' : ''}}"
-          bindtap="setCategory"
-          data-category="人际效能"
-        >
-          人际效能 (5)
         </view>
       </view>
     </scroll-view>
@@ -137,32 +137,22 @@
         indicator-active-color="#ffffff"
       >
         <swiper-item wx:for="{{currentImages}}" wx:key="index">
-          <view class="swiper-item-wrapper">
-            <movable-area class="movable-area" scale-area>
-              <movable-view
-                class="movable-view"
-                direction="all"
-                scale
-                scale-min="1"
-                scale-max="3"
-                scale-value="{{imageScale}}"
-                bindscale="onImageScale"
-                x="{{imageX}}"
-                y="{{imageY}}"
-                damping="50"
-                friction="2"
-                bindtap="onImageTap"
-              >
-                <image
-                  class="preview-image"
-                  src="{{item}}"
-                  mode="aspectFit"
-                  show-menu-by-longpress
-                  bindload="onImageLoad"
-                />
-              </movable-view>
-            </movable-area>
-          </view>
+          <scroll-view
+            class="image-scroll-view"
+            scroll-x
+            scroll-y
+            enable-flex
+          >
+            <view class="image-container" bindtap="onImageTap">
+              <image
+                class="preview-image"
+                src="{{item}}"
+                mode="widthFix"
+                show-menu-by-longpress
+                bindload="onImageLoad"
+              />
+            </view>
+          </scroll-view>
         </swiper-item>
       </swiper>
 

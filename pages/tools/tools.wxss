@@ -13,6 +13,7 @@
 .category-section {
   padding: 0 20rpx;
   margin-bottom: 20rpx;
+  margin-top: 60rpx;
 }
 
 .category-scroll {
@@ -274,36 +275,31 @@
   height: 100%;
 }
 
-.swiper-item-wrapper {
+.image-scroll-view {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100rpx 20rpx;
 }
 
-.movable-area {
+.image-container {
   width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.movable-view {
-  width: 100%;
-  height: 100%;
+  min-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 120rpx 30rpx 100rpx;
+  box-sizing: border-box;
 }
 
 .preview-image {
   width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
   animation: imageZoomIn 0.3s ease;
-  pointer-events: none;
-  margin-left: -80rpx;
+  border-radius: 10rpx;
 }
 
 @keyframes imageZoomIn {
@@ -375,8 +371,8 @@
     font-size: 36rpx;
   }
 
-  .swiper-item-wrapper {
-    padding: 80rpx 30rpx;
+  .image-container {
+    padding: 100rpx 20rpx 80rpx;
   }
 
   .image-counter {

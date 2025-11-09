@@ -143,9 +143,102 @@
   color: #999;
 }
 
+.notes-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.cancel-btn {
+  font-size: 24rpx;
+  padding: 12rpx 24rpx;
+}
+
 .save-notes-btn {
   font-size: 24rpx;
   padding: 12rpx 24rpx;
+}
+
+/* 笔记列表 */
+.notes-list-section {
+  margin-bottom: 30rpx;
+}
+
+.notes-list-header {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #E9ECEF;
+  margin-bottom: 20rpx;
+}
+
+.notes-count {
+  font-size: 26rpx;
+  color: #666;
+  font-weight: 500;
+}
+
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.note-item {
+  background: white;
+  border-radius: 15rpx;
+  padding: 25rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.note-content {
+  margin-bottom: 15rpx;
+}
+
+.note-text {
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: #333;
+  word-break: break-all;
+}
+
+.note-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15rpx;
+  border-top: 1rpx solid #F5F5F5;
+}
+
+.note-time {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.note-actions {
+  display: flex;
+  gap: 15rpx;
+  width: 300rpx;
+}
+
+.btn-icon {
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+  border: none;
+  background: transparent;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 5rpx;
+}
+
+.btn-icon::after {
+  border: none;
+}
+
+.edit-btn {
+  color: #1890ff;
+}
+
+.delete-btn {
+  color: #ff4d4f;
 }
 
 /* 完成学习按钮 */

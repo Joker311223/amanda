@@ -12,7 +12,9 @@ Page({
     optionLabels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'],
     sliderSegments: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], // 10个分段
     showCompletionModal: false, // 完成弹窗显示状态
-    earnedPoints: 0 // 获得的经验值
+    earnedPoints: 0, // 获得的经验值
+    showLeadScreen: true, // 显示导语界面
+    isStarting: false // 开始动画状态
   },
 
   // 加载数据
@@ -242,6 +244,21 @@ Page({
   // 继续按钮点击
   onContinue() {
     this.onCloseCompletionModal();
+  },
+
+  // 开始做题
+  onStartQuiz() {
+    this.setData({
+      isStarting: true
+    });
+
+    // 延迟隐藏导语界面，创建丝滑过渡效果
+    setTimeout(() => {
+      this.setData({
+        showLeadScreen: false,
+        isStarting: false
+      });
+    }, 300);
   },
 
   onLoad(options) {

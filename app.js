@@ -193,7 +193,7 @@ App({
         title: "正念觉察",
         category: "正念",
         courseId: 1,
-        status: "available",
+        status: "locked",
         dueDate: "2024-01-15",
         lead: "正念核心技能的练习·描述在什么情况下您决定练习正念技能。",
         problems: [
@@ -873,43 +873,43 @@ App({
       },
     ],
     skillCards: [
-      // 情绪管理-生物社会理论（3张）
-      { id: 1, title: "生物社会理论基础", category: "情绪管理-生物社会理论" },
-      { id: 2, title: "情绪脆弱性", category: "情绪管理-生物社会理论" },
-      { id: 3, title: "无效环境", category: "情绪管理-生物社会理论" },
+      // 人际效能（5张）
+      { id: 1, title: "DEARMAN1", category: "人际效能" },
+      { id: 2, title: "DEARMAN2", category: "人际效能" },
+      { id: 3, title: "FAST", category: "人际效能" },
+      { id: 4, title: "GIVE", category: "人际效能" },
+      { id: 5, title: "总概", category: "人际效能" },
 
-      // 正念（4张）
-      { id: 4, title: "HOW技能", category: "正念" },
-      { id: 5, title: "WHAT技能", category: "正念" },
-      { id: 6, title: "练习观察", category: "正念" },
-      { id: 7, title: "智慧心", category: "正念" },
-
-      // 痛苦耐受（13张）
-      { id: 8, title: "使用情境", category: "痛苦耐受" },
-      { id: 9, title: "ACCEPT", category: "痛苦耐受" },
-      { id: 10, title: "IMPROVE", category: "痛苦耐受" },
-      { id: 11, title: "STOP", category: "痛苦耐受" },
-      { id: 12, title: "TIP", category: "痛苦耐受" },
-      { id: 13, title: "保持正念", category: "痛苦耐受" },
-      { id: 14, title: "全然接纳1", category: "痛苦耐受" },
-      { id: 15, title: "全然接纳2", category: "痛苦耐受" },
-      { id: 16, title: "全然接纳3", category: "痛苦耐受" },
-      { id: 17, title: "全然接纳4", category: "痛苦耐受" },
-      { id: 18, title: "全然接纳5", category: "痛苦耐受" },
-      { id: 19, title: "身体扫描", category: "痛苦耐受" },
-      { id: 20, title: "自我安抚", category: "痛苦耐受" },
+      // 情绪管理（3张）
+      { id: 6, title: "生物社会技能3", category: "情绪管理" },
+      { id: 7, title: "生物社会理论1", category: "情绪管理" },
+      { id: 8, title: "生物社会理论2", category: "情绪管理" },
 
       // 情绪调节（3张）
-      { id: 21, title: "情绪调节-PLEASE", category: "情绪调节" },
-      { id: 22, title: "情绪调节-积累正面情绪", category: "情绪调节" },
-      { id: 23, title: "情绪调节-相反行为", category: "情绪调节" },
+      { id: 9, title: "PLEASE", category: "情绪调节" },
+      { id: 10, title: "相反行为", category: "情绪调节" },
+      { id: 11, title: "积累正面情绪", category: "情绪调节" },
 
-      // 人际效能（5张）
-      { id: 24, title: "人际效能目标", category: "人际效能" },
-      { id: 25, title: "DEARMAN1", category: "人际效能" },
-      { id: 26, title: "DEARMAN2", category: "人际效能" },
-      { id: 27, title: "FAST", category: "人际效能" },
-      { id: 28, title: "GIVE", category: "人际效能" },
+      // 正念（4张）
+      { id: 12, title: "HOW技能", category: "正念" },
+      { id: 13, title: "WHAT技能", category: "正念" },
+      { id: 14, title: "智慧心", category: "正念" },
+      { id: 15, title: "练习观察", category: "正念" },
+
+      // 痛苦耐受（13张）
+      { id: 16, title: "IMPROVE", category: "痛苦耐受" },
+      { id: 17, title: "STOP", category: "痛苦耐受" },
+      { id: 18, title: "TIP", category: "痛苦耐受" },
+      { id: 19, title: "保持正念", category: "痛苦耐受" },
+      { id: 20, title: "全然接纳1", category: "痛苦耐受" },
+      { id: 21, title: "全然接纳2", category: "痛苦耐受" },
+      { id: 22, title: "全然接纳3", category: "痛苦耐受" },
+      { id: 23, title: "全然接纳4", category: "痛苦耐受" },
+      { id: 24, title: "全然接纳5", category: "痛苦耐受" },
+      { id: 25, title: "总概", category: "痛苦耐受" },
+      { id: 26, title: "自我安抚", category: "痛苦耐受" },
+      { id: 27, title: "身体扫描", category: "痛苦耐受" },
+      { id: 28, title: "转移注意力", category: "痛苦耐受" },
     ],
   },
 

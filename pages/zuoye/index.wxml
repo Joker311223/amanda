@@ -1,6 +1,33 @@
 <view class="page-container">
+  <!-- 导语界面 -->
+  <view class="lead-screen {{isStarting ? 'fade-out' : ''}}" wx:if="{{showLeadScreen}}">
+    <view class="lead-content">
+      <!-- 装饰图标 -->
+      <view class="lead-icon">
+        <view class="icon-circle">
+          <text class="icon-emoji">📝</text>
+        </view>
+        <!-- 装饰粒子 -->
+        <view class="lead-particles">
+          <view class="lead-particle" style="top: 20rpx; left: 60rpx; background: #FFD700;"></view>
+          <view class="lead-particle" style="top: 80rpx; right: 80rpx; background: #7ed321;"></view>
+          <view class="lead-particle" style="bottom: 100rpx; left: 80rpx; background: #FF6B6B;"></view>
+          <view class="lead-particle" style="bottom: 60rpx; right: 60rpx; background: #4ECDC4;"></view>
+        </view>
+      </view>
+
+      <!-- 导语文本 -->
+      <view class="lead-text-wrapper">
+        <text class="lead-text">{{assignment.lead}}</text>
+      </view>
+
+      <!-- 开始按钮 -->
+      <button class="start-btn" bindtap="onStartQuiz">开始答题</button>
+    </view>
+  </view>
+
   <!-- 进度条区域 -->
-  <view class="progress-section">
+  <view class="progress-section" wx:if="{{!showLeadScreen}}">
     <view class="progress-header">
       <text class="progress-label">问题</text>
       <text class="progress-count-big">{{currentQuestion + 1}}</text>
@@ -16,13 +43,10 @@
     </view>
   </view>
   <!-- 问题内容区域 -->
-  <!-- <view class="question-section">
-    <text class="question-text">{{assignment.lead}}</text>
-  </view> -->
-  <view class="question-section">
+  <view class="question-section" wx:if="{{!showLeadScreen}}">
     <text class="question-text">{{currentProblem.info}}</text>
   </view>
-  <view class="form-container">
+  <view class="form-container" wx:if="{{!showLeadScreen}}">
     <!-- 1. 文本输入类 (type: "text") -->
     <block wx:if="{{currentProblem.type === 'text'}}">
       <view class="input-section">
@@ -135,7 +159,7 @@
     </block>
   </view>
   <!-- 底部按钮 -->
-  <view class="bottom-actions">
+  <view class="bottom-actions" wx:if="{{!showLeadScreen}}">
     <button class="next-btn" bindtap="onNextQuestion">下一题</button>
   </view>
 

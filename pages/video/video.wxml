@@ -27,7 +27,7 @@
     <view class="notes-section">
       <view class="notes-card card">
         <view class="card-header">
-          <text>学习笔记</text>
+          <text>{{editingNoteId ? '编辑笔记' : '添加笔记'}}</text>
         </view>
         <view class="card-content">
           <textarea
@@ -39,9 +39,39 @@
           ></textarea>
           <view class="notes-footer">
             <text class="char-count">{{notes.length}}/500</text>
-            <button class="btn btn-primary save-notes-btn" bindtap="saveNotes">
-              保存笔记
-            </button>
+            <view class="notes-actions">
+              <button wx:if="{{editingNoteId}}" class="btn btn-secondary cancel-btn" bindtap="cancelEdit">
+                取消
+              </button>
+              <button class="btn btn-primary save-notes-btn" bindtap="saveNotes">
+                {{editingNoteId ? '更新笔记' : '保存笔记'}}
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 笔记列表 -->
+    <view class="notes-list-section" wx:if="{{courseNotesList.length > 0}}">
+      <view class="notes-list-header">
+        <text class="notes-count">共 {{courseNotesList.length}} 条笔记</text>
+      </view>
+      <view class="notes-list">
+        <view class="note-item card" wx:for="{{courseNotesList}}" wx:key="id">
+          <view class="note-content">
+            <text class="note-text">{{item.content}}</text>
+          </view>
+          <view class="note-footer">
+            <text class="note-time">{{item.updateTime}}</text>
+            <view class="note-actions">
+              <button class="btn-icon edit-btn" bindtap="editNote" data-id="{{item.id}}">
+                <text>✏️ 编辑</text>
+              </button>
+              <button class="btn-icon delete-btn" bindtap="deleteNote" data-id="{{item.id}}">
+                <text>🗑️ 删除</text>
+              </button>
+            </view>
           </view>
         </view>
       </view>
