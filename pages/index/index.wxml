@@ -70,7 +70,7 @@
     <view class="recent-courses">
       <view class="recent-course-item" wx:for="{{recentCourses}}" wx:key="id" bindtap="goToCourse" data-course-id="{{item.id}}">
         <view class="course-thumbnail">
-          <text class="course-category-icon">{{item.categoryIcon}}</text>
+          <image class="course-category-icon" src="{{item.icon}}"></image>
         </view>
         <view class="course-info">
           <text class="course-title">{{item.title}}</text>

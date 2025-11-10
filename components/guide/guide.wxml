@@ -14,7 +14,10 @@
     style="top: {{tipTop}}px; left: {{tipLeft}}px;"
   >
     <view class="guide-tip-content">
-      <view class="guide-tip-icon">{{currentStep.icon}}</view>
+      <view class="guide-tip-icon">
+        <image wx:if="{{currentStep.iconUrl}}" src="{{currentStep.iconUrl}}" class="guide-tip-image" mode="aspectFit" />
+        <text wx:else>{{currentStep.icon}}</text>
+      </view>
       <view class="guide-tip-title">{{currentStep.title}}</view>
       <view class="guide-tip-desc">{{currentStep.desc}}</view>
 

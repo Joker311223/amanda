@@ -97,10 +97,10 @@ Page({
         categoryIcon: categoryIcons[nextCourse.category] || '📚',
         status: 'available'
       }
-      return [nextCourseWithIcon, ...completedCourses].slice(0, 3)
+      return [nextCourseWithIcon, ...completedCourses].slice(0, 1)
     }
 
-    return completedCourses.slice(0, 3)
+    return completedCourses.slice(0, 1)
   },
 
   // 获取激励文本

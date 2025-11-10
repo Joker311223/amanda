@@ -40,7 +40,7 @@
         </view>
         <view class="course-info">
           <view class="course-meta">
-            <image class="course-image" src="{{item.icon}}" data-course-id="{{item.id}}" bindtap="startLearning" />
+            <image class="course-image" src="{{item.icon}}" data-course-id="{{item.id}}" />
             <text class="course-time">{{item.title}}</text>
           </view>
         </view>

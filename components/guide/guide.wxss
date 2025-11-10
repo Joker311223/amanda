@@ -50,6 +50,16 @@
 .guide-tip-icon {
   font-size: 80rpx;
   margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80rpx;
+}
+
+.guide-tip-image {
+  width: 80rpx;
+  height: 80rpx;
+  display: block;
 }
 
 .guide-tip-title {

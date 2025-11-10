@@ -55,6 +55,10 @@ Page({
 
   // 显示新手导引
   showNewUserGuide() {
+    // 获取第一个可用课程的icon
+    const firstAvailableCourse = app.globalData.courses.find(c => c.status === 'available');
+    const courseIconUrl = firstAvailableCourse ? firstAvailableCourse.icon : '/images/kechenghuigu-icon1.svg';
+
     const guideSteps = [
       {
         icon: '👋',
@@ -64,7 +68,7 @@ Page({
         padding: 10
       },
       {
-        icon: '📚',
+        iconUrl: courseIconUrl,
         title: '课程学习',
         desc: '点击这些课程图标可以观看视频课程。完成课程后可以获得经验值，并解锁下一个课程！',
         selector: '.item-image.available', // 高亮第一个可用课程
@@ -129,17 +133,16 @@ Page({
     const subIndex = e.currentTarget.dataset.index;
     const zuoyeId = app.globalData.courses[courseId - 1].asssignIds[subIndex];
     const assignment = this.data.assignments[zuoyeId - 1];
+    const course = app.globalData.courses[courseId - 1];
 
     // 检查作业状态，如果是 locked 则显示锁定弹窗
     if (assignment && assignment.status === 'locked') {
-      // 找到需要完成的前置课程
-      const course = app.globalData.courses[courseId - 1];
       this.setData({
         showDialog: true,
         dialogType: 'locked',
         dialogParams: {},
         dialogData: {
-          emoji: '🔒',
+          iconUrl: course.icon,
           title: '作业尚未解锁',
           desc: `需要先完成「${course.title}」课程才能解锁这个作业哦！`,
           info: '继续加油，完成前面的课程吧！',
@@ -164,7 +167,7 @@ Page({
       dialogType: 'assignment',
       dialogParams: { zuoyeId },
       dialogData: {
-        emoji: '📝',
+        iconUrl: course.icon,
         title: assignment.title || '开始作业',
         desc: '准备好开始这个作业了吗？完成后可以获得经验值奖励！',
         info: assignment.experience ? `完成可获得 ${assignment.experience} 经验值` : '',
@@ -177,6 +180,7 @@ Page({
   // 显示课程弹窗
   showCourseDialog(e) {
     const { id, title, status } = e.currentTarget.dataset;
+    const course = app.globalData.courses.find(c => c.id === id);
 
     // 检查课程状态，如果是 locked 则显示锁定弹窗
     if (status === 'locked') {
@@ -189,7 +193,7 @@ Page({
         dialogType: 'locked',
         dialogParams: {},
         dialogData: {
-          emoji: '🔒',
+          iconUrl: course.icon,
           title: '课程尚未解锁',
           desc: prevCourse
             ? `需要先完成「${prevCourse.title}」才能解锁这门课程哦！`
@@ -210,16 +214,13 @@ Page({
       return;
     }
 
-    // 获取课程信息
-    const course = app.globalData.courses.find(c => c.id === id);
-
     // 显示确认弹窗
     this.setData({
       showDialog: true,
       dialogType: 'course',
       dialogParams: { courseId: id },
       dialogData: {
-        emoji: '🎓',
+        iconUrl: course.icon,
         title: title || '开始学习',
         desc: '准备好开始这门课程了吗？让我们一起学习新知识！',
         info: course?.experience ? `完成可获得 ${course.experience} 经验值` : '',

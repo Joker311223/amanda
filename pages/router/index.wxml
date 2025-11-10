@@ -39,7 +39,8 @@
       <view class="dialog-content">
         <!-- 图标 -->
         <view class="dialog-icon">
-          <text class="dialog-emoji">{{dialogData.emoji}}</text>
+          <image wx:if="{{dialogData.iconUrl}}" src="{{dialogData.iconUrl}}" class="dialog-icon-image" mode="aspectFit" />
+          <text wx:else class="dialog-emoji">{{dialogData.emoji}}</text>
         </view>
 
         <!-- 标题 -->
