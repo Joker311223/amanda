@@ -78,7 +78,7 @@
         </view>
         <view class="course-status">
           <text class="status-tag {{item.status === 'completed' ? 'status-completed' : 'status-available'}}">
-            {{item.status === 'completed' ? '已完成' : '继续学习'}}
+            <text class="status-text">{{item.status === 'completed' ? '已完成' : '继续学习'}}</text>
           </text>
         </view>
       </view>

@@ -86,11 +86,28 @@
   opacity: 0.6;
 }
 
+.course-left {
+  width: 600rpx;
+}
+
 .course-header {
   display: flex;
   align-items: center;
   padding: 30rpx;
   position: relative;
+}
+
+.course-icon-mini {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
 }
 
 .course-icon {
@@ -107,15 +124,15 @@
 }
 
 .course-icon.completed {
-  background: #E8F5E8;
+  background: #e8f5e8;
 }
 
 .course-icon.available {
-  background: #FFF3CD;
+  background: #fff3cd;
 }
 
 .course-icon.locked {
-  background: #F8F9FA;
+  background: #f8f9fa;
 }
 
 .course-info {
@@ -124,6 +141,30 @@
   min-width: 0;
 }
 
+.zuoye-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.xuexi-icon {
+  width: 200rpx;
+  height: 100rpx;
+}
+.xuexi-text {
+  margin-left: 30rpx;
+  width: 134rpx;
+  height: 70rpx;
+  font-family: Source Han Sans, Source Han Sans;
+  font-weight: 900;
+  font-size: 48rpx;
+  color: #000000;
+  line-height: 70rpx;
+  text-align: left;
+  font-style: normal;
+  text-transform: none;
+}
 .course-title {
   display: block;
   font-size: 30rpx;
@@ -133,9 +174,9 @@
   word-break: break-all;
 }
 
-.course-image{
-  width: 200rpx;
-  height: 200rpx;
+.course-image {
+  width: 180rpx;
+  height: 180rpx;
 }
 
 .course-meta {
@@ -161,8 +202,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 15rpx;
   margin-left: 20rpx;
+  gap:60rpx
 }
 
 .course-buttons {
@@ -210,7 +251,7 @@
 
 /* 待解锁按钮 - 灰色 */
 .btn-locked {
-  background: #E0E0E0;
+  background: #e0e0e0;
   color: #999;
   border: none;
 }
@@ -223,7 +264,7 @@
   position: absolute;
   top: 0rpx;
   right: 0rpx;
-  background: #FFD700;
+  background: #ffd700;
   color: #333;
   padding: 3rpx 10rpx;
   border-radius: 0 0 0 20rpx;
@@ -233,6 +274,165 @@
 .experience-text {
   display: flex;
   align-items: center;
+}
+
+/* 作业卡片样式 */
+.assignment-card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 25rpx;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.assignment-card.locked {
+  opacity: 0.5;
+}
+
+.assignment-card:active {
+  transform: scale(0.98);
+}
+
+/* 左侧状态图标 */
+.assignment-status-icon {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.assignment-status-icon image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 中间内容区域 */
+.assignment-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  min-width: 0;
+}
+
+/* 标题 */
+.assignment-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* 标题 */
+.assignment-title-text {
+  margin-left: 20rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+/* 按钮组 */
+.assignment-buttons {
+  display: flex;
+  gap: 15rpx;
+  flex-wrap: wrap;
+}
+
+/* 按钮基础样式 */
+.assignment-btn-img {
+  width: 240rpx;
+  height: 80rpx;
+  transition: all 0.3s ease;
+}
+
+/* 按钮基础样式 */
+.assignment-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 50rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.assignment-btn .btn-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+/* 已完成按钮 - 浅蓝色 */
+.assignment-btn-completed {
+  background: #7dd3fc;
+  color: #ffffff;
+}
+
+.assignment-btn-completed:active {
+  background: #38bdf8;
+}
+
+/* 查看作业按钮 - 深蓝色 */
+.assignment-btn-view {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.assignment-btn-view:active {
+  background: #0369a1;
+}
+
+/* 开始作业按钮 - 深蓝色 */
+.assignment-btn-start {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+.assignment-btn-start:active {
+  background: #0369a1;
+}
+
+/* 未解锁按钮 - 灰色 */
+.assignment-btn-locked {
+  background: #e5e7eb;
+  color: #9ca3af;
+}
+
+/* 右侧经验值 */
+.assignment-experience {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20rpx;
+  flex-shrink: 0;
+}
+
+.assignment-experience .star-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.experience-value {
+  display: flex;
+  align-items: baseline;
+  gap: 4rpx;
+}
+
+.experience-number {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333333;
+  line-height: 1;
+}
+
+.experience-unit {
+  font-size: 24rpx;
+  color: #666666;
+  font-weight: 500;
 }
 
 /* 空状态 */

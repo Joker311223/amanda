@@ -34,9 +34,9 @@
     <view class="course-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{filteredCourses}}" wx:key="id" bindtap="onCourseClick" data-course-id="{{item.id}}">
       <view class="course-header">
         <view class="course-icon {{item.status}}">
-          <image wx:if="{{item.status === 'completed'}}" src="/images/xuexi-wancheng.svg"/>
-          <image wx:elif="{{item.status === 'available'}}" src="/images/xuexi-daikaifa.svg"/>
-          <image wx:else src="/images/xuexi-suoding.svg"/>
+          <image wx:if="{{item.status === 'completed'}}" src="/images/xuexi-wancheng.svg" />
+          <image wx:elif="{{item.status === 'available'}}" src="/images/xuexi-daikaifa.svg" />
+          <image wx:else src="/images/xuexi-suoding.svg" />
         </view>
         <view class="course-info">
           <view class="course-meta">
@@ -46,71 +46,58 @@
         </view>
         <view class="course-actions">
           <view wx:if="{{item.status === 'completed'}}" class="status-tag status-completed">
-            已完成
+            <text class="status-text">可学习</text>
           </view>
           <view wx:elif="{{item.status === 'available'}}" class="status-tag status-available">
-            可学习
+            <text class="status-text">待学习</text>
           </view>
-          <view wx:else class="status-tag status-locked">未解锁</view>
-          <view class="course-buttons">
-            <button wx:if="{{item.status === 'completed'}}" class="btn course-btn btn-completed" bindtap="startLearning" data-course-id="{{item.id}}" catchtap="true">
-              已完成
-            </button>
-            <button wx:elif="{{item.status === 'available'}}" class="btn course-btn btn-available" bindtap="startLearning" data-course-id="{{item.id}}" catchtap="true">
-              可学习
-            </button>
-            <button wx:else class="btn course-btn btn-locked" bindtap="startLearning" data-course-id="{{item.id}}" catchtap="true">
-              待解锁
-            </button>
+          <view wx:else class="status-tag status-locked">
+            <text class="status-text">未解锁</text>
           </view>
-        </view>
-        <view class="course-experience">
-          <text class="experience-text">{{item.experience}}分</text>
+          <view class="zuoye-right">
+            <image wx:if="{{item.status!=='completed'}}" src="/images/xuexi-icon.svg" class="xuexi-icon" data-course-id="{{item.id}}" bindtap="startLearning"/>
+            <image wx:else src="/images/chongbo-icon.svg" class="xuexi-icon" data-course-id="{{item.id}}" bindtap="startLearning"/>
+            <text class="xuexi-text">{{item.duration}}</text>
+          </view>
         </view>
       </view>
     </view>
   </view>
   <!-- 作业列表 -->
   <view wx:if="{{nowPage==='作业回顾'}}" class="courses-section">
-    <view class="course-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{assignments}}" wx:key="id" data-zuoye-id="{{item.id}}">
-      <view class="course-header">
-        <view class="course-icon {{item.status}}">
-          <text wx:if="{{item.status === 'completed'}}">✅</text>
-          <text wx:elif="{{item.status === 'available'}}">⏰</text>
-          <text wx:else>🔒</text>
+    <view class="assignment-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{assignments}}" wx:key="id" data-zuoye-id="{{item.id}}">
+      <!-- 左侧状态图标 -->
+      <!-- 中间内容区域 -->
+      <view class="assignment-content">
+        <!-- 标题 -->
+        <view class="assignment-title">
+          <view class="assignment-status-icon">
+            <image wx:if="{{item.status === 'completed'}}" src="/images/xuexi-wancheng.svg" mode="aspectFit" />
+            <image wx:elif="{{item.status === 'available'}}" src="/images/xuexi-daikaifa.svg" mode="aspectFit" />
+            <image wx:else src="/images/xuexi-suoding.svg" mode="aspectFit" />
+          </view>
+          <text class="assignment-title-text">{{item.title}}</text>
         </view>
-        <view class="course-info">
-          <text class="course-title">{{item.title}}</text>
-          <view class="course-meta">
-            <text class="course-duration">▶️ {{item.status === 'completed' ? '重播' : '学习'}}</text>
-            <text class="course-time">{{item.duration}}</text>
-          </view>
+        <!-- 按钮组 -->
+        <view class="assignment-buttons">
+          <!-- 已完成按钮 -->
+          <image src="/images/yiwancheng.svg" wx:if="{{item.status === 'completed'}}" class="assignment-btn-img" />
+          <!-- 查看作业按钮 -->
+          <image src="/images/chakanzuoye.svg" wx:if="{{item.status === 'completed'}}" class="assignment-btn-img" bindtap="viewAssignment" data-zuoye-id="{{item.id}}" />
+          <!-- 待打卡按钮 -->
+          <image src="/images/daidaka.svg" wx:if="{{item.status === 'available'}}" class="assignment-btn-img" />
+          <!-- 开始学习 -->
+          <image src="/images/kaishixuexi.svg" wx:if="{{item.status === 'available'}}" class="assignment-btn-img" bindtap="jumpToZuoye" data-zuoye-id="{{item.id}}" />
+          <!-- 未解锁按钮 -->
+          <image src="/images/weijiesuo.svg" wx:if="{{item.status === 'locked'}}" class="assignment-btn-img" />
         </view>
-        <view class="course-actions">
-          <view wx:if="{{item.status === 'completed'}}" class="status-tag status-completed">
-            已完成
-          </view>
-          <view wx:elif="{{item.status === 'available'}}" class="status-tag status-available">
-            可学习
-          </view>
-          <view wx:else class="status-tag status-locked">未解锁</view>
-          <view class="course-buttons">
-            <button wx:if="{{item.status !== 'locked'}}" class="btn btn-secondary course-btn" >
-              {{item.status === 'completed' ? '已完成' : '可学习'}}
-            </button>
-            <button wx:if="{{item.status === 'completed'}}" class="btn btn-primary course-btn" bindtap="viewAssignment" data-zuoye-id="{{item.id}}" >
-              查看作业
-            </button>
-             <button wx:if="{{item.status === 'available'}}" class="btn btn-primary course-btn" bindtap="jumpToZuoye" data-zuoye-id="{{item.id}}" >
-              开始作业
-            </button>
-            <button wx:if="{{item.status === 'locked'}}" class="btn btn-disabled course-btn" disabled>
-              未解锁
-            </button>
-          </view>
-        </view>
-        <view class="course-experience">
-          <text class="experience-text">{{item.experience}}分</text>
+      </view>
+      <!-- 右侧经验值 -->
+      <view class="assignment-experience">
+        <image class="star-icon" src="/images/xingxing.svg" mode="aspectFit" />
+        <view class="experience-value">
+          <text class="experience-number">{{item.experience || 30}}</text>
+          <text class="experience-unit">分</text>
         </view>
       </view>
     </view>
