@@ -449,90 +449,160 @@ checkbox {
 
 /* 评分滑块样式 */
 .score-section {
-  padding: 40rpx;
+  padding: 0;
 }
 
-.slider-container {
+.score-card {
+  background: linear-gradient(135deg, #58cc02 0%, #7ed321 100%);
+  border-radius: 30rpx;
+  padding: 50rpx 40rpx;
+  box-shadow: 0 12rpx 40rpx rgba(88, 204, 2, 0.25);
+  min-height: auto;
   position: relative;
-  margin: 60rpx 0 40rpx;
+  overflow: hidden;
 }
 
-.custom-slider {
-  width: 100%;
-  height: 80rpx;
-  background: #7ed321;
-  border-radius: 40rpx;
-  position: relative;
+.score-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* 评分卡片顶部 - 数值和进度条 */
+.score-header {
   display: flex;
   align-items: center;
-  padding: 0 40rpx;
-  box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.3);
+  gap: 50rpx;
+  margin-bottom: 60rpx;
+  position: relative;
+  z-index: 1;
 }
 
-.slider-track {
-  position: absolute;
-  left: 40rpx;
-  right: 40rpx;
-  height: 100%;
+.score-value-display {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: baseline;
+  gap: 12rpx;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 20rpx 30rpx;
+  border-radius: 20rpx;
+  backdrop-filter: blur(10rpx);
 }
 
-.slider-segment {
-  width: 12rpx;
-  height: 50rpx;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 6rpx;
-}
-
-.slider-segment.active {
-  background: #ffffff;
-}
-
-.slider-label {
-  position: absolute;
-  font-size: 32rpx;
-  font-weight: bold;
+.score-value-number {
+  font-size: 88rpx;
+  font-weight: 900;
   color: #ffffff;
-  top: 50%;
-  transform: translateY(-50%);
+  line-height: 1;
+  text-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.2);
+  letter-spacing: -2rpx;
 }
 
-.slider-label.left {
-  left: 40rpx;
-}
-
-.slider-label.right {
-  right: 40rpx;
-}
-
-.slider-value {
-  text-align: center;
-  font-size: 72rpx;
+.score-value-unit {
+  font-size: 44rpx;
   font-weight: bold;
-  color: #333333;
-  margin-top: 30rpx;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 3rpx 10rpx rgba(0, 0, 0, 0.15);
+  margin-bottom: 8rpx;
+}
+
+.score-progress {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.score-progress-bar {
+  width: 100%;
+  height: 28rpx;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 14rpx;
+  overflow: hidden;
+  box-shadow: inset 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.score-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-radius: 14rpx;
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4rpx 12rpx rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.score-progress-fill::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 2rpx;
+}
+
+.score-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8rpx;
+}
+
+.score-label-left,
+.score-label-right {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+/* 评分卡片中部 - 滑块 */
+.score-slider-wrapper {
+  margin: 50rpx 0 60rpx;
+  padding: 30rpx 0;
+  position: relative;
+  z-index: 1;
+}
+
+.score-slider {
+  width: 100%;
 }
 
 /* 微信原生slider样式覆盖 */
 slider {
   width: 100%;
-  margin: 40rpx 0;
 }
 
+/* 评分卡片底部 - 选项 */
 .score-options {
   display: flex;
   justify-content: space-between;
-  margin-top: 30rpx;
-  padding: 0 20rpx;
+  gap: 20rpx;
+  padding: 30rpx 0 0;
+  border-top: 2rpx solid rgba(255, 255, 255, 0.25);
+  position: relative;
+  z-index: 1;
 }
 
 .score-option {
-  font-size: 24rpx;
-  color: #999999;
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.95);
   text-align: center;
   flex: 1;
+  font-weight: 600;
+  padding: 15rpx 10rpx;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12rpx;
+  transition: all 0.3s ease;
+}
+
+.score-option:active {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(0.98);
 }
 
 /* 底部按钮 */

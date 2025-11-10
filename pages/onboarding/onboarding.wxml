@@ -63,18 +63,21 @@
           <view class="form-group">
             <text class="form-label">姓名</text>
             <input
-              class="form-input"
+              class="form-input {{errors.name ? 'input-error' : ''}}"
               name="name"
               placeholder="请输入您的姓名"
               value="{{userInfo.name}}"
               bindinput="onInputChange"
               data-field="name"
             />
+            <text class="form-hint error-hint" wx:if="{{errors.name}}">
+              ❌ {{errors.name}}
+            </text>
           </view>
 
           <view class="form-group">
             <text class="form-label">性别</text>
-            <view class="gender-selector">
+            <view class="gender-selector {{errors.gender ? 'selector-error' : ''}}">
               <view
                 class="gender-option {{userInfo.gender === 'male' ? 'selected' : ''}}"
                 bindtap="selectGender"
@@ -90,6 +93,9 @@
                 女
               </view>
             </view>
+            <text class="form-hint error-hint" wx:if="{{errors.gender}}">
+              ❌ {{errors.gender}}
+            </text>
           </view>
 
           <view class="form-group">
@@ -100,35 +106,46 @@
               bindchange="onDateChange"
               fields="month"
             >
-              <view class="form-input picker-input">
+              <view class="form-input picker-input {{errors.birthDate ? 'input-error' : ''}}">
                 {{userInfo.birthDate || '请选择出生年月'}}
               </view>
             </picker>
+            <text class="form-hint error-hint" wx:if="{{errors.birthDate}}">
+              ❌ {{errors.birthDate}}
+            </text>
           </view>
 
           <view class="form-group">
             <text class="form-label">手机号</text>
             <input
-              class="form-input"
+              class="form-input {{errors.phone ? 'input-error' : ''}}"
               name="phone"
-              type="number"
-              placeholder="请输入手机号"
+              type="text"
+              placeholder="请输入11位手机号"
               value="{{userInfo.phone}}"
               bindinput="onInputChange"
               data-field="phone"
+              maxlength="11"
             />
+            <text class="form-hint error-hint" wx:if="{{errors.phone}}">
+              ❌ {{errors.phone}}
+            </text>
           </view>
 
           <view class="form-group">
             <text class="form-label">微信号</text>
             <input
-              class="form-input"
+              class="form-input {{errors.wechat ? 'input-error' : ''}}"
               name="wechat"
-              placeholder="请输入微信号"
+              placeholder="请输入微信号（6-20位）"
               value="{{userInfo.wechat}}"
               bindinput="onInputChange"
               data-field="wechat"
+              maxlength="20"
             />
+            <text class="form-hint error-hint" wx:if="{{errors.wechat}}">
+              ❌ {{errors.wechat}}
+            </text>
           </view>
 
           <button

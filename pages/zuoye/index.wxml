@@ -111,40 +111,48 @@
     <block wx:elif="{{currentProblem.type === 'score'}}">
       <view class="input-section">
         <view class="score-section">
-          <view class="slider-container">
-            <view class="custom-slider">
-              <text class="slider-label left">0</text>
-              <view class="slider-track">
-                <view
-                  wx:for="{{sliderSegments}}"
-                  wx:key="index"
-                  class="slider-segment {{index < answer ? 'active' : ''}}"
-                ></view>
+          <!-- 评分卡片 -->
+          <view class="score-card">
+            <!-- 顶部：进度条和数值 -->
+            <view class="score-header">
+              <view class="score-value-display">
+                <text class="score-value-number">{{answer}}</text>
+                <text class="score-value-unit">分</text>
               </view>
-              <text class="slider-label right">100</text>
+              <view class="score-progress">
+                <view class="score-progress-bar">
+                  <view class="score-progress-fill" style="width: {{(answer / (currentProblem.max || 100)) * 100}}%"></view>
+                </view>
+                <view class="score-progress-labels">
+                  <text class="score-label-left">{{currentProblem.min || 0}}</text>
+                  <text class="score-label-right">{{currentProblem.max || 100}}</text>
+                </view>
+              </view>
             </view>
-          </view>
 
-          <slider
-            value="{{answer}}"
-            min="{{currentProblem.min || 0}}"
-            max="{{currentProblem.max || 100}}"
-            step="{{currentProblem.step || 10}}"
-            bindchange="onSliderChange"
-            bindchanging="onSliderChanging"
-            activeColor="#58cc02"
-            backgroundColor="#e5f5e0"
-            block-size="28"
-            block-color="#58cc02"
-          />
+            <!-- 中部：滑块 -->
+            <view class="score-slider-wrapper">
+              <slider
+                class="score-slider"
+                value="{{answer}}"
+                min="{{currentProblem.min || 0}}"
+                max="{{currentProblem.max || 100}}"
+                step="{{currentProblem.step || 10}}"
+                bindchange="onSliderChange"
+                bindchanging="onSliderChanging"
+                activeColor="#58cc02"
+                backgroundColor="#e5f5e0"
+                block-size="32"
+                block-color="#58cc02"
+              />
+            </view>
 
-          <view class="slider-value">{{answer}}</view>
-
-          <!-- 可选：显示评分选项 -->
-          <view class="score-options" wx:if="{{currentProblem.options}}">
-            <text wx:for="{{currentProblem.options}}" wx:key="index" class="score-option">
-              {{item}}
-            </text>
+            <!-- 底部：评分选项 -->
+            <view class="score-options" wx:if="{{currentProblem.options}}">
+              <text wx:for="{{currentProblem.options}}" wx:key="index" class="score-option">
+                {{item}}
+              </text>
+            </view>
           </view>
         </view>
       </view>

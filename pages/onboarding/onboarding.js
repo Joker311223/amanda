@@ -10,7 +10,14 @@ Page({
       phone: '',
       wechat: ''
     },
-    isFormValid: false
+    isFormValid: false,
+    errors: {
+      name: '',
+      gender: '',
+      birthDate: '',
+      phone: '',
+      wechat: ''
+    }
   },
 
   onLoad() {
@@ -64,19 +71,72 @@ Page({
   // 验证表单
   validateForm() {
     const { name, gender, birthDate, phone, wechat } = this.data.userInfo
-    const isValid = name && gender && birthDate && phone && wechat
+    const errors = {
+      name: '',
+      gender: '',
+      birthDate: '',
+      phone: '',
+      wechat: ''
+    }
+
+    // 验证姓名
+    if (!name) {
+      errors.name = '请输入姓名'
+    }
+
+    // 验证性别
+    if (!gender) {
+      errors.gender = '请选择性别'
+    }
+
+    // 验证出生年月
+    if (!birthDate) {
+      errors.birthDate = '请选择出生年月'
+    }
+
+    // 验证手机号格式（11位数字）
+    const phoneRegex = /^1[3-9]\d{9}$/
+    if (!phone) {
+      errors.phone = '请输入手机号'
+    } else if (!phoneRegex.test(phone)) {
+      errors.phone = '手机号格式错误（需要11位数字，以1开头）'
+    }
+
+    // 验证微信号格式（6-20位字母数字下划线）
+    const wechatRegex = /^[a-zA-Z0-9_]{6,20}$/
+    if (!wechat) {
+      errors.wechat = '请输入微信号'
+    } else if (!wechatRegex.test(wechat)) {
+      errors.wechat = '微信号格式错误（需要6-20位字母、数字或下划线）'
+    }
+
+    const isValid = !errors.name && !errors.gender && !errors.birthDate && !errors.phone && !errors.wechat
 
     this.setData({
-      isFormValid: isValid
+      isFormValid: isValid,
+      errors: errors
     })
   },
 
   // 提交用户信息
   submitUserInfo(e) {
     if (!this.data.isFormValid) {
+      // 找出第一个有错误的字段
+      const { errors } = this.data
+      const errorMessages = []
+
+      if (errors.name) errorMessages.push(errors.name)
+      if (errors.gender) errorMessages.push(errors.gender)
+      if (errors.birthDate) errorMessages.push(errors.birthDate)
+      if (errors.phone) errorMessages.push(errors.phone)
+      if (errors.wechat) errorMessages.push(errors.wechat)
+
+      const errorMsg = errorMessages.join('；')
+
       wx.showToast({
-        title: '请完善所有信息',
-        icon: 'none'
+        title: errorMsg || '请完善所有信息',
+        icon: 'none',
+        duration: 2000
       })
       return
     }

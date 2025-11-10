@@ -103,6 +103,28 @@
   color: #999999 !important;
 }
 
+.form-hint {
+  display: block;
+  font-size: 22rpx;
+  color: #ff4d4f;
+  margin-top: 8rpx;
+  padding-left: 10rpx;
+}
+
+.error-hint {
+  color: #ff4d4f;
+  font-weight: 500;
+}
+
+.input-error {
+  border-color: #ff4d4f !important;
+  background-color: #fff1f0 !important;
+}
+
+.selector-error {
+  border-color: #ff4d4f !important;
+}
+
 .contact-info {
   margin-top: 30rpx;
   text-align: center;
