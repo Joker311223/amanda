@@ -7,6 +7,17 @@
 .course-title-card .card-header {
   text-align: center;
   font-size: 32rpx;
+  font-weight: 600;
+  line-height: 1.5;
+  padding: 20rpx 30rpx;
+  word-break: break-all;
+  white-space: normal;
+  display: block;
+}
+
+.course-title-card .card-header text {
+  display: inline-block;
+  width: 100%;
 }
 
 /* 视频播放区域 */

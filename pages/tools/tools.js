@@ -9,45 +9,45 @@ Page({
     showImagePreview: false,
     currentImages: [],
     currentImageIndex: 0,
-    // 技能卡片与图片的映射关系（使用本地图片）
+    // 技能卡片与图片的映射关系（使用 OSS 图片）
     imageMap: {
       // 人际效能
-      'DEARMAN1': ['/images/技能卡片/人际效能-DEARMAN1.jpg'],
-      'DEARMAN2': ['/images/技能卡片/人际效能-DEARMAN2.jpg'],
-      'FAST': ['/images/技能卡片/人际效能-FAST.jpg'],
-      'GIVE': ['/images/技能卡片/人际效能-GIVE.jpg'],
-      '总概': ['/images/技能卡片/人际效能-总概.jpg'],
+      'DEARMAN1': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-DEARMAN1.jpg'],
+      'DEARMAN2': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-DEARMAN2.jpg'],
+      'FAST': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-FAST.jpg'],
+      'GIVE': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-GIVE.jpg'],
+      '总概': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-总概.jpg'],
 
       // 情绪管理
-      '生物社会技能3': ['/images/技能卡片/情绪管理-生物社会技能3.jpg'],
-      '生物社会理论1': ['/images/技能卡片/情绪管理-生物社会理论1.jpg'],
-      '生物社会理论2': ['/images/技能卡片/情绪管理-生物社会理论2.jpg'],
+      '生物社会技能3': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪管理-生物社会技能3.jpg'],
+      '生物社会理论1': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪管理-生物社会理论1.jpg'],
+      '生物社会理论2': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪管理-生物社会理论2.jpg'],
 
       // 情绪调节
-      'PLEASE': ['/images/技能卡片/情绪调节-PLEASE.jpg'],
-      '相反行为': ['/images/技能卡片/情绪调节-相反行为.jpg'],
-      '积累正面情绪': ['/images/技能卡片/情绪调节-积累正面情绪.jpg'],
+      'PLEASE': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪调节-PLEASE.jpg'],
+      '相反行为': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪调节-相反行为.jpg'],
+      '积累正面情绪': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪调节-积累正面情绪.jpg'],
 
       // 正念
-      'HOW技能': ['/images/技能卡片/正念-HOW技能.jpg'],
-      'WHAT技能': ['/images/技能卡片/正念-WHAT技能.jpg'],
-      '智慧心': ['/images/技能卡片/正念-智慧心.jpg'],
-      '练习观察': ['/images/技能卡片/正念-练习观察.jpg'],
+      'HOW技能': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-HOW技能.jpg'],
+      'WHAT技能': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-WHAT技能.jpg'],
+      '智慧心': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-智慧心.jpg'],
+      '练习观察': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-练习观察.jpg'],
 
       // 痛苦耐受
-      'IMPROVE': ['/images/技能卡片/痛苦耐受-IMPROVE.jpg'],
-      'STOP': ['/images/技能卡片/痛苦耐受-STOP.jpg'],
-      'TIP': ['/images/技能卡片/痛苦耐受-TIP.jpg'],
-      '保持正念': ['/images/技能卡片/痛苦耐受-保持正念.jpg'],
-      '全然接纳1': ['/images/技能卡片/痛苦耐受-全然接纳1.jpg'],
-      '全然接纳2': ['/images/技能卡片/痛苦耐受-全然接纳2.jpg'],
-      '全然接纳3': ['/images/技能卡片/痛苦耐受-全然接纳3.jpg'],
-      '全然接纳4': ['/images/技能卡片/痛苦耐受-全然接纳4.jpg'],
-      '全然接纳5': ['/images/技能卡片/痛苦耐受-全然接纳5.jpg'],
-      '总概': ['/images/技能卡片/痛苦耐受-总概.jpg'],
-      '自我安抚': ['/images/技能卡片/痛苦耐受-自我安抚.jpg'],
-      '身体扫描': ['/images/技能卡片/痛苦耐受-身体扫描.jpg'],
-      '转移注意力': ['/images/技能卡片/痛苦耐受-转移注意力.jpg']
+      'IMPROVE': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-IMPROVE.jpg'],
+      'STOP': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-STOP.jpg'],
+      'TIP': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-TIP.jpg'],
+      '保持正念': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-保持正念.jpg'],
+      '全然接纳1': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳1.jpg'],
+      '全然接纳2': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳2.jpg'],
+      '全然接纳3': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳3.jpg'],
+      '全然接纳4': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳4.jpg'],
+      '全然接纳5': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳5.jpg'],
+      '总概': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-总概.jpg'],
+      '自我安抚': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-自我安抚.jpg'],
+      '身体扫描': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-身体扫描.jpg'],
+      '转移注意力': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-转移注意力.jpg']
     }
   },
 

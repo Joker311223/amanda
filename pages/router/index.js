@@ -23,6 +23,7 @@ Page({
     const skillCards = app.globalData.skillCards;
     const assignments = app.globalData.assignments;
 
+    console.log('yjc=>更新 totalExperience 为:', learningProgress.totalExperience);
     this.setData({
       totalExperience: learningProgress.totalExperience,
       skillCards: skillCards,
@@ -37,7 +38,11 @@ Page({
   },
 
   onShow() {
+    // 从本地存储重新加载最新数据
+    app.loadUserData();
+
     this.loadCourses();
+    this.loadData(); // 更新经验值等数据
 
     // 检查是否需要显示导引
     if (!app.globalData.hasSeenGuide && !app.globalData.isFirstTime) {

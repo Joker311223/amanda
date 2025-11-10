@@ -1,15 +1,9 @@
 <view class="page-container">
-  <!-- 经验值显示 -->
-  <view class="experience-badge">
-    <text class="star">⭐</text>
-    <text>30分</text>
-  </view>
-
   <!-- 课程标题 -->
   <view class="course-header">
     <view class="course-title-card card">
       <view class="card-header">
-        <text>第二课　正念、智慧心</text>
+        <text>{{currentCourse.title}}</text>
       </view>
     </view>
   </view>
