@@ -55,17 +55,20 @@
             <text class="status-text">未解锁</text>
           </view>
           <view class="zuoye-right">
-            <image wx:if="{{item.status!=='completed'}}" src="/images/xuexi-icon.svg" class="xuexi-icon" data-course-id="{{item.id}}" bindtap="startLearning"/>
-            <image wx:else src="/images/chongbo-icon.svg" class="xuexi-icon" data-course-id="{{item.id}}" bindtap="startLearning"/>
+            <image wx:if="{{item.status!=='completed'}}" src="/images/xuexi-icon.svg" class="xuexi-icon" data-course-id="{{item.id}}" />
+            <image wx:else src="/images/chongbo-icon.svg" class="xuexi-icon" data-course-id="{{item.id}}" />
             <text class="xuexi-text">{{item.duration}}</text>
           </view>
+        </view>
+         <view class="course-experience">
+          <text class="experience-text">30分</text>
         </view>
       </view>
     </view>
   </view>
   <!-- 作业列表 -->
   <view wx:if="{{nowPage==='作业回顾'}}" class="courses-section">
-    <view class="assignment-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{assignments}}" wx:key="id" data-zuoye-id="{{item.id}}">
+    <view class="assignment-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{assignments}}" wx:key="id" data-zuoye-id="{{item.id}}" data-zuoye-status="{{item.status}}" bindtap="unionJump">
       <!-- 左侧状态图标 -->
       <!-- 中间内容区域 -->
       <view class="assignment-content">
@@ -83,11 +86,11 @@
           <!-- 已完成按钮 -->
           <image src="/images/yiwancheng.svg" wx:if="{{item.status === 'completed'}}" class="assignment-btn-img" />
           <!-- 查看作业按钮 -->
-          <image src="/images/chakanzuoye.svg" wx:if="{{item.status === 'completed'}}" class="assignment-btn-img" bindtap="viewAssignment" data-zuoye-id="{{item.id}}" />
+          <image src="/images/chakanzuoye.svg" wx:if="{{item.status === 'completed'}}" class="assignment-btn-img"  />
           <!-- 待打卡按钮 -->
           <image src="/images/daidaka.svg" wx:if="{{item.status === 'available'}}" class="assignment-btn-img" />
           <!-- 开始学习 -->
-          <image src="/images/kaishixuexi.svg" wx:if="{{item.status === 'available'}}" class="assignment-btn-img" bindtap="jumpToZuoye" data-zuoye-id="{{item.id}}" />
+          <image src="/images/kaishixuexi.svg" wx:if="{{item.status === 'available'}}" class="assignment-btn-img"  />
           <!-- 未解锁按钮 -->
           <image src="/images/weijiesuo.svg" wx:if="{{item.status === 'locked'}}" class="assignment-btn-img" />
         </view>
@@ -96,10 +99,13 @@
       <view class="assignment-experience">
         <image class="star-icon" src="/images/xingxing.svg" mode="aspectFit" />
         <view class="experience-value">
-          <text class="experience-number">{{item.experience || 30}}</text>
+          <text class="experience-number">20</text>
           <text class="experience-unit">分</text>
         </view>
       </view>
+       <view class="course-experience">
+          <text class="experience-text">20分</text>
+        </view>
     </view>
   </view>
   <!-- 空状态 -->

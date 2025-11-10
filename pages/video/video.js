@@ -15,7 +15,13 @@ Page({
     isCompleted: false,
     showExperienceGain: false,
     playTimer: null,
-    videoUrl: ''
+    videoUrl: '',
+    isCourseCompleted: false, // 课程是否已完成
+    playbackRate: 1, // 播放速率
+    isLongPressing: false, // 是否正在长按
+    isFullscreen: false, // 是否全屏
+    longPressTimer: null, // 长按计时器
+    isVideoPlaying: false // 视频播放状态
   },
 
   onLoad(options) {
@@ -59,9 +65,13 @@ Page({
       return
     }
 
+    // 判断课程是否已完成
+    const isCourseCompleted = course.status === 'completed'
+
     this.setData({
       currentCourse: course,
-      totalTime: course.duration
+      totalTime: course.duration,
+      isCourseCompleted: isCourseCompleted
     })
 
     // 如果是已完成的课程，显示完成状态
@@ -336,5 +346,75 @@ Page({
         }
       }
     })
+  },
+
+  // 切换视频播放/暂停
+  toggleVideoPlay() {
+    const videoContext = wx.createVideoContext('center', this)
+    if (this.data.isVideoPlaying) {
+      videoContext.pause()
+    } else {
+      videoContext.play()
+    }
+  },
+
+  // 视频播放事件
+  onVideoPlay() {
+    this.setData({
+      isVideoPlaying: true
+    })
+  },
+
+  // 视频暂停事件
+  onVideoPause() {
+    this.setData({
+      isVideoPlaying: false
+    })
+  },
+
+  // 进入全屏
+  enterFullscreen() {
+    const videoContext = wx.createVideoContext('center', this)
+    videoContext.requestFullScreen({ direction: 90 }) // 0: 正常竖向, 90: 屏幕逆时针90度, -90: 屏幕顺时针90度
+  },
+
+  // 全屏状态变化
+  onFullscreenChange(e) {
+    this.setData({
+      isFullscreen: e.detail.fullScreen
+    })
+  },
+
+  // 关闭全屏
+  onCloseFullscreen() {
+    const videoContext = wx.createVideoContext('center', this)
+    videoContext.exitFullScreen()
+  },
+
+  // 长按开始加速播放
+  onLongPressStart() {
+    // 只有未完成的课程才能长按加速
+    if (!this.data.isCourseCompleted && !this.data.isFullscreen) {
+      this.setData({
+        isLongPressing: true
+      })
+      const videoContext = wx.createVideoContext('center', this)
+      videoContext.playbackRate(1.5) // 设置1.5倍速
+      this.setData({
+        playbackRate: 1.5
+      })
+    }
+  },
+
+  // 长按结束恢复正常播放
+  onLongPressEnd() {
+    if (!this.data.isCourseCompleted && this.data.isLongPressing) {
+      const videoContext = wx.createVideoContext('center', this)
+      videoContext.playbackRate(1) // 恢复正常速度
+      this.setData({
+        isLongPressing: false,
+        playbackRate: 1
+      })
+    }
   }
 })

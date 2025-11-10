@@ -34,6 +34,121 @@
   border-radius: 20rpx;
   overflow: hidden;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.video-touch-layer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* 自定义视频控制按钮 */
+.custom-video-controls {
+  position: absolute;
+  bottom: 20rpx;
+  right: 20rpx;
+  display: flex;
+  gap: 20rpx;
+  z-index: 100;
+}
+
+.play-pause-btn,
+.fullscreen-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10rpx);
+  transition: all 0.3s ease;
+}
+
+.play-pause-btn:active,
+.fullscreen-btn:active {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(0.95);
+}
+
+.control-icon {
+  color: white;
+  font-size: 36rpx;
+  line-height: 1;
+}
+
+/* 全屏控制容器 */
+.fullscreen-controls {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.fullscreen-controls .fullscreen-close-btn,
+.fullscreen-controls .fullscreen-play-btn {
+  pointer-events: auto;
+}
+
+/* 全屏关闭按钮 */
+.fullscreen-close-btn {
+  position: fixed;
+  top: 40rpx;
+  right: 40rpx;
+  z-index: 10000;
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  backdrop-filter: blur(10rpx);
+  transition: all 0.3s ease;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.3);
+}
+
+.fullscreen-close-btn:active {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(0.95);
+}
+
+.close-icon {
+  color: white;
+  font-size: 56rpx;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* 全屏时的播放/暂停按钮 */
+.fullscreen-play-btn {
+  position: fixed;
+  bottom: 60rpx;
+  right: 60rpx;
+  z-index: 10000;
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  backdrop-filter: blur(10rpx);
+  transition: all 0.3s ease;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.3);
+}
+
+.fullscreen-play-btn:active {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(0.95);
+}
+
+.fullscreen-play-btn .control-icon {
+  font-size: 48rpx;
 }
 
 .video-placeholder {

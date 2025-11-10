@@ -13,7 +13,71 @@
     <view class="video-container">
       <!-- 模拟视频播放器 -->
       <view class="video-player">
-        <video autoplay wx:if="{{videoUrl}}" id='center' controls src="{{videoUrl}}" class="video-placeholder" bindended="onVideoEnded"/>
+        <!-- 未完成课程：带触摸层控制 -->
+        <view
+          wx:if="{{!isCourseCompleted && videoUrl}}"
+          class="video-touch-layer"
+          bindlongpress="onLongPressStart"
+          bindtouchend="onLongPressEnd"
+        >
+          <video
+            autoplay
+            id='center'
+            controls="{{false}}"
+            enable-progress-gesture="{{false}}"
+            show-fullscreen-btn="{{false}}"
+            show-play-btn="{{false}}"
+            show-center-play-btn="{{false}}"
+            enable-play-gesture="{{false}}"
+            show-progress="{{true}}"
+            src="{{videoUrl}}"
+            class="video-placeholder"
+            bindended="onVideoEnded"
+            bindfullscreenchange="onFullscreenChange"
+            bindplay="onVideoPlay"
+            bindpause="onVideoPause"
+            catchtap="toggleVideoPlay"
+          />
+          <!-- 自定义控制按钮（非全屏时显示） -->
+          <view wx:if="{{!isFullscreen}}" class="custom-video-controls">
+            <!-- 播放/暂停按钮 -->
+            <view class="play-pause-btn" catchtap="toggleVideoPlay">
+              <text class="control-icon">{{isVideoPlaying ? '⏸' : '▶'}}</text>
+            </view>
+            <!-- 全屏按钮 -->
+            <view class="fullscreen-btn" catchtap="enterFullscreen">
+              <text class="control-icon">⛶</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 全屏时的控制按钮（独立于video-touch-layer） -->
+        <view wx:if="{{isFullscreen && !isCourseCompleted}}" class="fullscreen-controls">
+          <!-- 关闭全屏按钮 -->
+          <view class="fullscreen-close-btn" catchtap="onCloseFullscreen">
+            <text class="close-icon">✕</text>
+          </view>
+          <!-- 全屏时的播放/暂停按钮 -->
+          <view class="fullscreen-play-btn" catchtap="toggleVideoPlay">
+            <text class="control-icon">{{isVideoPlaying ? '⏸' : '▶'}}</text>
+          </view>
+        </view>
+        <!-- 已完成课程：完整控制 -->
+        <video
+          wx:if="{{isCourseCompleted && videoUrl}}"
+          autoplay
+          id='center'
+          controls="{{true}}"
+          enable-progress-gesture="{{true}}"
+          show-fullscreen-btn="{{true}}"
+          show-play-btn="{{true}}"
+          show-center-play-btn="{{true}}"
+          show-progress="{{true}}"
+          src="{{videoUrl}}"
+          class="video-placeholder"
+          bindended="onVideoEnded"
+          bindfullscreenchange="onFullscreenChange"
+        />
       </view>
     </view>
 
@@ -72,7 +136,7 @@
     </view>
 
     <!-- 完成学习按钮 -->
-    <view class="complete-section">
+    <view class="complete-section" wx:if="{{!isCourseCompleted}}">
       <button
         class="btn btn-primary complete-btn"
         bindtap="completeCourse"

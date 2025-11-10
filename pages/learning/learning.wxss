@@ -203,7 +203,7 @@
   flex-direction: column;
   align-items: flex-end;
   margin-left: 20rpx;
-  gap:60rpx
+  gap:30rpx;
 }
 
 .course-buttons {

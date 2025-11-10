@@ -7,7 +7,7 @@ Page({
     filteredCourses: [],
     searchKeyword: "",
     nowPage: "课程回顾",
-    assignments: app.globalData.assignments
+    assignments: app.globalData.assignments,
   },
 
   onLoad() {
@@ -26,12 +26,15 @@ Page({
 
     // 更新课程状态
     this.updateCourseStatus(courses, learningProgress.completedCourses);
-    this.updateAssigmentsStatus(assignments, learningProgress.completedAssignments);
+    this.updateAssigmentsStatus(
+      assignments,
+      learningProgress.completedAssignments
+    );
     this.setData({
       totalExperience: learningProgress.totalExperience,
       courses: courses,
       filteredCourses: courses,
-      assignments: app.globalData.assignments
+      assignments: app.globalData.assignments,
     });
   },
 
@@ -49,7 +52,7 @@ Page({
         course.status = "locked";
       }
     });
-    console.log('yjc=>courses',courses );
+    console.log("yjc=>courses", courses);
   },
 
   // 更新课程状态
@@ -58,7 +61,9 @@ Page({
       if (assignmentIds.includes(assignment.id)) {
         assignment.status = "completed";
       } else if (
-        app.globalData.courses[assignment.courseId-1]?.status === "completed" || assignment.id === 1
+        app.globalData.courses[assignment.courseId - 1]?.status ===
+          "completed" ||
+        assignment.id === 1
       ) {
         assignment.status = "available";
       } else {
@@ -129,9 +134,23 @@ Page({
     });
   },
 
+  unionJump(e) {
+    const status = e.currentTarget.dataset.zuoyeStatus;
+    if ("completed" === status) {
+      this.viewAssignment(e);
+    } else if ("available" === status) {
+      this.jumpToZuoye(e);
+    } else {
+      wx.showToast({
+        title: "作业尚未解锁",
+        icon: "none",
+      });
+    }
+  },
+
   // 查看作业
   viewAssignment(e) {
-    console.log('yjc=>viewAssignment', );
+    console.log("yjc=>viewAssignment");
     const zuoyeId = e.currentTarget.dataset.zuoyeId;
     wx.navigateTo({
       url: `/pages/assignment-review/assignment-review?assignmentId=${zuoyeId}`,
@@ -156,12 +175,12 @@ Page({
   onCourseCompleted(e) {
     const { courseId, status } = e.detail;
 
-    if (status === 'completed') {
+    if (status === "completed") {
       // 如果已完成，跳转到视频页面重播
       wx.navigateTo({
         url: `/pages/video/video?courseId=${courseId}`,
       });
-    } else if (status === 'available') {
+    } else if (status === "available") {
       // 如果可学习，跳转到视频页面开始学习
       wx.navigateTo({
         url: `/pages/video/video?courseId=${courseId}`,
