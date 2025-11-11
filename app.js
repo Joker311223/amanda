@@ -8,6 +8,7 @@ App({
       completedCourses: [],
       completedAssignments: [],
       totalExperience: 0,
+      happinessScore: 0, // 快乐分
     },
     courses: [
       // 正念技能
@@ -193,6 +194,7 @@ App({
         title: "正念-概览",
         category: "正念",
         courseId: 1,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-15",
         lead: "正念核心技能的练习·描述在什么情况下您决定练习正念技能。",

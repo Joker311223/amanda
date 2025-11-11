@@ -14,6 +14,9 @@ Page({
     dialogParams: {}, // 存储跳转参数
     showGuide: false, // 是否显示导引
     guideSteps: [], // 导引步骤
+    showDebugButtons: false, // 是否显示debug按钮
+    showCompletionTip: false, // 是否显示完成提示条
+    availableExperience: 0, // 可兑换的经验值
   },
 
   // 加载数据
@@ -38,7 +41,13 @@ Page({
     });
   },
 
-  onLoad() {
+  onLoad(options) {
+    // 检查是否有debug参数
+    if (options.debug === 'true') {
+      this.setData({
+        showDebugButtons: true,
+      });
+    }
     this.loadCourses();
     this.loadData();
   },
@@ -403,6 +412,14 @@ Page({
     const progressPercent =
       totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
+    // 检查是否所有课程和作业都已完成
+    const allCoursesCompleted = completedCount === totalCount;
+    const allAssignmentsCompleted = learningProgress.completedAssignments.length === assignments.length;
+    const isAllCompleted = allCoursesCompleted && allAssignmentsCompleted;
+
+    // 计算可兑换的经验值（未兑换的经验值）
+    const availableExperience = learningProgress.totalExperience;
+
     this.setData({
       allCourses: allCourses,
       courses: courses,
@@ -410,6 +427,8 @@ Page({
       completedCount: completedCount,
       progressPercent: progressPercent,
       assignments: assignments,
+      showCompletionTip: isAllCompleted && availableExperience > 0,
+      availableExperience: availableExperience,
     });
   },
 
@@ -479,5 +498,90 @@ Page({
         url: `/pages/assignments/assignments?courseId=${course.courseId}`,
       });
     }
+  },
+
+  // Debug: 清空所有学习记录
+  debugClearAllProgress() {
+    wx.showModal({
+      title: '确认清空',
+      content: '确定要清空所有学习的课程和作业记录吗？',
+      confirmText: '确定',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          const app = getApp();
+          app.globalData.learningProgress = {
+            currentWeek: 1,
+            currentDay: 1,
+            completedCourses: [],
+            completedAssignments: [],
+            totalExperience: 0,
+          };
+          app.saveUserData();
+          this.loadCourses();
+          this.loadData();
+          wx.showToast({
+            title: '已清空所有记录',
+            icon: 'success',
+            duration: 1500,
+          });
+        }
+      },
+    });
+  },
+
+  // Debug: 一键完成所有课程
+  debugCompleteAllCourses() {
+    wx.showModal({
+      title: '确认完成',
+      content: '确定要一键完成所有课程吗？',
+      confirmText: '确定',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          const app = getApp();
+          const allCourseIds = app.globalData.courses.map(c => c.id);
+          const allAssignmentIds = app.globalData.assignments.map(a => a.id);
+
+          // 计算总经验值
+          const totalExperience = app.globalData.courses.reduce((sum, course) => {
+            return sum + (course.experience || 0);
+          }, 0) + app.globalData.assignments.reduce((sum, assignment) => {
+            return sum + (assignment.experience || 0);
+          }, 0);
+
+          app.globalData.learningProgress = {
+            currentWeek: 1,
+            currentDay: 1,
+            completedCourses: allCourseIds,
+            completedAssignments: allAssignmentIds,
+            totalExperience: totalExperience,
+            happinessScore: 0,
+          };
+          app.saveUserData();
+          this.loadCourses();
+          this.loadData();
+          wx.showToast({
+            title: '已完成所有课程',
+            icon: 'success',
+            duration: 1500,
+          });
+        }
+      },
+    });
+  },
+
+  // 打开快乐分兑换页面
+  openHappinessExchange() {
+    wx.navigateTo({
+      url: `/pages/happiness-exchange/happiness-exchange?experience=${this.data.availableExperience}`,
+    });
+  },
+
+  // 关闭完成提示条
+  closeCompletionTip() {
+    this.setData({
+      showCompletionTip: false,
+    });
   },
 });

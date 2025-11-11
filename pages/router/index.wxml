@@ -75,4 +75,15 @@
     bind:complete="onGuideComplete"
     bind:stepchange="onGuideStepChange"
   />
+
+  <!-- Debug按钮 -->
+  <view wx:if="{{showDebugButtons}}" class="debug-buttons">
+    <button class="debug-btn debug-btn-clear" bindtap="debugClearAllProgress">
+      🗑️ 清空记录
+    </button>
+    <button class="debug-btn debug-btn-complete" bindtap="debugCompleteAllCourses">
+      ✅ 完成全部
+    </button>
+  </view>
+
 </view>

@@ -1,0 +1,137 @@
+<view class="page-container">
+  <!-- 顶部返回 -->
+  <view class="header">
+    <button class="back-btn" bindtap="goBack">
+      <text class="back-icon">←</text>
+      返回
+    </button>
+    <text class="header-title">快乐分兑换</text>
+    <view class="header-spacer"></view>
+  </view>
+
+  <!-- 主要内容 -->
+  <view class="content">
+    <!-- 当前快乐分显示 -->
+    <view class="current-happiness-card">
+      <view class="card-header">
+        <text class="card-icon">😊</text>
+        <text class="card-title">当前快乐分</text>
+      </view>
+      <view class="happiness-display">
+        <text class="happiness-number">{{currentHappiness}}</text>
+        <text class="happiness-unit">分</text>
+      </view>
+    </view>
+
+    <!-- 可用经验值显示 -->
+    <view class="available-experience-card">
+      <view class="card-header">
+        <text class="card-icon">⭐</text>
+        <text class="card-title">可用积分</text>
+      </view>
+      <view class="experience-display">
+        <text class="experience-number">{{totalExperience}}</text>
+        <text class="experience-unit">分</text>
+      </view>
+      <view class="exchange-rate-info">
+        <text>兑换比例：{{exchangeRate}} 积分 = 1 快乐分</text>
+      </view>
+    </view>
+
+    <!-- 兑换数量选择 -->
+    <view class="exchange-section">
+      <view class="section-title">
+        <text>选择兑换数量</text>
+        <text class="max-info">最多可兑换 {{maxHappinessScore}} 快乐分</text>
+      </view>
+
+      <!-- 滑块选择 -->
+      <view class="slider-container">
+        <view class="slider-labels">
+          <text class="label-left">0</text>
+          <text class="label-right">{{maxHappinessScore}}</text>
+        </view>
+        <slider
+          class="happiness-slider"
+          min="0"
+          max="{{maxHappinessScore}}"
+          step="1"
+          value="{{selectedHappiness}}"
+          bindchange="updateSelectedHappiness"
+          activeColor="#667eea"
+          backgroundColor="#e8eaf6"
+          block-size="28"
+          block-color="#667eea"
+        />
+        <view class="slider-value-display">
+          <text class="selected-value">{{selectedHappiness}}</text>
+          <text class="selected-unit">快乐分</text>
+        </view>
+      </view>
+
+      <!-- 快速选择按钮 -->
+      <view class="quick-select-buttons">
+        <button class="quick-btn" bindtap="quickSelect" data-percentage="25">
+          25%
+        </button>
+        <button class="quick-btn" bindtap="quickSelect" data-percentage="50">
+          50%
+        </button>
+        <button class="quick-btn" bindtap="quickSelect" data-percentage="75">
+          75%
+        </button>
+        <button class="quick-btn" bindtap="quickSelect" data-percentage="100">
+          全部
+        </button>
+      </view>
+    </view>
+
+    <!-- 兑换预览 -->
+    <view class="exchange-preview">
+      <view class="preview-item">
+        <text class="preview-label">消耗积分</text>
+        <text class="preview-value">{{selectedHappiness * exchangeRate}}</text>
+      </view>
+      <view class="preview-arrow">→</view>
+      <view class="preview-item">
+        <text class="preview-label">获得快乐分</text>
+        <text class="preview-value">{{selectedHappiness}}</text>
+      </view>
+    </view>
+
+    <!-- 兑换按钮 -->
+    <button class="exchange-btn" bindtap="performExchange">
+      <text class="btn-icon">✨</text>
+      <text class="btn-text">立即兑换</text>
+    </button>
+  </view>
+
+  <!-- 兑换动画层 -->
+  <view wx:if="{{showAnimation}}" class="animation-overlay">
+    <view class="animation-container">
+      <!-- 动画元素 -->
+      <view class="exchange-animation" animation="{{animationData}}">
+        <view class="animation-content">
+          <text class="animation-icon">✨</text>
+          <text class="animation-text">{{selectedHappiness}}</text>
+        </view>
+      </view>
+
+      <!-- 粒子效果 -->
+      <view class="particles">
+        <view class="particle" style="left: 20%; top: 30%;"></view>
+        <view class="particle" style="left: 80%; top: 40%;"></view>
+        <view class="particle" style="left: 30%; top: 70%;"></view>
+        <view class="particle" style="left: 70%; top: 60%;"></view>
+        <view class="particle" style="left: 50%; top: 20%;"></view>
+        <view class="particle" style="left: 40%; top: 80%;"></view>
+      </view>
+
+      <!-- 成功提示 -->
+      <view wx:if="{{exchangeSuccess}}" class="success-message">
+        <text class="success-icon">🎉</text>
+        <text class="success-text">兑换成功！</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,7 +1,19 @@
 {
   "libVersion": "3.10.3",
   "projectname": "DBT%E6%8A%80%E8%83%BD%E9%9A%8F%E8%BA%AB%E7%BB%83",
-  "condition": {},
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/router/index",
+          "pathName": "pages/router/index",
+          "query": "debug=true",
+          "scene": null,
+          "launchMode": "default"
+        }
+      ]
+    }
+  },
   "setting": {
     "urlCheck": true,
     "coverView": true,

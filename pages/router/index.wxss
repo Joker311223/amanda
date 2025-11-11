@@ -970,3 +970,154 @@
     font-size: 28rpx;
   }
 }
+
+/* Debug按钮样式 */
+.debug-buttons {
+  position: fixed;
+  bottom: 30rpx;
+  right: 30rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 15rpx;
+  z-index: 999;
+}
+
+.debug-btn {
+  width: 140rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.debug-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+.debug-btn-clear {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.debug-btn-clear:hover {
+  background-color: #ff5252;
+}
+
+.debug-btn-complete {
+  background-color: #51cf66;
+  color: white;
+}
+
+.debug-btn-complete:hover {
+  background-color: #40c057;
+}
+
+/* 完成提示条样式 */
+.completion-tip-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 998;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.completion-tip {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20rpx 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20rpx;
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.15);
+  border-radius: 20rpx 20rpx 0 0;
+}
+
+.tip-content {
+  display: flex;
+  align-items: center;
+  gap: 15rpx;
+  flex: 1;
+}
+
+.tip-icon {
+  font-size: 40rpx;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10rpx);
+  }
+}
+
+.tip-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  color: white;
+}
+
+.tip-title {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.tip-desc {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+.tip-actions {
+  display: flex;
+  gap: 12rpx;
+}
+
+.tip-btn {
+  padding: 12rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.exchange-btn {
+  background-color: #ffd700;
+  color: #333;
+}
+
+.exchange-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 12rpx rgba(255, 215, 0, 0.4);
+}
+
+.close-btn {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.close-btn:active {
+  background-color: rgba(255, 255, 255, 0.5);
+}
