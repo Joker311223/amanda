@@ -236,6 +236,7 @@ App({
         title: "正念-智慧心",
         category: "正念",
         courseId: 1,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-16",
         lead: "练习智慧心念",
@@ -276,6 +277,7 @@ App({
         title: '正念-是什么1',
         category: "正念",
         courseId: 2,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-17",
         lead: "“是什么”技能--观察、描述、参与",
@@ -312,6 +314,7 @@ App({
         title: '正念-是什么2',
         category: "正念",
         courseId: 2,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-18",
         lead: "观察、描述、参与的清单·记录您练习的技能。",
@@ -362,6 +365,7 @@ App({
         title: '正念-怎样做1',
         category: "正念",
         courseId: 3,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-19",
         lead: "“怎样做”技能--不评判、专一地做、有效地做",
@@ -404,6 +408,7 @@ App({
         title: '正念-怎样做2',
         category: "正念",
         courseId: 3,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-20",
         lead: "不评判、专一地做、有效地做的清单",
@@ -458,6 +463,7 @@ App({
         title: "ACCEPT",
         category: "痛苦耐受",
         courseId: 4,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-21",
         lead: "转移注意力(ACCEPTS技能)·请描述一个危机事件:并描述使用ACCEPTS技能的过程。",
@@ -500,6 +506,7 @@ App({
         title: "IMPROVE",
         category: "痛苦耐受",
         courseId: 5,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-22",
         lead: "改善当下·请列出危机事件，(IMPROVE)技能的过程。",
@@ -537,6 +544,7 @@ App({
         title: "TIP",
         category: "痛苦耐受",
         courseId: 6,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-23",
         lead: "使用TIP技能改变身体化学状况·描述练习的每种情景,记录使用TIP技能前后情绪激发的程度及痛苦承受遮程度。描述您实际的过程。",
@@ -564,6 +572,7 @@ App({
         title: "全然接纳",
         category: "痛苦耐受",
         courseId: 7,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-24",
         lead: "全然接纳·思考您需要全然接纳什么",
@@ -616,6 +625,7 @@ App({
         title: "自我安抚",
         category: "痛苦耐受",
         courseId: 8,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-25",
         lead: "自我安抚·描述危机事件，并描述使用自我安抚技能的过程。",
@@ -656,6 +666,7 @@ App({
         title: "PLEASE技能",
         category: "情绪调节",
         courseId: 9,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-26",
         lead: "PLEASE技巧·我已经",
@@ -697,6 +708,7 @@ App({
         title: "相反行为",
         category: "情绪调节",
         courseId: 10,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-27",
         lead: "用相反行为改变情绪，找出您想改变的情绪反应，或者您为之感到痛苦的情绪反应，评估这种情绪反应是否和事实符合。如果不是，请关注因情绪而来的行为冲动。然后找出与这种情绪相反的行为，并采取这个相反行为。记住，要练习完全相反的行为。描述所发生的事。",
@@ -745,6 +757,7 @@ App({
         title: "对当下情绪保持正念",
         category: "情绪调节",
         courseId: 11,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-28",
         lead: "对当下的情绪保持正念",
@@ -786,6 +799,7 @@ App({
         title: "人际觉察",
         category: "人际效能",
         courseId: null,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-29",
         lead: "追踪人际效能技能的使用，当您练习人际效能或有机会去练习时，甚至您未做任何练习，都请填写这张练习单。",
@@ -805,6 +819,7 @@ App({
         title: "维持关系（GIVE）",
         category: "人际效能",
         courseId: 12,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-30",
         lead: "GIVE(维持关系)·当您练习人际效能或有机会去练习时，甚至您未做任何练习，都请填写这张练习单",
@@ -831,6 +846,7 @@ App({
         title: "尊重自己（FAST）",
         category: "人际效能",
         courseId: 13,
+        experience: 20,
         status: "locked",
         dueDate: "2024-01-31",
         lead: "FAST(尊重自己)，当您练习人际效能或有机会去练习时，甚至您未做任何练习，都请填写这张练习单",
@@ -849,6 +865,7 @@ App({
         title: "如你所愿（DEAR MAN）",
         category: "人际效能",
         courseId: 14,
+        experience: 20,
         status: "locked",
         dueDate: "2024-02-01",
         lead: "DEAR MAN(如你所愿)·当您练习人际效能或有机会去练习时，甚至您未做任何练习，都请填写这张练习单。",
@@ -991,8 +1008,8 @@ App({
     console.log("yjc=>assignments", assignments);
   },
 
-  finishWork(workId) {
-    console.log("yjc=>workId", workId);
+  finishWork(workId, earnedPoints) {
+    console.log("yjc=>workId", workId, "earnedPoints", earnedPoints);
     const assignments = this.globalData.assignments;
     const learningProgress = this.globalData.learningProgress;
     assignments.forEach((assignment) => {
@@ -1004,7 +1021,9 @@ App({
           )
         ) {
           learningProgress.completedAssignments.push(assignment.id);
-          learningProgress.totalExperience += 30;
+          // 使用传入的earnedPoints，如果没有则使用assignment.experience，最后才用默认值30
+          const points = earnedPoints || assignment.experience || 30;
+          learningProgress.totalExperience += points;
           this.saveUserData();
         }
       }

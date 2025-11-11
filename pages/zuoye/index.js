@@ -176,10 +176,11 @@ Page({
       });
     } else {
       // 完成所有题目
-      app.finishWork(this.data.zuoyeId);
+      // 计算获得的经验值（使用作业的experience字段）
+      const earnedPoints = this.data.assignment.experience || 20;
 
-      // 计算获得的经验值（可以根据作业配置或默认值）
-      const earnedPoints = this.data.assignment.points || 20;
+      // 调用app的finishWork方法，传入作业ID和经验值
+      app.finishWork(this.data.zuoyeId, earnedPoints);
 
       // 显示完成弹窗
       this.setData({
