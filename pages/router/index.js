@@ -435,14 +435,13 @@ Page({
     // 计算可兑换的经验值（未兑换的经验值）
     const availableExperience = learningProgress.totalExperience;
 
-    // 如果所有课程和作业都完成了，显示完成弹窗（只显示一次）
-    if (isAllCompleted && !wx.getStorageSync('hasShownCompletionModal')) {
+    // 如果所有课程和作业都完成了，每次进入页面都显示完成弹窗
+    if (isAllCompleted) {
       setTimeout(() => {
         this.setData({
           showCompletionModal: true,
           totalEarnedExperience: availableExperience,
         });
-        wx.setStorageSync('hasShownCompletionModal', true);
       }, 500);
     }
 
