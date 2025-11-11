@@ -1,4 +1,9 @@
 <view class="page-container">
+  <!-- 手动导引按钮 -->
+  <view class="guide-trigger-btn" bindtap="showGuideManually">
+    <text class="guide-icon">❓</text>
+  </view>
+
   <!-- 经验值显示 -->
   <view class="experience-badge">
     <text class="star">⭐</text>
@@ -84,6 +89,51 @@
     <button class="debug-btn debug-btn-complete" bindtap="debugCompleteAllCourses">
       ✅ 完成全部
     </button>
+  </view>
+
+  <!-- 完成所有课程弹窗 -->
+  <view class="completion-modal-mask" wx:if="{{showCompletionModal}}" catchtouchmove="preventTouchMove">
+    <view class="completion-modal">
+      <!-- 顶部装饰图 -->
+      <view class="completion-header">
+        <view class="completion-emoji-group">
+          <text class="completion-emoji">🎉</text>
+          <text class="completion-emoji">🎊</text>
+          <text class="completion-emoji">✨</text>
+        </view>
+      </view>
+
+      <!-- 内容区域 -->
+      <view class="completion-content">
+        <view class="completion-title">恭喜通关！</view>
+
+        <view class="completion-desc">
+          <text>太棒啦！你已完成DBT情绪技能所有课程，成功 get 全套情绪管理工具。</text>
+        </view>
+
+        <view class="completion-points">
+          <text class="points-label">本次成长累计获得</text>
+          <text class="points-value">{{totalEarnedExperience}}</text>
+          <text class="points-unit">分快乐经验</text>
+        </view>
+
+        <view class="completion-message">
+          <text>每一分都是你用心练习的见证！</text>
+          <text>情绪成长没有终点，带着这些技能继续出发吧，你会成为更从容的自己！</text>
+        </view>
+
+        <view class="completion-contact">
+          <text>请通关小朋友联系负责人杨老师</text>
+          <text class="wechat-id" bindtap="copyWechat">18888929709 (wechat)</text>
+          <text>获取更多学习资源！</text>
+        </view>
+      </view>
+
+      <!-- 关闭按钮 -->
+      <view class="completion-close-btn" bindtap="closeCompletionModal">
+        <text>我知道了</text>
+      </view>
+    </view>
   </view>
 
 </view>

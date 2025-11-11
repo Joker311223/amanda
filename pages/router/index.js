@@ -17,6 +17,8 @@ Page({
     showDebugButtons: false, // 是否显示debug按钮
     showCompletionTip: false, // 是否显示完成提示条
     availableExperience: 0, // 可兑换的经验值
+    showCompletionModal: false, // 是否显示完成所有课程的弹窗
+    totalEarnedExperience: 0, // 总共获得的经验值
   },
 
   // 加载数据
@@ -59,8 +61,8 @@ Page({
     this.loadCourses();
     this.loadData(); // 更新经验值等数据
 
-    // 检查是否需要显示导引
-    if (!app.globalData.hasSeenGuide && !app.globalData.isFirstTime) {
+    // 检查是否需要显示导引（只有在未看过且未选择不再提示时才显示）
+    if (!app.globalData.hasSeenGuide && !app.globalData.isFirstTime && !app.globalData.noMoreGuide) {
       // 延迟显示导引，确保页面已完全渲染
       setTimeout(() => {
         this.showNewUserGuide();
@@ -123,21 +125,34 @@ Page({
   },
 
   // 导引完成
-  onGuideComplete() {
+  onGuideComplete(e) {
+    const noMoreGuide = e.detail && e.detail.noMoreGuide;
+
     this.setData({
       showGuide: false,
     });
 
     // 标记已看过导引
     app.globalData.hasSeenGuide = true;
+
+    // 如果用户选择不再提示，则保存该设置
+    if (noMoreGuide) {
+      app.globalData.noMoreGuide = true;
+    }
+
     app.saveUserData();
 
     // 显示提示
     wx.showToast({
-      title: "开始学习吧！",
+      title: noMoreGuide ? "已关闭自动导引" : "开始学习吧！",
       icon: "success",
       duration: 1500,
     });
+  },
+
+  // 手动显示导引
+  showGuideManually() {
+    this.showNewUserGuide();
   },
 
   // 导引步骤变化
@@ -420,6 +435,17 @@ Page({
     // 计算可兑换的经验值（未兑换的经验值）
     const availableExperience = learningProgress.totalExperience;
 
+    // 如果所有课程和作业都完成了，显示完成弹窗（只显示一次）
+    if (isAllCompleted && !wx.getStorageSync('hasShownCompletionModal')) {
+      setTimeout(() => {
+        this.setData({
+          showCompletionModal: true,
+          totalEarnedExperience: availableExperience,
+        });
+        wx.setStorageSync('hasShownCompletionModal', true);
+      }, 500);
+    }
+
     this.setData({
       allCourses: allCourses,
       courses: courses,
@@ -429,6 +455,27 @@ Page({
       assignments: assignments,
       showCompletionTip: isAllCompleted && availableExperience > 0,
       availableExperience: availableExperience,
+    });
+  },
+
+  // 关闭完成弹窗
+  closeCompletionModal() {
+    this.setData({
+      showCompletionModal: false,
+    });
+  },
+
+  // 复制微信号
+  copyWechat() {
+    wx.setClipboardData({
+      data: '18888929709',
+      success: () => {
+        wx.showToast({
+          title: '微信号已复制',
+          icon: 'success',
+          duration: 2000,
+        });
+      },
     });
   },
 

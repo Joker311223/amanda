@@ -21,7 +21,8 @@ Component({
     tipTop: 0,
     tipLeft: 0,
     tipPosition: 'tip-bottom',
-    arrowPosition: 'arrow-top'
+    arrowPosition: 'arrow-top',
+    noMoreGuide: false // 是否不再提示
   },
 
   observers: {
@@ -157,12 +158,19 @@ Component({
       const nextIndex = this.data.currentStepIndex + 1
 
       if (nextIndex >= this.data.totalSteps) {
-        // 完成导引
-        this.triggerEvent('complete')
+        // 完成导引，传递noMoreGuide参数
+        this.triggerEvent('complete', { noMoreGuide: this.data.noMoreGuide })
       } else {
         this.showStep(nextIndex)
         this.triggerEvent('stepchange', { step: nextIndex })
       }
+    },
+
+    // 切换"不再提示"选项
+    onToggleNoMore() {
+      this.setData({
+        noMoreGuide: !this.data.noMoreGuide
+      })
     },
 
     // 上一步

@@ -39,6 +39,14 @@
           </button>
         </view>
       </view>
+
+      <!-- 最后一步显示"不再提示"选项 -->
+      <view wx:if="{{currentStepIndex === totalSteps - 1}}" class="guide-no-more-option">
+        <label class="guide-checkbox-label">
+          <checkbox value="noMore" checked="{{noMoreGuide}}" bindtap="onToggleNoMore" />
+          <text class="guide-checkbox-text">后续不再导引提示</text>
+        </label>
+      </view>
     </view>
 
     <!-- 箭头指示器 -->
