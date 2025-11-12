@@ -617,6 +617,54 @@ Page({
     });
   },
 
+  // Debug: 一键学习所有课程（不包括作业）
+  debugCompleteCoursesOnly() {
+    wx.showModal({
+      title: '确认学习',
+      content: '确定要一键学习所有课程吗？（不包括作业）',
+      confirmText: '确定',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          const app = getApp();
+          const allCourseIds = app.globalData.courses.map(c => c.id);
+
+          // 只计算课程的经验值
+          const coursesExperience = app.globalData.courses.reduce((sum, course) => {
+            return sum + (course.experience || 0);
+          }, 0);
+
+          // 保留当前已完成的作业
+          const currentCompletedAssignments = app.globalData.learningProgress.completedAssignments || [];
+          
+          // 计算作业的经验值
+          const assignmentsExperience = app.globalData.assignments
+            .filter(a => currentCompletedAssignments.includes(a.id))
+            .reduce((sum, assignment) => {
+              return sum + (assignment.experience || 0);
+            }, 0);
+
+          app.globalData.learningProgress = {
+            currentWeek: 1,
+            currentDay: 1,
+            completedCourses: allCourseIds,
+            completedAssignments: currentCompletedAssignments,
+            totalExperience: coursesExperience + assignmentsExperience,
+            happinessScore: app.globalData.learningProgress.happinessScore || 0,
+          };
+          app.saveUserData();
+          this.loadCourses();
+          this.loadData();
+          wx.showToast({
+            title: '已学习所有课程',
+            icon: 'success',
+            duration: 1500,
+          });
+        }
+      },
+    });
+  },
+
   // 打开快乐分兑换页面
   openHappinessExchange() {
     wx.navigateTo({

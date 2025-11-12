@@ -26,7 +26,7 @@ App({
       },
       {
         id: 2,
-        title: '正念-"怎样做"技能',
+        title: '正念"怎样做"技能',
         category: "正念",
         duration: "03:37",
         status: "locked",
@@ -38,7 +38,7 @@ App({
       },
       {
         id: 3,
-        title: '正念-"是什么"技能',
+        title: '正念"是什么"技能',
         category: "正念",
         duration: "04:05",
         status: "locked",
@@ -1012,7 +1012,7 @@ App({
     },
     {
         "id": 13,
-        "title": "相反行为",
+        "title": "情绪-相反行为",
         "category": "情绪调节",
         "courseId": 10,
         "experience": 20,
@@ -1093,7 +1093,7 @@ App({
     },
     {
         "id": 14,
-        "title": "对当下保持正念",
+        "title": "情绪-对当下保持正念",
         "category": "情绪调节",
         "courseId": 11,
         "experience": 20,

@@ -89,6 +89,9 @@
     <button class="debug-btn debug-btn-complete" bindtap="debugCompleteAllCourses">
       ✅ 完成全部
     </button>
+    <button class="debug-btn debug-btn-courses" bindtap="debugCompleteCoursesOnly">
+      📚 学习课程
+    </button>
   </view>
 
   <!-- 完成所有课程弹窗 -->

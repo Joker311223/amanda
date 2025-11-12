@@ -1019,6 +1019,15 @@
   background-color: #40c057;
 }
 
+.debug-btn-courses {
+  background-color: #4dabf7;
+  color: white;
+}
+
+.debug-btn-courses:hover {
+  background-color: #339af0;
+}
+
 /* 完成提示条样式 */
 .completion-tip-container {
   position: fixed;
