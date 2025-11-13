@@ -44,12 +44,16 @@ Page({
   },
 
   onLoad(options) {
-    // 检查是否有debug参数
-    if (options.debug === 'true') {
-      this.setData({
-        showDebugButtons: true,
-      });
-    }
+    // 检查是否有debug参数 TODO
+    // if (options.debug === 'true') {
+    //   this.setData({
+    //     showDebugButtons: true,
+    //   });
+    // }
+    // 测试环境直接设置True 上线的时候去掉
+    this.setData({
+      showDebugButtons: true,
+    });
     this.loadCourses();
     this.loadData();
   },
@@ -62,7 +66,11 @@ Page({
     this.loadData(); // 更新经验值等数据
 
     // 检查是否需要显示导引（只有在未看过且未选择不再提示时才显示）
-    if (!app.globalData.hasSeenGuide && !app.globalData.isFirstTime && !app.globalData.noMoreGuide) {
+    if (
+      !app.globalData.hasSeenGuide &&
+      !app.globalData.isFirstTime &&
+      !app.globalData.noMoreGuide
+    ) {
       // 延迟显示导引，确保页面已完全渲染
       setTimeout(() => {
         this.showNewUserGuide();
@@ -427,11 +435,14 @@ Page({
     const totalExperience = 850; // 总分
     const currentExperience = learningProgress.totalExperience; // 当前获得的经验值
     const progressPercent =
-      totalExperience > 0 ? Math.round((currentExperience / totalExperience) * 100) : 0;
+      totalExperience > 0
+        ? Math.round((currentExperience / totalExperience) * 100)
+        : 0;
 
     // 检查是否所有课程和作业都已完成
     const allCoursesCompleted = completedCount === totalCount;
-    const allAssignmentsCompleted = learningProgress.completedAssignments.length === assignments.length;
+    const allAssignmentsCompleted =
+      learningProgress.completedAssignments.length === assignments.length;
     const isAllCompleted = allCoursesCompleted && allAssignmentsCompleted;
 
     // 计算可兑换的经验值（未兑换的经验值）
@@ -469,11 +480,11 @@ Page({
   // 复制微信号
   copyWechat() {
     wx.setClipboardData({
-      data: '18888929709',
+      data: "18888929709",
       success: () => {
         wx.showToast({
-          title: '微信号已复制',
-          icon: 'success',
+          title: "微信号已复制",
+          icon: "success",
           duration: 2000,
         });
       },
@@ -551,10 +562,10 @@ Page({
   // Debug: 清空所有学习记录
   debugClearAllProgress() {
     wx.showModal({
-      title: '确认清空',
-      content: '确定要清空所有学习的课程和作业记录吗？',
-      confirmText: '确定',
-      cancelText: '取消',
+      title: "确认清空",
+      content: "确定要清空所有学习的课程和作业记录吗？",
+      confirmText: "确定",
+      cancelText: "取消",
       success: (res) => {
         if (res.confirm) {
           const app = getApp();
@@ -569,8 +580,8 @@ Page({
           this.loadCourses();
           this.loadData();
           wx.showToast({
-            title: '已清空所有记录',
-            icon: 'success',
+            title: "已清空所有记录",
+            icon: "success",
             duration: 1500,
           });
         }
@@ -581,22 +592,24 @@ Page({
   // Debug: 一键完成所有课程
   debugCompleteAllCourses() {
     wx.showModal({
-      title: '确认完成',
-      content: '确定要一键完成所有课程吗？',
-      confirmText: '确定',
-      cancelText: '取消',
+      title: "确认完成",
+      content: "确定要一键完成所有课程吗？",
+      confirmText: "确定",
+      cancelText: "取消",
       success: (res) => {
         if (res.confirm) {
           const app = getApp();
-          const allCourseIds = app.globalData.courses.map(c => c.id);
-          const allAssignmentIds = app.globalData.assignments.map(a => a.id);
+          const allCourseIds = app.globalData.courses.map((c) => c.id);
+          const allAssignmentIds = app.globalData.assignments.map((a) => a.id);
 
           // 计算总经验值
-          const totalExperience = app.globalData.courses.reduce((sum, course) => {
-            return sum + (course.experience || 0);
-          }, 0) + app.globalData.assignments.reduce((sum, assignment) => {
-            return sum + (assignment.experience || 0);
-          }, 0);
+          const totalExperience =
+            app.globalData.courses.reduce((sum, course) => {
+              return sum + (course.experience || 0);
+            }, 0) +
+            app.globalData.assignments.reduce((sum, assignment) => {
+              return sum + (assignment.experience || 0);
+            }, 0);
 
           app.globalData.learningProgress = {
             currentWeek: 1,
@@ -610,8 +623,8 @@ Page({
           this.loadCourses();
           this.loadData();
           wx.showToast({
-            title: '已完成所有课程',
-            icon: 'success',
+            title: "已完成所有课程",
+            icon: "success",
             duration: 1500,
           });
         }
@@ -622,26 +635,30 @@ Page({
   // Debug: 一键学习所有课程（不包括作业）
   debugCompleteCoursesOnly() {
     wx.showModal({
-      title: '确认学习',
-      content: '确定要一键学习所有课程吗？（不包括作业）',
-      confirmText: '确定',
-      cancelText: '取消',
+      title: "确认学习",
+      content: "确定要一键学习所有课程吗？（不包括作业）",
+      confirmText: "确定",
+      cancelText: "取消",
       success: (res) => {
         if (res.confirm) {
           const app = getApp();
-          const allCourseIds = app.globalData.courses.map(c => c.id);
+          const allCourseIds = app.globalData.courses.map((c) => c.id);
 
           // 只计算课程的经验值
-          const coursesExperience = app.globalData.courses.reduce((sum, course) => {
-            return sum + (course.experience || 0);
-          }, 0);
+          const coursesExperience = app.globalData.courses.reduce(
+            (sum, course) => {
+              return sum + (course.experience || 0);
+            },
+            0
+          );
 
           // 保留当前已完成的作业
-          const currentCompletedAssignments = app.globalData.learningProgress.completedAssignments || [];
-          
+          const currentCompletedAssignments =
+            app.globalData.learningProgress.completedAssignments || [];
+
           // 计算作业的经验值
           const assignmentsExperience = app.globalData.assignments
-            .filter(a => currentCompletedAssignments.includes(a.id))
+            .filter((a) => currentCompletedAssignments.includes(a.id))
             .reduce((sum, assignment) => {
               return sum + (assignment.experience || 0);
             }, 0);
@@ -658,8 +675,8 @@ Page({
           this.loadCourses();
           this.loadData();
           wx.showToast({
-            title: '已学习所有课程',
-            icon: 'success',
+            title: "已学习所有课程",
+            icon: "success",
             duration: 1500,
           });
         }
