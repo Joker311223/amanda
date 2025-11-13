@@ -23,15 +23,42 @@ Page({
     const zuoyeId = props.zuoyeId;
     const assignment = app.globalData.assignments[zuoyeId-1];
     const problems = assignment.problems || [];
-    const currentProblem = problems[this.data.currentQuestion];
-    const progressPercent = ((this.data.currentQuestion + 1) / problems.length) * 100;
-
+    
     // 检查作业是否已完成
     const isAssignmentCompleted = app.globalData.learningProgress.completedAssignments.includes(zuoyeId);
+
+    // 从本地存储加载已保存的答案
+    const savedAnswers = this.loadAnswersFromStorage(zuoyeId);
+    
+    // 找到第一个未做的题目索引
+    let startQuestion = 0;
+    let hasAnsweredQuestions = false;
+    
+    for (let i = 0; i < problems.length; i++) {
+      const savedAnswer = savedAnswers[i];
+      if (this.isAnswerValid(savedAnswer, problems[i])) {
+        hasAnsweredQuestions = true;
+        startQuestion = i + 1; // 从下一题开始
+      } else {
+        break; // 找到第一个未做的题目
+      }
+    }
+    
+    // 如果所有题目都做过了,从最后一题开始
+    if (startQuestion >= problems.length) {
+      startQuestion = problems.length - 1;
+    }
+    
+    const currentQuestion = startQuestion;
+    const currentProblem = problems[currentQuestion];
+    const progressPercent = ((currentQuestion + 1) / problems.length) * 100;
 
     // 根据题目类型初始化答案
     let answer = "";
     if (currentProblem) {
+      // 先尝试加载已保存的答案
+      const savedAnswer = savedAnswers[currentQuestion];
+      
       if (currentProblem.type === 'multiple') {
         answer = [];
         // 为多选题的每个选项添加selected属性
@@ -43,21 +70,113 @@ Page({
             return { title: option, selected: false };
           });
         }
+        // 恢复已保存的答案
+        if (Array.isArray(savedAnswer) && savedAnswer.length > 0) {
+          answer = savedAnswer;
+          currentProblem.options.forEach(option => {
+            if (savedAnswer.some(ans => this.compareAnswerOptions(ans, option))) {
+              option.selected = true;
+            }
+          });
+        }
+      } else if (currentProblem.type === 'choose') {
+        // 单选题恢复已保存的答案
+        answer = savedAnswer !== undefined && savedAnswer !== null && savedAnswer !== "" 
+          ? savedAnswer 
+          : "";
       } else if (currentProblem.type === 'score') {
-        answer = currentProblem.min || 0;
+        answer = savedAnswer !== undefined && savedAnswer !== null && savedAnswer !== "" 
+          ? savedAnswer 
+          : (currentProblem.min || 0);
+      } else {
+        // 文本或单选题
+        answer = savedAnswer !== undefined && savedAnswer !== null && savedAnswer !== "" 
+          ? savedAnswer 
+          : "";
       }
     }
 
     this.setData({
       assignment: assignment,
       zuoyeId: zuoyeId,
+      currentQuestion: currentQuestion,
       progressPercent: progressPercent,
       totalQuestions: problems.length,
       problems: problems,
       currentProblem: currentProblem,
       answer: answer,
-      isAssignmentCompleted: isAssignmentCompleted
+      isAssignmentCompleted: isAssignmentCompleted,
+      showLeadScreen: !hasAnsweredQuestions // 如果有已做的题目,不显示导引
     });
+  },
+
+  // 从本地存储加载答案
+  loadAnswersFromStorage(zuoyeId) {
+    try {
+      const key = `assignment_answers_${zuoyeId}`;
+      const answers = wx.getStorageSync(key) || {};
+      return answers;
+    } catch (error) {
+      console.error('加载答案失败:', error);
+      return {};
+    }
+  },
+
+  // 检查答案是否有效
+  isAnswerValid(answer, problem) {
+    if (!problem) return false;
+    
+    if (answer === undefined || answer === null || answer === "") {
+      return false;
+    }
+    
+    if (problem.type === 'multiple') {
+      return Array.isArray(answer) && answer.length > 0;
+    }
+    
+    if (problem.type === 'text') {
+      return typeof answer === 'string' && answer.trim().length > 0;
+    }
+    
+    if (problem.type === 'score') {
+      return answer !== null && answer !== undefined && answer !== "";
+    }
+    
+    if (problem.type === 'choose') {
+      return answer !== "";
+    }
+    
+    return true;
+  },
+
+  // 比较答案选项是否相同
+  compareAnswerOptions(savedAnswer, option) {
+    // 如果保存的答案是字符串
+    if (typeof savedAnswer === 'string') {
+      // 比较字符串
+      if (typeof option === 'string') {
+        return savedAnswer === option;
+      }
+      // 比较对象的title或整个对象
+      if (typeof option === 'object') {
+        return savedAnswer === option.title || savedAnswer === option;
+      }
+    }
+    
+    // 如果保存的答案是对象
+    if (typeof savedAnswer === 'object' && savedAnswer !== null) {
+      // 深度比较对象
+      if (typeof option === 'object' && option !== null) {
+        // 比较JSON字符串
+        return JSON.stringify(savedAnswer) === JSON.stringify(option);
+      }
+      // 比较对象的title
+      if (typeof option === 'string') {
+        return savedAnswer.title === option;
+      }
+    }
+    
+    return false;
   },
 
   // 文本输入变化
@@ -151,6 +270,10 @@ Page({
       const currentProblem = this.data.problems[newQuestion];
       const progressPercent = ((newQuestion + 1) / this.data.totalQuestions) * 100;
 
+      // 获取已保存的答案
+      const savedAnswers = this.loadAnswersFromStorage(this.data.zuoyeId);
+      const savedAnswer = savedAnswers[newQuestion];
+
       // 根据题目类型初始化答案
       let answer = "";
       if (currentProblem.type === 'multiple') {
@@ -164,8 +287,29 @@ Page({
             return { title: option, selected: false };
           });
         }
+        // 恢复已保存的答案
+        if (Array.isArray(savedAnswer) && savedAnswer.length > 0) {
+          answer = savedAnswer;
+          currentProblem.options.forEach(option => {
+            if (savedAnswer.some(ans => this.compareAnswerOptions(ans, option))) {
+              option.selected = true;
+            }
+          });
+        }
+      } else if (currentProblem.type === 'choose') {
+        // 单选题恢复已保存的答案
+        answer = savedAnswer !== undefined && savedAnswer !== null && savedAnswer !== "" 
+          ? savedAnswer 
+          : "";
       } else if (currentProblem.type === 'score') {
-        answer = currentProblem.min || 0;
+        answer = savedAnswer !== undefined && savedAnswer !== null && savedAnswer !== "" 
+          ? savedAnswer 
+          : (currentProblem.min || 0);
+      } else {
+        // 文本题
+        answer = savedAnswer !== undefined && savedAnswer !== null && savedAnswer !== "" 
+          ? savedAnswer 
+          : "";
       }
 
       this.setData({
@@ -206,14 +350,8 @@ Page({
       const progressPercent = ((newQuestion + 1) / this.data.totalQuestions) * 100;
 
       // 获取之前保存的答案
-      let answer = "";
-      try {
-        const key = `assignment_answers_${this.data.zuoyeId}`;
-        const answers = wx.getStorageSync(key) || {};
-        answer = answers[newQuestion] || "";
-      } catch (error) {
-        console.error('获取答案失败:', error);
-      }
+      const savedAnswers = this.loadAnswersFromStorage(this.data.zuoyeId);
+      let answer = savedAnswers[newQuestion] || "";
 
       // 如果是多选题，需要恢复selected状态
       if (currentProblem.type === 'multiple') {
@@ -228,7 +366,7 @@ Page({
         // 恢复之前选中的选项
         if (Array.isArray(answer) && answer.length > 0) {
           currentProblem.options.forEach(option => {
-            if (answer.some(ans => JSON.stringify(ans) === JSON.stringify(option) || ans === option.title || ans === option)) {
+            if (answer.some(ans => this.compareAnswerOptions(ans, option))) {
               option.selected = true;
             }
           });
