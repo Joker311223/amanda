@@ -95,5 +95,13 @@ Page({
   // 返回上一页
   goBack() {
     wx.navigateBack();
+  },
+
+  // 跳转到作业填写页面
+  goToFillAssignment() {
+    const zuoyeId = this.data.assignmentId;
+    wx.navigateTo({
+      url: `/pages/zuoye/index?zuoyeId=${zuoyeId}`
+    });
   }
 });

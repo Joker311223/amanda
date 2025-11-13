@@ -1,19 +1,19 @@
 <view class="page-container">
-  <!-- 顶部导航栏 -->
-  <view class="header">
-    <view class="back-button" bindtap="goBack">
-      <text class="back-icon">‹</text>
-    </view>
-    <view class="points-badge">
-      <text class="star-icon">⭐</text>
-      <text class="points-text">{{assignment.points || 30}}分</text>
-    </view>
+
+
+  <!-- 顶部操作按钮 -->
+  <view class="top-actions">
+    <button class="action-btn edit-btn" bindtap="goToFillAssignment">
+      <text class="btn-icon">✏️</text>
+      <text class="btn-text">修改作业</text>
+    </button>
+  </view>
+  
+  <!-- 作业导语 -->
+  <view class="lead-section" wx:if="{{assignment.lead}}">
+    <text class="lead-text">导语：{{assignment.lead}}</text>
   </view>
 
-  <!-- 标题卡片 -->
-  <view class="title-card">
-    <text class="title-text">查看作业</text>
-  </view>
 
   <!-- 题目列表 -->
   <view class="problems-list">

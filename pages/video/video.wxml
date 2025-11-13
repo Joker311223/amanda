@@ -3,7 +3,7 @@
   <view class="course-header">
     <view class="course-title-card card">
       <view class="card-header">
-        <text>{{currentCourse.title}}</text>
+        <text>第{{courseNumber}}课 {{currentCourse.title}}</text>
       </view>
     </view>
   </view>

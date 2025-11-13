@@ -4,6 +4,7 @@ Page({
   data: {
     courseId: null,
     currentCourse: null,
+    courseNumber: 0, // 课程序号
     isPlaying: false,
     isFinied:false,
     playProgress: 0,
@@ -67,9 +68,14 @@ Page({
 
     // 判断课程是否已完成
     const isCourseCompleted = course.status === 'completed'
+    
+    // 计算课程序号（根据ID在所有课程中的位置）
+    const courseIndex = app.globalData.courses.findIndex(c => c.id === courseId)
+    const courseNumber = courseIndex + 1
 
     this.setData({
       currentCourse: course,
+      courseNumber: courseNumber,
       totalTime: course.duration,
       isCourseCompleted: isCourseCompleted
     })

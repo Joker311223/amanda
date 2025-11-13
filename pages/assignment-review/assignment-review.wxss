@@ -1,59 +1,48 @@
 /* 页面容器 */
 .page-container {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: linear-gradient(180deg, #f7f9fc 0%, #e8f4f8 100%);
   padding: 20rpx 30rpx;
-  padding-top: 80rpx;
 }
 
-/* 顶部导航栏 */
-.header {
+/* 经验值显示 */
+.experience-badge {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 120rpx;
-  background: #ffffff;
+  top: 30rpx;
+  right: 30rpx;
+  background: linear-gradient(135deg, #58cc02 0%, #7ed321 100%);
+  color: #ffffff;
+  padding: 15rpx 25rpx;
+  border-radius: 50rpx;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 30rpx;
-  z-index: 100;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
-}
-
-/* 返回按钮 */
-.back-button {
-  width: 80rpx;
-  height: 80rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.back-icon {
-  font-size: 60rpx;
-  font-weight: 300;
-  color: #333333;
-  line-height: 1;
-}
-
-/* 分数徽章 */
-.points-badge {
-  display: flex;
-  align-items: center;
-  gap: 10rpx;
-}
-
-.star-icon {
-  font-size: 48rpx;
-  line-height: 1;
-}
-
-.points-text {
-  font-size: 36rpx;
+  gap: 8rpx;
+  font-size: 28rpx;
   font-weight: bold;
+  box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.3);
+  z-index: 999;
+}
+
+.star {
+  font-size: 32rpx;
+}
+
+/* 作业导语 */
+.lead-section {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+  border-left: 6rpx solid #58cc02;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.1);
+}
+
+.lead-text {
+  font-size: 28rpx;
   color: #333333;
+  line-height: 1.6;
+  display: block;
+  word-break: break-all;
 }
 
 /* 标题卡片 */
@@ -168,24 +157,26 @@
 @media screen and (max-width: 375px) {
   .page-container {
     padding: 20rpx;
-    padding-top: 80rpx;
   }
 
-  .header {
-    height: 100rpx;
-    padding: 0 20rpx;
+  .experience-badge {
+    top: 20rpx;
+    right: 20rpx;
+    padding: 12rpx 20rpx;
+    font-size: 26rpx;
   }
 
-  .back-icon {
-    font-size: 50rpx;
+  .star {
+    font-size: 28rpx;
   }
 
-  .star-icon {
-    font-size: 40rpx;
+  .lead-section {
+    padding: 24rpx;
+    margin-bottom: 24rpx;
   }
 
-  .points-text {
-    font-size: 32rpx;
+  .lead-text {
+    font-size: 26rpx;
   }
 
   .title-card {
@@ -220,4 +211,55 @@
   .problem-answer {
     font-size: 26rpx;
   }
+
+  .top-actions {
+    padding: 20rpx 0;
+  }
+
+  .action-btn {
+    font-size: 28rpx;
+  }
+}
+
+/* 顶部操作按钮 */
+.top-actions {
+  display: flex;
+  justify-content: center;
+  padding: 30rpx 0;
+  gap: 20rpx;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 20rpx 40rpx;
+  border-radius: 50rpx;
+  border: none;
+  font-size: 32rpx;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #58cc02 0%, #7ed321 100%);
+  color: #ffffff;
+  box-shadow: 0 8rpx 20rpx rgba(88, 204, 2, 0.3);
+}
+
+.edit-btn:active {
+  box-shadow: 0 4rpx 12rpx rgba(88, 204, 2, 0.3);
+}
+
+.btn-icon {
+  font-size: 36rpx;
+}
+
+.btn-text {
+  font-size: 32rpx;
 }

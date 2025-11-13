@@ -1,4 +1,5 @@
 {
   "navigationBarTitleText": "查看作业",
-  "navigationStyle": "custom"
+  "navigationBarBackgroundColor": "#f7f9fc",
+  "navigationBarTextStyle": "black"
 }

@@ -14,16 +14,20 @@ Page({
     showCompletionModal: false, // 完成弹窗显示状态
     earnedPoints: 0, // 获得的经验值
     showLeadScreen: true, // 显示导语界面
-    isStarting: false // 开始动画状态
+    isStarting: false, // 开始动画状态
+    isAssignmentCompleted: false // 作业是否已完成
   },
 
   // 加载数据
   loadData(props) {
     const zuoyeId = props.zuoyeId;
-    const assignment = app.globalData.assignments[zuoyeId];
+    const assignment = app.globalData.assignments[zuoyeId-1];
     const problems = assignment.problems || [];
     const currentProblem = problems[this.data.currentQuestion];
     const progressPercent = ((this.data.currentQuestion + 1) / problems.length) * 100;
+
+    // 检查作业是否已完成
+    const isAssignmentCompleted = app.globalData.learningProgress.completedAssignments.includes(zuoyeId);
 
     // 根据题目类型初始化答案
     let answer = "";
@@ -51,7 +55,8 @@ Page({
       totalQuestions: problems.length,
       problems: problems,
       currentProblem: currentProblem,
-      answer: answer
+      answer: answer,
+      isAssignmentCompleted: isAssignmentCompleted
     });
   },
 
@@ -186,6 +191,65 @@ Page({
       this.setData({
         showCompletionModal: true,
         earnedPoints: earnedPoints
+      });
+    }
+  },
+
+  // 上一题
+  onPreviousQuestion() {
+    // 保存当前答案
+    this.saveAnswer();
+
+    if (this.data.currentQuestion > 0) {
+      const newQuestion = this.data.currentQuestion - 1;
+      const currentProblem = this.data.problems[newQuestion];
+      const progressPercent = ((newQuestion + 1) / this.data.totalQuestions) * 100;
+
+      // 获取之前保存的答案
+      let answer = "";
+      try {
+        const key = `assignment_answers_${this.data.zuoyeId}`;
+        const answers = wx.getStorageSync(key) || {};
+        answer = answers[newQuestion] || "";
+      } catch (error) {
+        console.error('获取答案失败:', error);
+      }
+
+      // 如果是多选题，需要恢复selected状态
+      if (currentProblem.type === 'multiple') {
+        if (currentProblem.options) {
+          currentProblem.options = currentProblem.options.map(option => {
+            if (typeof option === 'object') {
+              return { ...option, selected: false };
+            }
+            return { title: option, selected: false };
+          });
+        }
+        // 恢复之前选中的选项
+        if (Array.isArray(answer) && answer.length > 0) {
+          currentProblem.options.forEach(option => {
+            if (answer.some(ans => JSON.stringify(ans) === JSON.stringify(option) || ans === option.title || ans === option)) {
+              option.selected = true;
+            }
+          });
+        }
+      }
+
+      this.setData({
+        currentQuestion: newQuestion,
+        progressPercent: progressPercent,
+        currentProblem: currentProblem,
+        answer: answer
+      });
+
+      wx.showToast({
+        title: '已返回上一题',
+        icon: 'success'
+      });
+    } else {
+      wx.showToast({
+        title: '已是第一题',
+        icon: 'none'
       });
     }
   },

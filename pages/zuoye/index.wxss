@@ -7,6 +7,33 @@
   flex-direction: column;
 }
 
+/* 完成标志样式 */
+.completion-badge {
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
+  background: linear-gradient(135deg, #51cf66 0%, #7ed321 100%);
+  color: #ffffff;
+  padding: 12rpx 20rpx;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  box-shadow: 0 4rpx 12rpx rgba(81, 207, 102, 0.3);
+  z-index: 100;
+}
+
+.completion-icon {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.completion-text {
+  font-size: 24rpx;
+}
+
 /* 导语界面样式 */
 .lead-screen {
   position: fixed;
@@ -609,7 +636,30 @@ slider {
 .bottom-actions {
   display: flex;
   justify-content: center;
+  gap: 20rpx;
   padding-bottom: 80rpx;
+}
+
+.prev-btn {
+  background: linear-gradient(135deg, #999999 0%, #b3b3b3 100%);
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: bold;
+  padding: 25rpx 60rpx;
+  border-radius: 50rpx;
+  border: none;
+  box-shadow: 0 8rpx 20rpx rgba(153, 153, 153, 0.3);
+  transition: all 0.3s ease;
+}
+
+.prev-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 12rpx rgba(153, 153, 153, 0.3);
+}
+
+.prev-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .next-btn {
@@ -617,7 +667,7 @@ slider {
   color: #ffffff;
   font-size: 32rpx;
   font-weight: bold;
-  padding: 25rpx 80rpx;
+  padding: 25rpx 60rpx;
   border-radius: 50rpx;
   border: none;
   box-shadow: 0 8rpx 20rpx rgba(88, 204, 2, 0.3);

@@ -1,6 +1,12 @@
 <view class="page-container">
   <!-- 导语界面 -->
   <view class="lead-screen {{isStarting ? 'fade-out' : ''}}" wx:if="{{showLeadScreen}}">
+    <!-- 完成标志 -->
+    <view class="completion-badge" wx:if="{{isAssignmentCompleted}}">
+      <text class="completion-icon">✓</text>
+      <text class="completion-text">已完成</text>
+    </view>
+
     <view class="lead-content">
       <!-- 装饰图标 -->
       <view class="lead-icon">
@@ -28,6 +34,12 @@
 
   <!-- 进度条区域 -->
   <view class="progress-section" wx:if="{{!showLeadScreen}}">
+    <!-- 完成标志 -->
+    <view class="completion-badge" wx:if="{{isAssignmentCompleted}}">
+      <text class="completion-icon">✓</text>
+      <text class="completion-text">已完成</text>
+    </view>
+
     <view class="progress-header">
       <text class="progress-label">问题</text>
       <text class="progress-count-big">{{currentQuestion + 1}}</text>
@@ -143,7 +155,7 @@
                 activeColor="#58cc02"
                 backgroundColor="#e5f5e0"
                 block-size="32"
-                block-color="#58cc02"
+                block-color="#ffffff"
               />
             </view>
 
@@ -168,6 +180,7 @@
   </view>
   <!-- 底部按钮 -->
   <view class="bottom-actions" wx:if="{{!showLeadScreen}}">
+    <button class="prev-btn {{currentQuestion === 0 ? 'disabled' : ''}}" bindtap="onPreviousQuestion" disabled="{{currentQuestion === 0}}">上一题</button>
     <button class="next-btn" bindtap="onNextQuestion">下一题</button>
   </view>
 
