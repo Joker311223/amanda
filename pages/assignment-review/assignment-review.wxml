@@ -25,11 +25,9 @@
       <view class="problem-number">{{index + 1}}</view>
       <view class="problem-content">
         <view class="problem-title-wrapper">
-          <text class="problem-label">题目：</text>
           <text class="problem-title">{{item.info || item.question || item.title || '无题目'}}</text>
         </view>
         <view class="problem-answer-wrapper">
-          <text class="answer-label">答案：</text>
           <text class="problem-answer">{{item.formattedAnswer}}</text>
         </view>
       </view>

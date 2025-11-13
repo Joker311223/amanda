@@ -86,7 +86,7 @@
           <!-- 已完成按钮 -->
           <image src="/images/yiwancheng.svg" wx:if="{{item.status === 'completed'}}" class="assignment-btn-img" />
           <!-- 查看作业按钮 -->
-          <image src="/images/chakanzuoye.svg" wx:if="{{item.status === 'completed'}}" class="assignment-btn-img"  />
+          <image src="/images/chakanzuoye.svg" wx:if="{{item.status === 'completed'}}" class="assig nment-btn-img"  />
           <!-- 待打卡按钮 -->
           <image src="/images/daidaka.svg" wx:if="{{item.status === 'available'}}" class="assignment-btn-img" />
           <!-- 开始学习 -->

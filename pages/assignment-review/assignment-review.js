@@ -50,13 +50,15 @@ Page({
 
   // 格式化答案显示
   formatAnswer(answer) {
+    console.log('yjc=>formatAnswer', typeof answer);
+    console.log('yjc=>formatAnswer',  answer);
     if (answer === undefined || answer === null || answer === '') {
       return '暂无答案';
     }
 
     // 如果是数组
     if (Array.isArray(answer)) {
-      return answer.length > 0 ? answer.join('、') : '暂无答案';
+      return answer.length > 0 ? answer.map(item=>item.title).join('、') : '暂无答案';
     }
 
     // 如果是对象
@@ -70,10 +72,28 @@ Page({
       // 如果对象有多个键值对，格式化显示
       const entries = Object.entries(answer);
       if (entries.length > 0) {
-        return entries.map(([key, value]) => `${key}: ${value}`).join('\n');
+        // 对于多选题，通常值是布尔值或选项标识，提取为数组显示
+        const selectedItems = entries
+          .filter(([key, value]) => value === true || value === 1 || value === '1')
+          .map(([key]) => key);
+        
+        if (selectedItems.length > 0) {
+          return selectedItems.join('、');
+        }
+
+        // 如果没有找到布尔值，尝试提取所有非空值
+        const values = entries
+          .filter(([key, value]) => value !== false && value !== 0 && value !== '' && value !== null && value !== undefined)
+          .map(([key, value]) => value);
+        
+        if (values.length > 0) {
+          return values.join('、');
+        }
+
+        return '暂无答案';
       }
 
-      return JSON.stringify(answer);
+      return '暂无答案';
     }
 
     // 其他类型直接转字符串
