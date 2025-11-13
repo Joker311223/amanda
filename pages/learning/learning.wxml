@@ -68,7 +68,7 @@
   </view>
   <!-- 作业列表 -->
   <view wx:if="{{nowPage==='作业回顾'}}" class="courses-section">
-    <view class="assignment-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{assignments}}" wx:key="id" data-zuoye-id="{{item.id}}" data-zuoye-status="{{item.status}}" bindtap="unionJump">
+    <view class="assignment-card {{item.status === 'locked' ? 'locked' : ''}}" wx:for="{{filteredAssignments}}" wx:key="id" data-zuoye-id="{{item.id}}" data-zuoye-status="{{item.status}}" bindtap="unionJump">
       <!-- 左侧状态图标 -->
       <!-- 中间内容区域 -->
       <view class="assignment-content">
@@ -96,7 +96,7 @@
         </view>
       </view>
       <!-- 右侧经验值 -->
-      <view class="assignment-experience">
+      <view wx:if="{{item.status !== 'completed'}}" class="assignment-experience">
         <image class="star-icon" src="/images/xingxing.svg" mode="aspectFit" />
         <view class="experience-value">
           <text class="experience-number">20</text>
@@ -109,8 +109,12 @@
     </view>
   </view>
   <!-- 空状态 -->
-  <view wx:if="{{filteredCourses.length === 0}}" class="empty-state">
+  <view wx:if="{{nowPage==='课程回顾' && filteredCourses.length === 0}}" class="empty-state">
     <view class="empty-icon">📚</view>
     <text class="empty-text">没有找到相关课程</text>
+  </view>
+  <view wx:if="{{nowPage==='作业回顾' && filteredAssignments.length === 0}}" class="empty-state">
+    <view class="empty-icon">📝</view>
+    <text class="empty-text">没有找到相关作业</text>
   </view>
 </view>

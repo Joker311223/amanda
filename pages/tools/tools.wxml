@@ -17,25 +17,11 @@
           全部 ({{skillCards.length}})
         </view>
         <view
-          class="category-tab {{currentCategory === '人际效能' ? 'active' : ''}}"
-          bindtap="setCategory"
-          data-category="人际效能"
-        >
-          人际效能 (5)
-        </view>
-        <view
           class="category-tab {{currentCategory === '情绪管理' ? 'active' : ''}}"
           bindtap="setCategory"
           data-category="情绪管理"
         >
           情绪管理 (3)
-        </view>
-        <view
-          class="category-tab {{currentCategory === '情绪调节' ? 'active' : ''}}"
-          bindtap="setCategory"
-          data-category="情绪调节"
-        >
-          情绪调节 (3)
         </view>
         <view
           class="category-tab {{currentCategory === '正念' ? 'active' : ''}}"
@@ -50,6 +36,20 @@
           data-category="痛苦耐受"
         >
           痛苦耐受 (13)
+        </view>
+        <view
+          class="category-tab {{currentCategory === '情绪调节' ? 'active' : ''}}"
+          bindtap="setCategory"
+          data-category="情绪调节"
+        >
+          情绪调节 (3)
+        </view>
+        <view
+          class="category-tab {{currentCategory === '人际效能' ? 'active' : ''}}"
+          bindtap="setCategory"
+          data-category="人际效能"
+        >
+          人际效能 (5)
         </view>
       </view>
     </scroll-view>

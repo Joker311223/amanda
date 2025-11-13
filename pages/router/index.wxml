@@ -56,7 +56,7 @@
 
         <!-- 额外信息 -->
         <view class="dialog-info" wx:if="{{dialogData.info}}">
-          <text class="info-icon">ℹ️</text>
+          <text class="info-icon">🏄🏻</text>
           <text class="info-text">{{dialogData.info}}</text>
         </view>
 

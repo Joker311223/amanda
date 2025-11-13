@@ -5,9 +5,10 @@ Page({
     totalExperience: 0,
     courses: [],
     filteredCourses: [],
+    assignments: app.globalData.assignments,
+    filteredAssignments: [],
     searchKeyword: "",
     nowPage: "课程回顾",
-    assignments: app.globalData.assignments,
   },
 
   onLoad() {
@@ -34,7 +35,8 @@ Page({
       totalExperience: learningProgress.totalExperience,
       courses: courses,
       filteredCourses: courses,
-      assignments: app.globalData.assignments,
+      assignments: assignments,
+      filteredAssignments: assignments,
     });
   },
 
@@ -77,26 +79,36 @@ Page({
     this.setData({
       searchKeyword: keyword,
     });
-    this.filterCourses(keyword);
+    this.filterCoursesAndAssignments(keyword);
   },
 
-  // 过滤课程
-  filterCourses(keyword) {
+  // 过滤课程和作业
+  filterCoursesAndAssignments(keyword) {
     if (!keyword) {
       this.setData({
         filteredCourses: this.data.courses,
+        filteredAssignments: this.data.assignments,
       });
       return;
     }
 
-    const filtered = this.data.courses.filter(
+    // 过滤课程
+    const filteredCourses = this.data.courses.filter(
       (course) =>
         course.title.toLowerCase().includes(keyword) ||
         course.category.toLowerCase().includes(keyword)
     );
 
+    // 过滤作业
+    const filteredAssignments = this.data.assignments.filter(
+      (assignment) =>
+        assignment.title.toLowerCase().includes(keyword) ||
+        (assignment.category && assignment.category.toLowerCase().includes(keyword))
+    );
+
     this.setData({
-      filteredCourses: filtered,
+      filteredCourses: filteredCourses,
+      filteredAssignments: filteredAssignments,
     });
   },
 

@@ -46,10 +46,12 @@ Page({
       return
     }
 
-    // 计算进度数据
+    // 计算进度数据（基于经验分数，总分850分）
     const completedCourses = learningProgress.completedCourses.length
     const completedAssignments = learningProgress.completedAssignments.length
-    const progressPercentage = Math.round((completedCourses / this.data.totalCourses) * 100)
+    const totalExperience = 850 // 总分
+    const currentExperience = learningProgress.totalExperience // 当前获得的经验值
+    const progressPercentage = totalExperience > 0 ? Math.round((currentExperience / totalExperience) * 100) : 0
 
     // 获取最近学习的课程（最多3个）
     const recentCourses = this.getRecentCourses(courses, learningProgress.completedCourses)

@@ -421,11 +421,13 @@ Page({
       learningProgress.completedAssignments
     );
 
-    // 计算学习进度
+    // 计算学习进度（基于经验分数，总分850分）
     const totalCount = allCourses.length;
     const completedCount = learningProgress.completedCourses.length;
+    const totalExperience = 850; // 总分
+    const currentExperience = learningProgress.totalExperience; // 当前获得的经验值
     const progressPercent =
-      totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+      totalExperience > 0 ? Math.round((currentExperience / totalExperience) * 100) : 0;
 
     // 检查是否所有课程和作业都已完成
     const allCoursesCompleted = completedCount === totalCount;
