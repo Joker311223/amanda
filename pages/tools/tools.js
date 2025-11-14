@@ -11,43 +11,127 @@ Page({
     currentImageIndex: 0,
     // 技能卡片与图片的映射关系（使用 OSS 图片）
     imageMap: {
-      // 情绪管理（1-1, 1-2, 1-3）
-      '生物社会理论': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪管理-生物社会理论.jpg'],
-      '生物社会理论2': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪管理-生物社会理论2.jpg'],
-      '生物社会技能3': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪管理-生物社会技能3.jpg'],
+      // 1-情绪管理（3张）
+      '生物社会理论1': { 
+        order: 1, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪管理-生物社会理论1.jpg'] 
+      },
+      '生物社会理论2': { 
+        order: 2, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪管理-生物社会理论2.jpg'] 
+      },
+      '生物社会技能3': { 
+        order: 3, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪管理-生物社会技能3.jpg'] 
+      },
 
-      // 正念（2-1, 2-2, 2-3, 2-4）
-      '智慧心': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-智慧心.jpg'],
-      'WHAT技能': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-WHAT技能.jpg'],
-      'HOW技能': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-HOW技能.jpg'],
-      '练习观察': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-练习观察.jpg'],
+      // 2-正念（4张）
+      '智慧心': { 
+        order: 4, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-智慧心.jpg'] 
+      },
+      'WHAT技能': { 
+        order: 5, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-WHAT技能.jpg'] 
+      },
+      'HOW技能': { 
+        order: 6, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-HOW技能.jpg'] 
+      },
+      '练习观察': { 
+        order: 7, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/正念-练习观察.jpg'] 
+      },
 
-      // 痛苦耐受（3-1 到 3-13）
-      '痛苦耐受总概': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-总概.jpg'],
-      '转移注意力': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-转移注意力ACCEPT.jpg'],
-      'IMPROVE': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-改善当下IMPROVE.jpg'],
-      'STOP': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-STOP.jpg'],
-      'TIP': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-TIP.jpg'],
-      '保持正念': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-保持正念.jpg'],
-      '全然接纳1': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳1.jpg'],
-      '全然接纳2': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳2.jpg'],
-      '全然接纳3': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳3.jpg'],
-      '全然接纳4': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳4.jpg'],
-      '全然接纳5': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳5.jpg'],
-      '身体扫描': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-身体扫描.jpg'],
-      '自我安抚': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-自我安抚.jpg'],
+      // 3-痛苦耐受（13张）
+      '总概': { 
+        order: 8, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-总概.jpg'] 
+      },
+      '转移注意力': { 
+        order: 9, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-转移注意力ACCEPT.jpg'] 
+      },
+      'IMPROVE': { 
+        order: 10, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-改善当下IMPROVE.jpg'] 
+      },
+      'STOP': { 
+        order: 11, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-STOP.jpg'] 
+      },
+      'TIP': { 
+        order: 12, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-TIP.jpg'] 
+      },
+      '保持正念': { 
+        order: 13, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-保持正念.jpg'] 
+      },
+      '全然接纳1': { 
+        order: 14, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳1.jpg'] 
+      },
+      '全然接纳2': { 
+        order: 15, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳2.jpg'] 
+      },
+      '全然接纳3': { 
+        order: 16, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳3.jpg'] 
+      },
+      '全然接纳4': { 
+        order: 17, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳4.jpg'] 
+      },
+      '全然接纳5': { 
+        order: 18, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-全然接纳5.jpg'] 
+      },
+      '身体扫描': { 
+        order: 19, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-身体扫描.jpg'] 
+      },
+      '自我安抚': { 
+        order: 20, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-自我安抚.jpg'] 
+      },
 
-      // 情绪调节（4-1, 4-2, 4-3）
-      'PLEASE': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪调节-PLEASE.jpg'],
-      '相反行为': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪调节-相反行为.jpg'],
-      '积累正面情绪': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪调节-积累正面情绪.jpg'],
+      // 4-情绪调节（3张）
+      'PLEASE': { 
+        order: 21, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪调节-PLEASE.jpg'] 
+      },
+      '相反行为': { 
+        order: 22, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪调节-相反行为.jpg'] 
+      },
+      '积累正面情绪': { 
+        order: 23, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/情绪调节-积累正面情绪.jpg'] 
+      },
 
-      // 人际效能（5-1 到 5-5）
-      '人际效能总概': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-总概.jpg'],
-      'FAST': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-尊重自己FAST.jpg'],
-      'GIVE': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-维持关系GIVE.jpg'],
-      'DEARMAN1': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-如你所愿DEARMAN1.jpg'],
-      'DEARMAN2': ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-如你所愿DEARMAN2.jpg']
+      // 5-人际效能（5张）
+      '总概': { 
+        order: 24, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-总概.jpg'] 
+      },
+      'FAST': { 
+        order: 25, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-尊重自己FAST.jpg'] 
+      },
+      'GIVE': { 
+        order: 26, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-维持关系GIVE.jpg'] 
+      },
+      'DEARMAN1': { 
+        order: 27, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-如你所愿DEARMAN1.jpg'] 
+      },
+      'DEARMAN2': { 
+        order: 28, 
+        images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/人际效能-如你所愿DEARMAN2.jpg'] 
+      }
     }
   },
 
@@ -63,11 +147,12 @@ Page({
   loadData() {
     const learningProgress = app.globalData.learningProgress
     const skillCards = app.globalData.skillCards
-
+    // 按照imageMap中的order字段排序卡片
+    const sortedCards = skillCards
     this.setData({
       totalExperience: learningProgress.totalExperience,
       skillCards: skillCards,
-      filteredCards: skillCards
+      filteredCards: sortedCards
     })
   },
 
@@ -82,11 +167,28 @@ Page({
 
   // 筛选卡片
   filterCards() {
-    const { skillCards, currentCategory } = this.data
+    const { skillCards, currentCategory, imageMap } = this.data
     let filtered = skillCards
 
     if (currentCategory !== 'all') {
       filtered = skillCards.filter(card => card.category === currentCategory)
+    } else {
+      // 当选择"全部"时，按照imageMap中的order字段排序
+      filtered = [...skillCards].sort((a, b) => {
+        const mapA = imageMap[a.title]
+        const mapB = imageMap[b.title]
+        
+        // 如果都在imageMap中，按照order排序
+        if (mapA && mapB) {
+          return mapA.order - mapB.order
+        }
+        // 如果只有a在imageMap中，a排在前面
+        if (mapA) return -1
+        // 如果只有b在imageMap中，b排在前面
+        if (mapB) return 1
+        // 如果都不在imageMap中，保持原顺序
+        return 0
+      })
     }
 
     this.setData({
@@ -112,11 +214,12 @@ Page({
     }
 
     // 获取对应的图片列表
-    const images = this.data.imageMap[card.title] || []
+    const imageMapItem = this.data.imageMap[card.title]
+    const images = imageMapItem ? imageMapItem.images : []
     console.log('卡片标题:', card.title)
     console.log('对应的图片:', images)
 
-    if (images.length === 0) {
+    if (!images || images.length === 0) {
       wx.showToast({
         title: `暂无图片: ${card.title}`,
         icon: 'none',

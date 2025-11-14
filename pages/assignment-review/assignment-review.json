@@ -1,5 +1,8 @@
 {
   "navigationBarTitleText": "查看作业",
   "navigationBarBackgroundColor": "#f7f9fc",
-  "navigationBarTextStyle": "black"
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f7f9fc",
+  "backgroundTextStyle": "dark"
 }

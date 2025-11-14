@@ -22,7 +22,8 @@ Page({
   loadData(props) {
     const zuoyeId = props.zuoyeId;
     const assignment = app.globalData.assignments[zuoyeId-1];
-    const problems = assignment.problems || [];
+    // 深拷贝problems数组，避免修改原始数据
+    const problems = JSON.parse(JSON.stringify(assignment.problems || []));
     
     // 检查作业是否已完成
     const isAssignmentCompleted = app.globalData.learningProgress.completedAssignments.includes(zuoyeId);
@@ -60,6 +61,7 @@ Page({
       const savedAnswer = savedAnswers[currentQuestion];
       
       if (currentProblem.type === 'multiple') {
+          console.log('yjc=>多选题currentProblem.options', currentProblem.options);
         answer = [];
         // 为多选题的每个选项添加selected属性
         if (currentProblem.options) {
@@ -72,6 +74,8 @@ Page({
         }
         // 恢复已保存的答案
         if (Array.isArray(savedAnswer) && savedAnswer.length > 0) {
+                  console.log('yjc=>多选题1', answer);
+
           answer = savedAnswer;
           currentProblem.options.forEach(option => {
             if (savedAnswer.some(ans => this.compareAnswerOptions(ans, option))) {
@@ -89,6 +93,7 @@ Page({
           ? savedAnswer 
           : (currentProblem.min || 0);
       } else {
+        console.log('yjc=>多选题', answer);
         // 文本或单选题
         answer = savedAnswer !== undefined && savedAnswer !== null && savedAnswer !== "" 
           ? savedAnswer 
@@ -106,7 +111,7 @@ Page({
       currentProblem: currentProblem,
       answer: answer,
       isAssignmentCompleted: isAssignmentCompleted,
-      showLeadScreen: !hasAnsweredQuestions // 如果有已做的题目,不显示导引
+      showLeadScreen: true // 每次进入都显示导引
     });
   },
 
@@ -267,7 +272,8 @@ Page({
 
     if (this.data.currentQuestion < this.data.totalQuestions - 1) {
       const newQuestion = this.data.currentQuestion + 1;
-      const currentProblem = this.data.problems[newQuestion];
+      // 深拷贝currentProblem，避免修改原始数据
+      const currentProblem = JSON.parse(JSON.stringify(this.data.problems[newQuestion]));
       const progressPercent = ((newQuestion + 1) / this.data.totalQuestions) * 100;
 
       // 获取已保存的答案
@@ -346,7 +352,8 @@ Page({
 
     if (this.data.currentQuestion > 0) {
       const newQuestion = this.data.currentQuestion - 1;
-      const currentProblem = this.data.problems[newQuestion];
+      // 深拷贝currentProblem，避免修改原始数据
+      const currentProblem = JSON.parse(JSON.stringify(this.data.problems[newQuestion]));
       const progressPercent = ((newQuestion + 1) / this.data.totalQuestions) * 100;
 
       // 获取之前保存的答案
@@ -465,8 +472,40 @@ Page({
   },
 
   onLoad(options) {
+    // 保存zuoyeId，供onShow使用
+    this.zuoyeId = options.zuoyeId;
     this.loadData(options);
   },
 
-  onShow() {}
+  onShow() {
+    // 如果zuoyeId存在，重新加载数据以刷新页面
+    if (this.zuoyeId) {
+      this.loadData({ zuoyeId: this.zuoyeId });
+    }
+  },
+
+  // 下拉刷新
+  onPullDownRefresh() {
+    console.log('下拉刷新作业数据');
+    
+    // 如果zuoyeId存在，重新加载数据
+    if (this.zuoyeId) {
+      this.loadData({ zuoyeId: this.zuoyeId });
+      
+      // 显示刷新提示
+      wx.showToast({
+        title: '刷新成功',
+        icon: 'success',
+        duration: 1500
+      });
+      
+      // 停止下拉刷新动画
+      setTimeout(() => {
+        wx.stopPullDownRefresh();
+      }, 500);
+    } else {
+      // 如果没有zuoyeId，直接停止刷新
+      wx.stopPullDownRefresh();
+    }
+  }
 });
