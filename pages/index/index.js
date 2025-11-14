@@ -53,6 +53,11 @@ Page({
     const currentExperience = learningProgress.totalExperience // 当前获得的经验值
     const progressPercentage = totalExperience > 0 ? Math.round((currentExperience / totalExperience) * 100) : 0
 
+    // 计算当前周数和天数（基于已完成的课程数）
+    // 假设每周学习2门课程，每天学习1门课程
+    const currentWeek = Math.floor(completedCourses / 2) + 1
+    const currentDay = (completedCourses % 2) + 1
+
     // 获取最近学习的课程（最多3个）
     const recentCourses = this.getRecentCourses(courses, learningProgress.completedCourses)
 
@@ -62,8 +67,8 @@ Page({
     this.setData({
       userName: userInfo.name,
       totalExperience: learningProgress.totalExperience,
-      currentWeek: learningProgress.currentWeek,
-      currentDay: learningProgress.currentDay,
+      currentWeek: currentWeek,
+      currentDay: currentDay,
       completedCourses: completedCourses,
       completedAssignments: completedAssignments,
       progressPercentage: progressPercentage,

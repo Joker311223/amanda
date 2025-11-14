@@ -1,0 +1,83 @@
+<view class="page-container">
+  <!-- 背景装饰 -->
+  <view class="background-decoration">
+    <view class="decoration-circle circle-1"></view>
+    <view class="decoration-circle circle-2"></view>
+    <view class="decoration-circle circle-3"></view>
+  </view>
+  <!-- 主要内容 -->
+  <view class="content-wrapper">
+    <!-- Logo 区域 -->
+    <view class="logo-section">
+      <view class="logo-icon">🧘</view>
+    </view>
+
+    <!-- 标题区域 -->
+    <view class="title-section">
+      <text class="main-title">DBT技能随身练</text>
+      <text class="subtitle">青少年情绪管理与成长平台</text>
+    </view>
+
+    <!-- 说明信息 -->
+    <view class="description-section">
+      <view class="description-item">
+        <text class="description-icon">📚</text>
+        <text class="description-text">14门核心DBT技能课程</text>
+      </view>
+      <view class="description-item">
+        <text class="description-icon">✍️</text>
+        <text class="description-text">18项配套作业练习</text>
+      </view>
+      <view class="description-item">
+        <text class="description-icon">🎯</text>
+        <text class="description-text">28张技能卡片工具</text>
+      </view>
+      <view class="description-item">
+        <text class="description-icon">📝</text>
+        <text class="description-text">情绪记录与追踪</text>
+      </view>
+    </view>
+
+    <!-- 核心模块 -->
+    <view class="modules-section">
+      <text class="modules-title">四大核心技能模块</text>
+      <view class="modules-grid">
+        <view class="module-card">
+          <text class="module-emoji">🧘</text>
+          <text class="module-name">正念技能</text>
+        </view>
+        <view class="module-card">
+          <text class="module-emoji">💪</text>
+          <text class="module-name">痛苦耐受</text>
+        </view>
+        <view class="module-card">
+          <text class="module-emoji">❤️</text>
+          <text class="module-name">情绪调节</text>
+        </view>
+        <view class="module-card">
+          <text class="module-emoji">🤝</text>
+          <text class="module-name">人际效能</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 联系方式 -->
+    <view class="contact-section">
+      <text class="contact-title">联系我们</text>
+      <view class="contact-item">
+        <text class="contact-icon">📞</text>
+        <text class="contact-text">18888929709</text>
+      </view>
+      <view class="contact-item">
+        <text class="contact-icon">👤</text>
+        <text class="contact-text">杨老师</text>
+      </view>
+    </view>
+
+    <!-- 底部说明 -->
+    <view class="footer-section">
+      <text class="footer-text">让情绪管理变得更简单，让成长之路更从容</text>
+      <text class="version-text">v1.0.0</text>
+    </view>
+  </view>
+</view>

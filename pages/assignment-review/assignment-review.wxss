@@ -47,15 +47,14 @@
 
 /* 标题卡片 */
 .title-card {
-  background: linear-gradient(135deg, #58cc02 0%, #7ed321 100%);
-  border-radius: 40rpx;
-  padding: 50rpx 40rpx;
-  margin-bottom: 40rpx;
-  box-shadow: 0 8rpx 24rpx rgba(88, 204, 2, 0.2);
+  background: #58a41f;
+  border-radius: 20rpx;
+  padding: 10rpx 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(50, 81, 27, 0.2);
 }
 
 .title-text {
-  font-size: 48rpx;
+  font-size: 44rpx;
   font-weight: bold;
   color: #ffffff;
   text-align: center;

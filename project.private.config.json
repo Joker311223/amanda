@@ -5,11 +5,18 @@
     "miniprogram": {
       "list": [
         {
+          "name": "/pages/cover/cover",
+          "pathName": "/pages/cover/cover",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
+        },
+        {
           "name": "pages/router/index",
           "pathName": "pages/router/index",
           "query": "debug=true",
-          "scene": null,
-          "launchMode": "default"
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
