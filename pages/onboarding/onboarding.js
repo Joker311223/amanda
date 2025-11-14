@@ -17,6 +17,14 @@ Page({
       birthDate: '',
       phone: '',
       wechat: ''
+    },
+    // 记录哪些字段已经显示过错误提示
+    touchedFields: {
+      name: false,
+      gender: false,
+      birthDate: false,
+      phone: false,
+      wechat: false
     }
   },
 
@@ -47,6 +55,17 @@ Page({
     })
   },
 
+  // 输入框失焦 - 如果该字段已经显示过错误，则进行验证
+  onInputBlur(e) {
+    const field = e.currentTarget.dataset.field
+    const { touchedFields } = this.data
+
+    // 如果该字段已经显示过错误提示，则在失焦时验证
+    if (touchedFields[field]) {
+      this.validateField(field)
+    }
+  },
+
   // 选择性别
   selectGender(e) {
     const gender = e.currentTarget.dataset.gender
@@ -62,6 +81,49 @@ Page({
     })
   },
 
+  // 验证单个字段
+  validateField(field) {
+    const { userInfo } = this.data
+    const errors = { ...this.data.errors }
+    const touchedFields = { ...this.data.touchedFields }
+
+    switch (field) {
+      case 'name':
+        errors.name = !userInfo.name ? '请输入姓名' : ''
+        break
+      case 'gender':
+        errors.gender = !userInfo.gender ? '请选择性别' : ''
+        break
+      case 'birthDate':
+        errors.birthDate = !userInfo.birthDate ? '请选择出生年月' : ''
+        break
+      case 'phone':
+        const phoneRegex = /^1[3-9]\d{9}$/
+        if (!userInfo.phone) {
+          errors.phone = '请输入手机号'
+        } else if (!phoneRegex.test(userInfo.phone)) {
+          errors.phone = '手机号格式错误（需要11位数字，以1开头）'
+        } else {
+          errors.phone = ''
+        }
+        break
+      case 'wechat':
+        const wechatRegex = /^[a-zA-Z0-9_]{6,20}$/
+        if (!userInfo.wechat) {
+          errors.wechat = '请输入微信号'
+        } else if (!wechatRegex.test(userInfo.wechat)) {
+          errors.wechat = '微信号格式错误（需要6-20位字母、数字或下划线）'
+        } else {
+          errors.wechat = ''
+        }
+        break
+    }
+
+    this.setData({
+      errors: errors
+    })
+  },
+
   // 验证表单
   validateForm() {
     const { name, gender, birthDate, phone, wechat } = this.data.userInfo
@@ -71,6 +133,13 @@ Page({
       birthDate: '',
       phone: '',
       wechat: ''
+    }
+    const touchedFields = {
+      name: true,
+      gender: true,
+      birthDate: true,
+      phone: true,
+      wechat: true
     }
 
     // 验证姓名
@@ -108,7 +177,8 @@ Page({
 
     this.setData({
       isFormValid: isValid,
-      errors: errors
+      errors: errors,
+      touchedFields: touchedFields
     })
   },
 

@@ -68,6 +68,7 @@
               placeholder="请输入您的姓名"
               value="{{userInfo.name}}"
               bindinput="onInputChange"
+              bindblur="onInputBlur"
               data-field="name"
             />
             <text class="form-hint error-hint" wx:if="{{errors.name}}">
@@ -124,6 +125,7 @@
               placeholder="请输入11位手机号"
               value="{{userInfo.phone}}"
               bindinput="onInputChange"
+              bindblur="onInputBlur"
               data-field="phone"
               maxlength="11"
             />
@@ -140,6 +142,7 @@
               placeholder="请输入微信号（6-20位）"
               value="{{userInfo.wechat}}"
               bindinput="onInputChange"
+              bindblur="onInputBlur"
               data-field="wechat"
               maxlength="20"
             />

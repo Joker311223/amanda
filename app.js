@@ -1,3 +1,7 @@
+wx.cloud.init({
+  env: 'cloud1-6gnh2toe07d2c577	' // 替换为你的环境ID
+})
+
 App({
   globalData: {
     userInfo: null,
@@ -1254,6 +1258,8 @@ App({
     const isFirstTime = wx.getStorageSync("isFirstTime");
     if (isFirstTime === "") {
       this.globalData.isFirstTime = true;
+      this.globalData.hasSeenGuide = false;
+      this.globalData.noMoreGuide = false;
     } else {
       this.globalData.isFirstTime = false;
       // 加载用户数据
@@ -1265,12 +1271,20 @@ App({
     try {
       const userInfo = wx.getStorageSync("userInfo");
       const learningProgress = wx.getStorageSync("learningProgress");
+      const hasSeenGuide = wx.getStorageSync("hasSeenGuide");
+      const noMoreGuide = wx.getStorageSync("noMoreGuide");
 
       if (userInfo) {
         this.globalData.userInfo = userInfo;
       }
       if (learningProgress) {
         this.globalData.learningProgress = learningProgress;
+      }
+      if (hasSeenGuide) {
+        this.globalData.hasSeenGuide = hasSeenGuide;
+      }
+      if (noMoreGuide) {
+        this.globalData.noMoreGuide = noMoreGuide;
       }
     } catch (e) {
       console.error("加载用户数据失败", e);
@@ -1283,6 +1297,7 @@ App({
       wx.setStorageSync("learningProgress", this.globalData.learningProgress);
       wx.setStorageSync("isFirstTime", false);
       wx.setStorageSync("hasSeenGuide", this.globalData.hasSeenGuide);
+      wx.setStorageSync("noMoreGuide", this.globalData.noMoreGuide);
     } catch (e) {
       console.error("保存用户数据失败", e);
     }

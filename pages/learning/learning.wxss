@@ -95,7 +95,6 @@
   flex-direction: row;
 }
 .course-header {
-  dir
   display: flex;
   align-items: center;
   padding: 30rpx;
