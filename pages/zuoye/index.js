@@ -397,6 +397,9 @@ Page({
       // 调用app的finishWork方法，传入作业ID和经验值
       app.finishWork(this.data.zuoyeId, earnedPoints);
 
+      // 保存作业到云数据库
+      this.saveAssignmentToCloud(earnedPoints);
+
       // 显示完成弹窗
       this.setData({
         showCompletionModal: true,
@@ -522,6 +525,87 @@ Page({
   // 继续按钮点击
   onContinue() {
     this.onCloseCompletionModal();
+  },
+
+  // 保存作业到云数据库
+  saveAssignmentToCloud(earnedPoints) {
+    const db = wx.cloud.database()
+    const cloudUserId = wx.getStorageSync('cloudUserId')
+    const userInfo = app.globalData.userInfo
+
+    // 获取所有答案
+    const answers = this.loadAnswersFromStorage(this.data.zuoyeId)
+
+    // 构建作业数据
+    const assignmentData = {
+      userId: cloudUserId || '', // 用户云数据库ID
+      userName: userInfo ? userInfo.name : '',
+      assignmentId: this.data.zuoyeId,
+      assignmentTitle: this.data.assignment.title,
+      assignmentCategory: this.data.assignment.category || '',
+      answers: answers, // 所有答案
+      problems: this.data.problems.map((problem, index) => ({
+        question: problem.info || problem.question || problem.title,
+        type: problem.type,
+        answer: this.formatAnswerForCloud(answers[index])
+      })),
+      earnedPoints: earnedPoints,
+      submitTime: db.serverDate(), // 服务器时间
+      completedAt: new Date().toISOString()
+    }
+
+    // 保存到云数据库
+    db.collection('assigments').add({
+      data: assignmentData,
+      success: res => {
+        console.log('作业保存到云数据库成功', res)
+      },
+      fail: err => {
+        console.error('作业保存到云数据库失败', err)
+        // 不影响用户体验，静默失败
+      }
+    })
+  },
+
+  // 格式化答案用于云存储
+  formatAnswerForCloud(answer) {
+    if (answer === undefined || answer === null || answer === '') {
+      return ''
+    }
+
+    // 如果是数组
+    if (Array.isArray(answer)) {
+      return answer.map(item => {
+        if (typeof item === 'object') {
+          return item.title || JSON.stringify(item)
+        }
+        return String(item)
+      }).join('、')
+    }
+
+    // 如果是对象
+    if (typeof answer === 'object') {
+      // 尝试提取常见的字段
+      if (answer.text) return answer.text
+      if (answer.value) return answer.value
+      if (answer.content) return answer.content
+      if (answer.title) return answer.title
+
+      // 对于多选题，提取选中的项
+      const entries = Object.entries(answer)
+      const selectedItems = entries
+        .filter(([key, value]) => value === true || value === 1 || value === '1')
+        .map(([key]) => key)
+
+      if (selectedItems.length > 0) {
+        return selectedItems.join('、')
+      }
+
+      return JSON.stringify(answer)
+    }
+
+    // 其他类型直接转字符串
+    return String(answer)
   },
 
   // 开始做题

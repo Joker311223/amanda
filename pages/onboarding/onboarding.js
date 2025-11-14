@@ -222,9 +222,51 @@ Page({
     // 保存到本地存储
     app.saveUserData()
 
+    // 保存用户信息到云数据库
+    this.saveUserToCloud()
+
     // 显示成功弹窗
     this.setData({
       showSuccessModal: true
+    })
+  },
+
+  // 保存用户信息到云数据库
+  saveUserToCloud() {
+    const db = wx.cloud.database()
+    const userInfo = this.data.userInfo
+
+    // 添加创建时间和openid
+    db.collection('users').add({
+      data: {
+        name: userInfo.name,
+        gender: userInfo.gender,
+        birthDate: userInfo.birthDate,
+        phone: userInfo.phone,
+        wechat: userInfo.wechat,
+        createTime: db.serverDate(), // 服务器时间
+        learningProgress: {
+          currentWeek: 1,
+          currentDay: 1,
+          completedCourses: [],
+          completedAssignments: [],
+          totalExperience: 0,
+          happinessScore: 0
+        }
+      },
+      success: res => {
+        console.log('用户信息保存到云数据库成功', res)
+        // 保存用户的云数据库ID到本地
+        wx.setStorageSync('cloudUserId', res._id)
+      },
+      fail: err => {
+        console.error('用户信息保存到云数据库失败', err)
+        wx.showToast({
+          title: '数据同步失败，请检查网络',
+          icon: 'none',
+          duration: 2000
+        })
+      }
     })
   },
 
