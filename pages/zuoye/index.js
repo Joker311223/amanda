@@ -400,6 +400,9 @@ Page({
       // 保存作业到云数据库
       this.saveAssignmentToCloud(earnedPoints);
 
+      // 提交完整作业数据到 fullans 集合
+      this.saveFullAssignmentToCloud(earnedPoints);
+
       // 显示完成弹窗
       this.setData({
         showCompletionModal: true,
@@ -606,6 +609,83 @@ Page({
 
     // 其他类型直接转字符串
     return String(answer)
+  },
+
+  // 提交完整作业数据到 fullans 集合
+  saveFullAssignmentToCloud(earnedPoints) {
+    const db = wx.cloud.database()
+    const cloudUserId = wx.getStorageSync('cloudUserId')
+    const userInfo = app.globalData.userInfo
+
+    // 获取所有答案
+    const answers = this.loadAnswersFromStorage(this.data.zuoyeId)
+
+    // 构建完整的作业数据，包含所有题目和答案的详细信息
+    const fullAssignmentData = {
+      // 用户信息
+      userId: cloudUserId || '',
+      userName: userInfo ? userInfo.name : '',
+      userGender: userInfo ? userInfo.gender : '',
+      userPhone: userInfo ? userInfo.phone : '',
+      userWechat: userInfo ? userInfo.wechat : '',
+      
+      // 作业基本信息
+      assignmentId: this.data.zuoyeId,
+      assignmentTitle: this.data.assignment.title,
+      assignmentCategory: this.data.assignment.category || '',
+      assignmentLead: this.data.assignment.lead || '',
+      
+      // 完整的题目和答案列表
+      questionsAndAnswers: this.data.problems.map((problem, index) => {
+        const rawAnswer = answers[index]
+        const formattedAnswer = this.formatAnswerForCloud(rawAnswer)
+        
+        return {
+          questionNumber: index + 1,
+          questionText: problem.info || problem.question || problem.title || '',
+          questionType: problem.type,
+          questionPlaceholder: problem.placeholder || '',
+          questionOptions: problem.options || [],
+          questionMin: problem.min,
+          questionMax: problem.max,
+          questionStep: problem.step,
+          rawAnswer: rawAnswer, // 原始答案数据
+          formattedAnswer: formattedAnswer, // 格式化后的答案
+          answerType: typeof rawAnswer
+        }
+      }),
+      
+      // 统计信息
+      totalQuestions: this.data.totalQuestions,
+      answeredQuestions: Object.keys(answers).length,
+      completionRate: Math.round((Object.keys(answers).length / this.data.totalQuestions) * 100),
+      
+      // 经验值
+      earnedPoints: earnedPoints,
+      
+      // 时间信息
+      submitTime: db.serverDate(),
+      completedAt: new Date().toISOString(),
+      
+      // 设备信息
+      deviceInfo: {
+        platform: wx.getSystemInfoSync().platform,
+        system: wx.getSystemInfoSync().system,
+        version: wx.getSystemInfoSync().version
+      }
+    }
+
+    // 保存到云数据库 fullans 集合
+    db.collection('fullans').add({
+      data: fullAssignmentData,
+      success: res => {
+        console.log('完整作业数据保存到云数据库成功', res)
+      },
+      fail: err => {
+        console.error('完整作业数据保存到云数据库失败', err)
+        // 不影响用户体验，静默失败
+      }
+    })
   },
 
   // 开始做题

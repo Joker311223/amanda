@@ -90,6 +90,62 @@ wx.cloud.init({
 - `assignmentId`: 用于查询特定作业的提交记录
 - `submitTime`: 用于按提交时间排序
 
+### 集合3: fullans（完整作业数据表）
+
+**集合名称**: `fullans`
+
+**权限设置**: 建议设置为"仅创建者可读写"
+
+**数据结构**:
+```json
+{
+  "_id": "云数据库自动生成的ID",
+  "_openid": "用户的openid（自动添加）",
+  "userId": "用户在users表中的_id",
+  "userName": "用户姓名",
+  "userGender": "用户性别",
+  "userPhone": "用户手机号",
+  "userWechat": "用户微信号",
+  "assignmentId": "作业ID",
+  "assignmentTitle": "作业标题",
+  "assignmentCategory": "作业分类",
+  "assignmentLead": "作业导语",
+  "questionsAndAnswers": [
+    {
+      "questionNumber": 1,
+      "questionText": "题目内容",
+      "questionType": "题目类型（text/choose/multiple/score）",
+      "questionPlaceholder": "输入提示",
+      "questionOptions": ["选项数组"],
+      "questionMin": "最小值（评分题）",
+      "questionMax": "最大值（评分题）",
+      "questionStep": "步长（评分题）",
+      "rawAnswer": "原始答案数据",
+      "formattedAnswer": "格式化后的答案",
+      "answerType": "答案数据类型"
+    }
+  ],
+  "totalQuestions": "总题目数",
+  "answeredQuestions": "已回答题目数",
+  "completionRate": "完成率（百分比）",
+  "earnedPoints": "获得的经验值",
+  "submitTime": "提交时间（服务器时间）",
+  "completedAt": "完成时间（ISO格式）",
+  "deviceInfo": {
+    "platform": "设备平台",
+    "system": "系统版本",
+    "version": "微信版本"
+  }
+}
+```
+
+**索引建议**:
+- `_openid`: 用于查询用户的所有作业
+- `userId`: 用于关联用户信息
+- `assignmentId`: 用于查询特定作业的提交记录
+- `submitTime`: 用于按提交时间排序
+- `assignmentCategory`: 用于按分类查询
+
 ## 数据库创建步骤
 
 ### 1. 登录微信开发者工具
@@ -106,6 +162,12 @@ wx.cloud.init({
 #### 创建 assignments 集合
 1. 点击"数据库" -> "添加集合"
 2. 集合名称：`assignments`
+3. 权限设置：选择"仅创建者可读写"
+4. 点击"确定"
+
+#### 创建 fullans 集合
+1. 点击"数据库" -> "添加集合"
+2. 集合名称：`fullans`
 3. 权限设置：选择"仅创建者可读写"
 4. 点击"确定"
 
@@ -191,6 +253,34 @@ db.collection('assignments')
   .get()
   .then(res => {
     console.log('作业提交记录', res.data)
+  })
+```
+
+### 查询完整作业数据
+```javascript
+const db = wx.cloud.database()
+db.collection('fullans')
+  .where({
+    _openid: '{openid}'
+  })
+  .orderBy('submitTime', 'desc')
+  .get()
+  .then(res => {
+    console.log('完整作业数据', res.data)
+  })
+```
+
+### 查询特定分类的作业
+```javascript
+const db = wx.cloud.database()
+db.collection('fullans')
+  .where({
+    _openid: '{openid}',
+    assignmentCategory: '正念'
+  })
+  .get()
+  .then(res => {
+    console.log('正念类作业', res.data)
   })
 ```
 
