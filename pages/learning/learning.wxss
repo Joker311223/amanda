@@ -90,7 +90,12 @@
   width: 600rpx;
 }
 
+.course-upper{
+  display: flex;
+  flex-direction: row;
+}
 .course-header {
+  dir
   display: flex;
   align-items: center;
   padding: 30rpx;
@@ -149,8 +154,8 @@
 }
 
 .xuexi-icon {
-  width: 200rpx;
-  height: 100rpx;
+  width: 160rpx;
+  height: 85rpx;
 }
 .xuexi-text {
   margin-left: 30rpx;
@@ -194,8 +199,12 @@
 }
 
 .course-time {
+  display: flex; 
   font-weight: bold;
   color: #333;
+  width: 160%;
+  align-items: center;
+  justify-content: center;
 }
 
 .course-actions {
@@ -203,7 +212,7 @@
   flex-direction: column;
   align-items: flex-end;
   margin-left: 20rpx;
-  gap:30rpx;
+  gap:10rpx;
 }
 
 .course-buttons {
