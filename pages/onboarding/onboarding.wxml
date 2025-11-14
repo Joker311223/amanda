@@ -152,7 +152,6 @@
             class="btn btn-primary start-journey-btn"
             form-type="submit"
             style="width:600rpx"
-            disabled="{{!isFormValid}}"
           >
             开始你的DBT技能学习之旅吧！
           </button>

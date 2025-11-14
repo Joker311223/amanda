@@ -44,8 +44,6 @@ Page({
 
     this.setData({
       [`userInfo.${field}`]: value
-    }, () => {
-      this.validateForm()
     })
   },
 
@@ -54,8 +52,6 @@ Page({
     const gender = e.currentTarget.dataset.gender
     this.setData({
       'userInfo.gender': gender
-    }, () => {
-      this.validateForm()
     })
   },
 
@@ -63,8 +59,6 @@ Page({
   onDateChange(e) {
     this.setData({
       'userInfo.birthDate': e.detail.value
-    }, () => {
-      this.validateForm()
     })
   },
 
@@ -120,6 +114,9 @@ Page({
 
   // 提交用户信息
   submitUserInfo(e) {
+    // 在提交时进行验证
+    this.validateForm()
+    
     if (!this.data.isFormValid) {
       // 找出第一个有错误的字段
       const { errors } = this.data
