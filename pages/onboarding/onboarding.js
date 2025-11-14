@@ -25,7 +25,8 @@ Page({
       birthDate: false,
       phone: false,
       wechat: false
-    }
+    },
+    showSuccessModal: false
   },
 
   onLoad() {
@@ -221,18 +222,21 @@ Page({
     // 保存到本地存储
     app.saveUserData()
 
-    // 显示欢迎提示
-    wx.showToast({
-      title: '欢迎加入DBT学习之旅！',
-      icon: 'success',
-      duration: 2000
+    // 显示成功弹窗
+    this.setData({
+      showSuccessModal: true
+    })
+  },
+
+  // 关闭成功弹窗
+  closeSuccessModal() {
+    this.setData({
+      showSuccessModal: false
     })
 
-    // 延迟跳转到router页面（学习路线页面）并触发导引
-    setTimeout(() => {
-      wx.switchTab({
-        url: '/pages/router/index'
-      })
-    }, 2000)
+    // 跳转到router页面（学习路线页面）
+    wx.switchTab({
+      url: '/pages/router/index'
+    })
   }
 })

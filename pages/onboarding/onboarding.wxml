@@ -166,4 +166,41 @@
       </view>
     </view>
   </view>
+
+  <!-- 注册成功弹窗 -->
+  <view class="modal-overlay" wx:if="{{showSuccessModal}}" bindtap="closeSuccessModal">
+    <view class="modal-content" catchtap>
+      <view class="modal-header">
+        <text class="modal-title">🎉 欢迎加入</text>
+      </view>
+      
+      <view class="modal-body">
+        <text class="welcome-text">亲爱的{{userInfo.name}}，</text>
+        <text class="welcome-desc">欢迎加入DBT技能学习之旅！</text>
+        
+        <view class="contact-section">
+          <text class="section-title">📞 联系方式</text>
+          <view class="contact-item">
+            <text class="contact-label">项目负责人：</text>
+            <text class="contact-value">杨老师</text>
+          </view>
+          <view class="contact-item">
+            <text class="contact-label">电话：</text>
+            <text class="contact-value">18888929709</text>
+          </view>
+        </view>
+
+        <view class="group-section">
+          <text class="section-title">👥 学习交流群</text>
+          <text class="group-desc">请添加杨老师微信，入学习交流群，与其他学员一起学习和交流。</text>
+        </view>
+      </view>
+
+      <view class="modal-footer">
+        <button class="btn btn-primary" bindtap="closeSuccessModal">
+          开始学习
+        </button>
+      </view>
+    </view>
+  </view>
 </view>
