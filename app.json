@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/cover/cover",
     "pages/onboarding/onboarding",
     "pages/index/index",
     "pages/router/index",
@@ -13,8 +14,7 @@
     "pages/emotion/emotion",
     "pages/video/video",
     "pages/assignment-detail/assignment-detail",
-    "pages/skill-card/skill-card",
-    "pages/cover/cover"
+    "pages/skill-card/skill-card"
   ],
   "window": {
     "backgroundTextStyle": "light",
