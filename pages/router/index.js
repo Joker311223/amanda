@@ -44,15 +44,9 @@ Page({
   },
 
   onLoad(options) {
-    // 检查是否有debug参数 TODO
-    // if (options.debug === 'true') {
-    //   this.setData({
-    //     showDebugButtons: true,
-    //   });
-    // }
-    // 测试环境直接设置True 上线的时候去掉
+    // 根据全局debugMode标志来判断是否显示debug按钮
     this.setData({
-      showDebugButtons: true,
+      showDebugButtons: app.globalData.debugMode,
     });
     this.loadCourses();
     this.loadData();

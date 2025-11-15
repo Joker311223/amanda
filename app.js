@@ -2,6 +2,7 @@ App({
   globalData: {
     userInfo: null,
     isFirstTime: true,
+    debugMode: false, // debug模式标志
     learningProgress: {
       currentWeek: 1,
       currentDay: 1,
@@ -1246,10 +1247,15 @@ App({
     ],
   },
 
-  onLaunch() {
+  onLaunch(options) {
     wx.cloud.init({
       env: "cloud1-6gnh2toe07d2c577", // 替换为你的环境ID
     });
+
+    // 检查跳链参数中是否包含 debug=true
+    if (options && (options.debug === 'true'|| options.query.debug)) {
+      this.globalData.debugMode = true;
+    }
 
     // 检查是否首次使用
     const isFirstTime = wx.getStorageSync("isFirstTime");

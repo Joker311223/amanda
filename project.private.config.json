@@ -5,9 +5,9 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/onboading/onboading",
+          "name": "pages/onboarding/onboarding",
           "pathName": "pages/onboarding/onboarding",
-          "query": "",
+          "query": "debug=true",
           "scene": null,
           "launchMode": "default"
         },
