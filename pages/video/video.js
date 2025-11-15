@@ -22,7 +22,8 @@ Page({
     isLongPressing: false, // 是否正在长按
     isFullscreen: false, // 是否全屏
     longPressTimer: null, // 长按计时器
-    isVideoPlaying: false // 视频播放状态
+    isVideoPlaying: false, // 视频播放状态
+    videoCurrentTime: 0 // 视频当前播放时间（秒）
   },
 
   onLoad(options) {
@@ -38,6 +39,9 @@ Page({
     })
     this.loadCourse(courseId)
     this.loadCourseNotes(courseId)
+    
+    // 加载保存的播放进度
+    this.loadVideoProgress(courseId)
   },
 
   onUnload() {
@@ -45,6 +49,9 @@ Page({
     if (this.data.playTimer) {
       clearInterval(this.data.playTimer)
     }
+    
+    // 保存播放进度
+    this.saveVideoProgress()
   },
 
   onVideoEnded() {
@@ -421,6 +428,55 @@ Page({
         isLongPressing: false,
         playbackRate: 1
       })
+    }
+  },
+
+  // 保存视频播放进度
+  saveVideoProgress() {
+    try {
+      const videoContext = wx.createVideoContext('center', this)
+      videoContext.currentTime((currentTime) => {
+        const progressData = wx.getStorageSync('videoProgress') || {}
+        progressData[this.data.courseId] = currentTime
+        wx.setStorageSync('videoProgress', progressData)
+        console.log('yjc=>保存播放进度:', this.data.courseId, currentTime)
+      })
+    } catch (error) {
+      console.error('保存播放进度失败:', error)
+    }
+  },
+
+  // 加载视频播放进度
+  loadVideoProgress(courseId) {
+    try {
+      const progressData = wx.getStorageSync('videoProgress') || {}
+      const currentTime = progressData[courseId] || 0
+      
+      if (currentTime > 0) {
+        // 延迟设置，确保video组件已加载
+        setTimeout(() => {
+          const videoContext = wx.createVideoContext('center', this)
+          videoContext.seek(currentTime)
+          this.setData({
+            videoCurrentTime: currentTime
+          })
+          console.log('yjc=>恢复播放进度:', courseId, currentTime)
+        }, 500)
+      }
+    } catch (error) {
+      console.error('加载播放进度失败:', error)
+    }
+  },
+
+  // 视频时间更新事件
+  onVideoTimeUpdate(e) {
+    // 定期保存播放进度（每5秒保存一次）
+    const currentTime = e.detail.currentTime
+    if (Math.floor(currentTime) % 5 === 0 && Math.floor(currentTime) !== Math.floor(this.data.videoCurrentTime)) {
+      this.setData({
+        videoCurrentTime: currentTime
+      })
+      this.saveVideoProgress()
     }
   }
 })

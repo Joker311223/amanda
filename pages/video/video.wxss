@@ -86,19 +86,14 @@
   right: 0;
   bottom: 0;
   z-index: 9999;
-  pointer-events: none;
-}
-
-.fullscreen-controls .fullscreen-close-btn,
-.fullscreen-controls .fullscreen-play-btn {
   pointer-events: auto;
 }
 
-/* 全屏关闭按钮 */
-.fullscreen-close-btn {
+/* 全屏返回按钮 */
+.fullscreen-back-btn {
   position: fixed;
   top: 40rpx;
-  right: 40rpx;
+  left: 40rpx;
   z-index: 10000;
   width: 100rpx;
   height: 100rpx;
@@ -112,12 +107,12 @@
   box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.3);
 }
 
-.fullscreen-close-btn:active {
+.fullscreen-back-btn:active {
   background: rgba(0, 0, 0, 0.8);
   transform: scale(0.95);
 }
 
-.close-icon {
+.back-icon {
   color: white;
   font-size: 56rpx;
   font-weight: bold;
@@ -709,6 +704,31 @@
 .continue-btn:active {
   transform: scale(0.95);
   box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 全屏按钮响应式调整 */
+@media screen and (max-width: 375px) {
+  .fullscreen-back-btn,
+  .fullscreen-play-btn {
+    width: 80rpx;
+    height: 80rpx;
+  }
+
+  .fullscreen-back-btn {
+    top: 30rpx;
+    left: 30rpx;
+  }
+
+  .fullscreen-play-btn {
+    bottom: 50rpx;
+    right: 50rpx;
+    width: 100rpx;
+    height: 100rpx;
+  }
+
+  .back-icon {
+    font-size: 48rpx;
+  }
 }
 
 /* 响应式调整 */
