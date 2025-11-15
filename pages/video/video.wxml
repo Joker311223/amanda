@@ -7,62 +7,18 @@
       </view>
     </view>
   </view>
-
   <!-- 视频播放区域 -->
   <view class="video-section">
     <view class="video-container">
       <!-- 模拟视频播放器 -->
       <view class="video-player">
         <!-- 未完成课程：带触摸层控制 -->
-        <view
-          wx:if="{{!isCourseCompleted && videoUrl}}"
-          class="video-touch-layer"
-          bindlongpress="onLongPressStart"
-          bindtouchend="onLongPressEnd"
-        >
-          <video
-            autoplay
-            id='center'
-            controls="{{true}}"
-            enable-progress-gesture="{{true}}"
-            show-fullscreen-btn="{{true}}"
-            show-play-btn="{{true}}"
-            show-center-play-btn="{{true}}"
-            enable-play-gesture="{{true}}"
-            show-progress="{{false}}"
-            src="{{videoUrl}}"
-            class="video-placeholder"
-            bindended="onVideoEnded"
-            bindfullscreenchange="onFullscreenChange"
-            bindplay="onVideoPlay"
-            bindpause="onVideoPause"
-            bindtimeupdate="onVideoTimeUpdate"
-            catchtap="toggleVideoPlay"
-          />
-          <!-- 自定义控制按钮（非全屏时显示） -->
-         
-        </view>
-
-       
+        <video wx:if="{{!isCourseCompleted && videoUrl}}" autoplay id='center' controls="{{true}}" enable-progress-gesture="{{true}}" show-fullscreen-btn="{{true}}" show-play-btn="{{true}}" show-center-play-btn="{{true}}" enable-play-gesture="{{true}}" show-progress="{{false}}" src="{{videoUrl}}" class="video-placeholder" bindended="onVideoEnded" bindfullscreenchange="onFullscreenChange" />
+        <!-- 自定义控制按钮（非全屏时显示） -->
         <!-- 已完成课程：完整控制 -->
-        <video
-          wx:if="{{isCourseCompleted && videoUrl}}"
-          autoplay
-          id='center'
-          controls="{{true}}"
-          enable-progress-gesture="{{true}}"
-          show-fullscreen-btn="{{true}}"
-          show-play-btn="{{true}}"
-          show-center-play-btn="{{true}}"
-          show-progress="{{true}}"
-          src="{{videoUrl}}"
-          class="video-placeholder"
-          bindended="onVideoEnded"
-          bindfullscreenchange="onFullscreenChange"
-        />
+        <video wx:if="{{isCourseCompleted && videoUrl}}" autoplay id='center' controls="{{true}}" enable-progress-gesture="{{true}}" show-fullscreen-btn="{{true}}" show-play-btn="{{true}}" show-center-play-btn="{{true}}" show-progress="{{true}}" src="{{videoUrl}}" class="video-placeholder" bindended="onVideoEnded" bindfullscreenchange="onFullscreenChange" />
       </view>
     </view>
-
     <!-- 笔记功能 -->
     <view class="notes-section">
       <view class="notes-card card">
@@ -70,13 +26,7 @@
           <text>{{editingNoteId ? '编辑笔记' : '添加笔记'}}</text>
         </view>
         <view class="card-content">
-          <textarea
-            class="notes-textarea"
-            placeholder="记录你的学习心得和感悟..."
-            value="{{notes}}"
-            bindinput="onNotesInput"
-            maxlength="500"
-          ></textarea>
+          <textarea class="notes-textarea" placeholder="记录你的学习心得和感悟..." value="{{notes}}" bindinput="onNotesInput" maxlength="500"></textarea>
           <view class="notes-footer">
             <text class="char-count">{{notes.length}}/500</text>
             <view class="notes-actions">
@@ -91,7 +41,6 @@
         </view>
       </view>
     </view>
-
     <!-- 笔记列表 -->
     <view class="notes-list-section" wx:if="{{courseNotesList.length > 0}}">
       <view class="notes-list-header">
@@ -116,19 +65,13 @@
         </view>
       </view>
     </view>
-
     <!-- 完成学习按钮 -->
     <view class="complete-section" wx:if="{{!isCourseCompleted}}">
-      <button
-        class="btn btn-primary complete-btn"
-        bindtap="completeCourse"
-        disabled="{{!isFinied}}"
-      >
+      <button class="btn btn-primary complete-btn" bindtap="completeCourse" disabled="{{!isFinied}}">
         {{!isFinied? '请完整观看视频' : '完成学习'}}
       </button>
     </view>
   </view>
-
   <!-- 完成弹窗 -->
   <view class="completion-modal" wx:if="{{showExperienceGain}}" bindtap="continueJourney">
     <view class="modal-content" catchtap="stopPropagation">
@@ -155,23 +98,22 @@
           <view class="particle circle" style="top: 100rpx; left: 60rpx; background: #FF6B6B;"></view>
           <view class="particle circle" style="top: 40rpx; right: 80rpx; background: #4ECDC4;"></view>
           <view class="particle plus" style="bottom: 120rpx; left: 100rpx; color: #FFD700;">+</view>
-          <view class="particle plus" style="bottom: 140rpx; right: 120rpx; color: #FF6B6B;">+</view>
+          <view class="particle plus" style="bottom: 140rpx; right: 120rpx; color: #FF6B6B;">
+            +
+          </view>
           <view class="particle dot" style="top: 80rpx; left: 120rpx; background: #7ed321;"></view>
           <view class="particle dot" style="bottom: 160rpx; right: 100rpx; background: #FFD700;"></view>
         </view>
       </view>
-
       <!-- 分数显示 -->
       <view class="points-display">
         <text class="points-number">{{currentCourse.experience || 30}}</text>
         <text class="points-unit">分</text>
       </view>
-
       <!-- 提示文字 -->
       <view class="completion-message">
         <text>恭喜你成功解锁{{currentCourse.experience || 30}}分经验</text>
       </view>
-
       <!-- 继续按钮 -->
       <button class="continue-btn" bindtap="continueJourney">继续</button>
     </view>
