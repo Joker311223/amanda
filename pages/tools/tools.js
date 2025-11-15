@@ -48,7 +48,7 @@ Page({
         order: 8, 
         images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-总概.jpg'] 
       },
-      '转移注意力': { 
+      'ACCEPT': { 
         order: 9, 
         images: ['https://yinjiacheng2025.oss-cn-shanghai.aliyuncs.com/图片/技能卡片（最新）/痛苦耐受-转移注意力ACCEPT.jpg'] 
       },

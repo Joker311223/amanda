@@ -54,20 +54,6 @@ saveUserToCloud() {
 - 保存的信息包括：用户信息、作业ID、作业标题、所有题目和答案、获得的经验值、提交时间等
 - 答案会被格式化为易读的文本格式
 
-### ✅ 3. 完整作业数据提交到云数据库
-
-**实现位置**: `pages/zuoye/index.js`
-
-**功能描述**:
-- 用户完成作业所有题目后，同时将完整的作业数据保存到云数据库 `fullans` 集合
-- 保存的信息包括：
-  - 完整的用户信息（姓名、性别、手机号、微信号）
-  - 作业详细信息（ID、标题、分类、导语）
-  - 每道题目的完整信息（题目文本、类型、选项、答案等）
-  - 统计信息（总题数、完成率）
-  - 设备信息
-- 数据结构更完整，便于后续数据分析和导出
-
 **代码实现**:
 ```javascript
 // 在 onNextQuestion() 方法中，完成所有题目时调用
@@ -101,74 +87,6 @@ saveAssignmentToCloud(earnedPoints) {
     },
     fail: err => {
       console.error('作业保存失败', err)
-    }
-  })
-}
-```
-
-**代码实现**:
-```javascript
-// 在 onNextQuestion() 方法中，完成所有题目时调用
-saveFullAssignmentToCloud(earnedPoints) {
-  const db = wx.cloud.database()
-  const cloudUserId = wx.getStorageSync('cloudUserId')
-  const userInfo = app.globalData.userInfo
-  const answers = this.loadAnswersFromStorage(this.data.zuoyeId)
-
-  const fullAssignmentData = {
-    // 用户信息
-    userId: cloudUserId,
-    userName: userInfo ? userInfo.name : '',
-    userGender: userInfo ? userInfo.gender : '',
-    userPhone: userInfo ? userInfo.phone : '',
-    userWechat: userInfo ? userInfo.wechat : '',
-    
-    // 作业基本信息
-    assignmentId: this.data.zuoyeId,
-    assignmentTitle: this.data.assignment.title,
-    assignmentCategory: this.data.assignment.category,
-    assignmentLead: this.data.assignment.lead,
-    
-    // 完整的题目和答案列表
-    questionsAndAnswers: this.data.problems.map((problem, index) => ({
-      questionNumber: index + 1,
-      questionText: problem.info || problem.question || problem.title,
-      questionType: problem.type,
-      questionPlaceholder: problem.placeholder,
-      questionOptions: problem.options,
-      questionMin: problem.min,
-      questionMax: problem.max,
-      questionStep: problem.step,
-      rawAnswer: answers[index],
-      formattedAnswer: this.formatAnswerForCloud(answers[index]),
-      answerType: typeof answers[index]
-    })),
-    
-    // 统计信息
-    totalQuestions: this.data.totalQuestions,
-    answeredQuestions: Object.keys(answers).length,
-    completionRate: Math.round((Object.keys(answers).length / this.data.totalQuestions) * 100),
-    
-    // 经验值和时间
-    earnedPoints: earnedPoints,
-    submitTime: db.serverDate(),
-    completedAt: new Date().toISOString(),
-    
-    // 设备信息
-    deviceInfo: {
-      platform: wx.getSystemInfoSync().platform,
-      system: wx.getSystemInfoSync().system,
-      version: wx.getSystemInfoSync().version
-    }
-  }
-
-  db.collection('fullans').add({
-    data: fullAssignmentData,
-    success: res => {
-      console.log('完整作业数据保存成功', res)
-    },
-    fail: err => {
-      console.error('完整作业数据保存失败', err)
     }
   })
 }
@@ -222,57 +140,6 @@ saveFullAssignmentToCloud(earnedPoints) {
   "earnedPoints": 20,
   "submitTime": "2024-01-01T00:00:00.000Z",
   "completedAt": "2024-01-01T00:00:00.000Z"
-}
-```
-
-### fullans 集合（完整作业数据）
-```json
-{
-  "_id": "自动生成",
-  "_openid": "用户openid",
-  "userId": "users表的_id",
-  "userName": "张三",
-  "userGender": "male",
-  "userPhone": "13800138000",
-  "userWechat": "zhangsan123",
-  "assignmentId": 1,
-  "assignmentTitle": "正念练习作业",
-  "assignmentCategory": "正念",
-  "assignmentLead": "这是作业导语...",
-  "questionsAndAnswers": [
-    {
-      "questionNumber": 1,
-      "questionText": "请描述你的感受",
-      "questionType": "text",
-      "questionPlaceholder": "请输入你的答案",
-      "questionOptions": [],
-      "rawAnswer": "我感觉很平静",
-      "formattedAnswer": "我感觉很平静",
-      "answerType": "string"
-    },
-    {
-      "questionNumber": 2,
-      "questionText": "你的情绪强度",
-      "questionType": "score",
-      "questionMin": 0,
-      "questionMax": 100,
-      "questionStep": 10,
-      "rawAnswer": 60,
-      "formattedAnswer": "60",
-      "answerType": "number"
-    }
-  ],
-  "totalQuestions": 5,
-  "answeredQuestions": 5,
-  "completionRate": 100,
-  "earnedPoints": 20,
-  "submitTime": "2024-01-01T00:00:00.000Z",
-  "completedAt": "2024-01-01T00:00:00.000Z",
-  "deviceInfo": {
-    "platform": "ios",
-    "system": "iOS 15.0",
-    "version": "8.0.0"
-  }
 }
 ```
 
@@ -341,11 +208,10 @@ saveFullAssignmentToCloud(earnedPoints) {
 ### 2. 数据库集合
 需要创建以下集合：
 - `users`: 用户信息表
-- `assignments`: 作业提交记录表（简化版）
-- `fullans`: 完整作业数据表（详细版）
+- `assignments`: 作业提交记录表
 
 ### 3. 权限设置
-建议将三个集合的权限都设置为"仅创建者可读写"
+建议将两个集合的权限都设置为"仅创建者可读写"
 
 ## 测试建议
 

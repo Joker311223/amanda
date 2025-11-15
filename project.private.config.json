@@ -5,23 +5,23 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/cover/cover",
-          "pathName": "pages/cover/cover",
+          "name": "pages/onboading/onboading",
+          "pathName": "pages/onboarding/onboarding",
           "query": "",
           "scene": null,
           "launchMode": "default"
         },
         {
-          "name": "/pages/cover/cover",
-          "pathName": "/pages/cover/cover",
+          "name": "pages/cover/cover",
+          "pathName": "pages/cover/cover",
           "query": "",
           "launchMode": "default",
           "scene": null
         },
         {
-          "name": "pages/router/index",
-          "pathName": "pages/router/index",
-          "query": "debug=true",
+          "name": "/pages/cover/cover",
+          "pathName": "/pages/cover/cover",
+          "query": "",
           "launchMode": "default",
           "scene": null
         }
