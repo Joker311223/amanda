@@ -47,6 +47,7 @@
 
 /* 标题卡片 */
 .title-card {
+  margin-bottom: 30rpx;
   background: #58a41f;
   border-radius: 20rpx;
   padding: 10rpx 40rpx;

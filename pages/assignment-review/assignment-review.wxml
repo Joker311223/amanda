@@ -1,10 +1,5 @@
 <view class="page-container">
-
-  <!-- 作业标题 -->
-  <view class="title-card" wx:if="{{assignment.title}}">
-    <text class="title-text">{{assignment.title}}</text>
-  </view>
-  <!-- 顶部操作按钮 -->
+ <!-- 顶部操作按钮 -->
   <view class="top-actions">
     <button class="action-btn edit-btn" bindtap="goToFillAssignment">
       <text class="btn-icon">✏️</text>
@@ -12,6 +7,11 @@
     </button>
   </view>
 
+  <!-- 作业标题 -->
+  <view class="title-card" wx:if="{{assignment.title}}">
+    <text class="title-text">{{assignment.title}}</text>
+  </view>
+ 
   <!-- 作业导语 -->
   <view class="lead-section" wx:if="{{assignment.lead}}">
     <text class="lead-text">导语：{{assignment.lead}}</text>
