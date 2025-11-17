@@ -151,6 +151,26 @@
             </text>
           </view>
 
+          <view class="form-group">
+            <text class="form-label">邀请码 <text class="required-mark">*</text></text>
+            <input
+              class="form-input {{errors.inviteCode ? 'input-error' : ''}}"
+              name="inviteCode"
+              placeholder="请输入邀请码"
+              value="{{userInfo.inviteCode}}"
+              bindinput="onInputChange"
+              bindblur="onInputBlur"
+              data-field="inviteCode"
+              maxlength="20"
+            />
+            <text class="form-hint error-hint" wx:if="{{errors.inviteCode}}">
+              ❌ {{errors.inviteCode}}
+            </text>
+            <text class="form-hint info-hint" wx:if="{{!errors.inviteCode}}">
+              💡 请联系项目负责人杨老师（18888929709）获取邀请码
+            </text>
+          </view>
+
           <button
             class="btn btn-primary start-journey-btn"
             form-type="submit"

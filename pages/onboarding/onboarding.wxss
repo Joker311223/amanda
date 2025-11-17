@@ -106,14 +106,24 @@
 .form-hint {
   display: block;
   font-size: 22rpx;
-  color: #ff4d4f;
   margin-top: 8rpx;
   padding-left: 10rpx;
+  line-height: 1.5;
 }
 
 .error-hint {
   color: #ff4d4f;
   font-weight: 500;
+}
+
+.info-hint {
+  color: #1890ff;
+}
+
+.required-mark {
+  color: #ff4d4f;
+  font-size: 24rpx;
+  margin-left: 4rpx;
 }
 
 .input-error {

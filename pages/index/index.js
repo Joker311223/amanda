@@ -53,10 +53,8 @@ Page({
     const currentExperience = learningProgress.totalExperience // 当前获得的经验值
     const progressPercentage = totalExperience > 0 ? Math.round((currentExperience / totalExperience) * 100) : 0
 
-    // 计算当前周数和天数（基于已完成的课程数）
-    // 假设每周学习2门课程，每天学习1门课程
-    const currentWeek = Math.floor(completedCourses / 2) + 1
-    const currentDay = (completedCourses % 2) + 1
+    // 从云数据库获取用户注册时间，计算已学习的周数和天数
+    this.calculateLearningDuration()
 
     // 获取最近学习的课程（最多3个）
     const recentCourses = this.getRecentCourses(courses, learningProgress.completedCourses)
@@ -67,13 +65,72 @@ Page({
     this.setData({
       userName: userInfo.name,
       totalExperience: learningProgress.totalExperience,
-      currentWeek: currentWeek,
-      currentDay: currentDay,
       completedCourses: completedCourses,
       completedAssignments: completedAssignments,
       progressPercentage: progressPercentage,
       recentCourses: recentCourses,
       motivationText: motivationText
+    })
+  },
+
+  // 从云数据库获取注册时间并计算学习周数和天数
+  calculateLearningDuration() {
+    const cloudUserId = wx.getStorageSync('cloudUserId')
+    
+    if (!cloudUserId) {
+      // 如果没有云数据库ID，使用默认值
+      this.setData({
+        currentWeek: 1,
+        currentDay: 1
+      })
+      return
+    }
+
+    const db = wx.cloud.database()
+    db.collection('users').doc(cloudUserId).get({
+      success: res => {
+        if (res.data && res.data.createTime) {
+          console.log('yjc=>res.data.createTime', res.data.createTime);
+          // 获取注册时间
+          const createTime = new Date(res.data.createTime)
+          const now = new Date()
+          
+          // 计算时间差（毫秒）
+          const timeDiff = now.getTime() - createTime.getTime()
+          
+          // 计算已经过了多少天（向下取整）
+          const daysPassed = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
+          
+          // 计算已经过了多少周（向下取整）
+          const weeksPassed = Math.floor(daysPassed / 7)
+          
+          // 计算当前是第几周第几天
+          // 注册当天算第1周第1天
+          const currentWeek = weeksPassed + 1
+          const currentDay = (daysPassed % 7) + 1
+          
+          this.setData({
+            currentWeek: currentWeek,
+            currentDay: currentDay
+          })
+          
+          console.log(`用户注册时间: ${createTime.toLocaleDateString()}, 已学习 ${weeksPassed} 周 ${daysPassed % 7} 天`)
+        } else {
+          // 如果没有获取到createTime，使用默认值
+          this.setData({
+            currentWeek: 1,
+            currentDay: 1
+          })
+        }
+      },
+      fail: err => {
+        console.error('获取用户注册时间失败', err)
+        // 失败时使用默认值
+        this.setData({
+          currentWeek: 1,
+          currentDay: 1
+        })
+      }
     })
   },
 

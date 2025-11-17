@@ -8,7 +8,8 @@ Page({
       gender: '',
       birthDate: '',
       phone: '',
-      wechat: ''
+      wechat: '',
+      inviteCode: ''
     },
     isFormValid: false,
     errors: {
@@ -16,7 +17,8 @@ Page({
       gender: '',
       birthDate: '',
       phone: '',
-      wechat: ''
+      wechat: '',
+      inviteCode: ''
     },
     // 记录哪些字段已经显示过错误提示
     touchedFields: {
@@ -24,9 +26,11 @@ Page({
       gender: false,
       birthDate: false,
       phone: false,
-      wechat: false
+      wechat: false,
+      inviteCode: false
     },
-    showSuccessModal: false
+    showSuccessModal: false,
+    VALID_INVITE_CODE: 'DBT2025' // 有效的邀请码
   },
 
   onLoad() {
@@ -84,7 +88,7 @@ Page({
 
   // 验证单个字段
   validateField(field) {
-    const { userInfo } = this.data
+    const { userInfo, VALID_INVITE_CODE } = this.data
     const errors = { ...this.data.errors }
     const touchedFields = { ...this.data.touchedFields }
 
@@ -118,6 +122,15 @@ Page({
           errors.wechat = ''
         }
         break
+      case 'inviteCode':
+        if (!userInfo.inviteCode) {
+          errors.inviteCode = '请输入邀请码'
+        } else if (userInfo.inviteCode !== VALID_INVITE_CODE) {
+          errors.inviteCode = '邀请码错误，请联系项目负责人获取正确的邀请码'
+        } else {
+          errors.inviteCode = ''
+        }
+        break
     }
 
     this.setData({
@@ -127,20 +140,23 @@ Page({
 
   // 验证表单
   validateForm() {
-    const { name, gender, birthDate, phone, wechat } = this.data.userInfo
+    const { name, gender, birthDate, phone, wechat, inviteCode } = this.data.userInfo
+    const { VALID_INVITE_CODE } = this.data
     const errors = {
       name: '',
       gender: '',
       birthDate: '',
       phone: '',
-      wechat: ''
+      wechat: '',
+      inviteCode: ''
     }
     const touchedFields = {
       name: true,
       gender: true,
       birthDate: true,
       phone: true,
-      wechat: true
+      wechat: true,
+      inviteCode: true
     }
 
     // 验证姓名
@@ -174,7 +190,14 @@ Page({
       errors.wechat = '微信号格式错误（需要6-20位字母、数字或下划线）'
     }
 
-    const isValid = !errors.name && !errors.gender && !errors.birthDate && !errors.phone && !errors.wechat
+    // 验证邀请码
+    if (!inviteCode) {
+      errors.inviteCode = '请输入邀请码'
+    } else if (inviteCode !== VALID_INVITE_CODE) {
+      errors.inviteCode = '邀请码错误，请联系项目负责人获取正确的邀请码'
+    }
+
+    const isValid = !errors.name && !errors.gender && !errors.birthDate && !errors.phone && !errors.wechat && !errors.inviteCode
 
     this.setData({
       isFormValid: isValid,
@@ -198,6 +221,7 @@ Page({
       if (errors.birthDate) errorMessages.push(errors.birthDate)
       if (errors.phone) errorMessages.push(errors.phone)
       if (errors.wechat) errorMessages.push(errors.wechat)
+      if (errors.inviteCode) errorMessages.push(errors.inviteCode)
 
       const errorMsg = errorMessages.join('；')
 
