@@ -222,9 +222,16 @@
   flex: 1;
 }
 
-.course-title {
-  display: block;
+.course-title-container {
+  display: flex;
+  width: 140%;
   font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.course-title {
   font-weight: bold;
   color: #333;
   margin-bottom: 8rpx;
@@ -236,6 +243,7 @@
 }
 
 .course-status {
+  margin-top: 40rpx;
   margin-left: 20rpx;
 }
 
