@@ -74,6 +74,15 @@ Page({
     } catch (error) {
       console.error('清除播放进度失败:', error)
     }
+    
+    // 如果课程还未完成，自动执行完成课程操作
+    if (!this.data.isCourseCompleted) {
+      console.log('yjc=>自动完成课程:', this.data.courseId)
+      // 延迟500ms执行，让用户看到视频结束的画面
+      setTimeout(() => {
+        this.completeCourse()
+      }, 500)
+    }
   },
 
   // 加载课程信息
