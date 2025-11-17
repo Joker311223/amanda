@@ -222,15 +222,13 @@ Page({
 
     // 更新全局数据
     const learningProgress = app.globalData.learningProgress
-    console.log('yjc=>this.data.assignmentId',this.data.assignmentId );
-    console.log('yjc=>this.data.assignmentId type',typeof this.data.assignmentId );
     if (!learningProgress.completedAssignments.includes(this.data.assignmentId)) {
       learningProgress.completedAssignments.push(this.data.assignmentId)
-      learningProgress.totalExperience += 30
+      learningProgress.totalExperience += 35
       app.saveUserData()
     }
 
-    wx.showToast({ title: '作业提交成功！+30经验值', icon: 'success', duration: 2000 })
+    wx.showToast({ title: '作业提交成功！+20经验值', icon: 'success', duration: 2000 })
 
     setTimeout(() => {
       wx.navigateBack()

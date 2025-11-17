@@ -59,11 +59,12 @@ Page({
     this.loadCourses();
     this.loadData(); // 更新经验值等数据
 
-    // 检查是否需要显示导引（只有在未看过且未选择不再提示时才显示）
+    // 检查是否需要显示导引（只有在用户选择不再提示时才不显示）
+    // 注意：需要检查本地存储中的noMoreGuide，确保最新的设置被读取
+    const noMoreGuide = wx.getStorageSync("noMoreGuide");
     if (
-      !app.globalData.hasSeenGuide &&
       !app.globalData.isFirstTime &&
-      !app.globalData.noMoreGuide
+      !noMoreGuide
     ) {
       // 延迟显示导引，确保页面已完全渲染
       setTimeout(() => {
@@ -164,22 +165,25 @@ Page({
       showGuide: false,
     });
 
-    // 标记已看过导引
-    app.globalData.hasSeenGuide = true;
-
     // 如果用户选择不再提示，则保存该设置
     if (noMoreGuide) {
       app.globalData.noMoreGuide = true;
+      app.saveUserData();
+      
+      // 显示提示
+      wx.showToast({
+        title: "已关闭自动导引",
+        icon: "success",
+        duration: 1500,
+      });
+    } else {
+      // 显示提示
+      wx.showToast({
+        title: "开始学习吧！",
+        icon: "success",
+        duration: 1500,
+      });
     }
-
-    app.saveUserData();
-
-    // 显示提示
-    wx.showToast({
-      title: noMoreGuide ? "已关闭自动导引" : "开始学习吧！",
-      icon: "success",
-      duration: 1500,
-    });
   },
 
   // 手动显示导引

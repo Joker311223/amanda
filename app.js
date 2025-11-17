@@ -1349,7 +1349,8 @@ App({
       if (hasSeenGuide) {
         this.globalData.hasSeenGuide = hasSeenGuide;
       }
-      if (noMoreGuide) {
+      // 修复：无论noMoreGuide是true还是false都要赋值
+      if (noMoreGuide !== undefined && noMoreGuide !== '') {
         this.globalData.noMoreGuide = noMoreGuide;
       }
 
@@ -1460,9 +1461,10 @@ App({
   completeCourse(courseId) {
     console.log("yjc=>courseId", courseId);
     const progress = this.globalData.learningProgress;
+    const course = this.globalData.courses?.[courseId]
     if (!progress.completedCourses.includes(courseId)) {
       progress.completedCourses.push(courseId);
-      progress.totalExperience += 30;
+      progress.totalExperience += course.experience;
     }
     // 解锁对应作业
     this.unlockAssignmentsByCourse(courseId);
