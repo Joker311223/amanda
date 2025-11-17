@@ -82,6 +82,20 @@ Page({
       ? firstAvailableCourse.icon
       : "/images/kechenghuigu-icon1.svg";
 
+    // 保存第一个作业的实际状态，并临时设置为completed
+    const assignments = app.globalData.assignments;
+    if (assignments && assignments.length > 0) {
+      const firstAssignment = assignments[0];
+      // 保存原始状态
+      this.originalFirstAssignmentStatus = firstAssignment.status;
+      // 临时设置为completed以便在导引中显示
+      firstAssignment.status = "available";
+      // 更新页面数据
+      this.setData({
+        assignments: assignments,
+      });
+    }
+
     const guideSteps = [
       {
         icon: "👋",
@@ -129,6 +143,22 @@ Page({
   // 导引完成
   onGuideComplete(e) {
     const noMoreGuide = e.detail && e.detail.noMoreGuide;
+
+    // 恢复第一个作业的实际状态
+    const assignments = app.globalData.assignments;
+    if (
+      assignments &&
+      assignments.length > 0 &&
+      this.originalFirstAssignmentStatus !== undefined
+    ) {
+      assignments[0].status = this.originalFirstAssignmentStatus;
+      // 清除保存的原始状态
+      delete this.originalFirstAssignmentStatus;
+      // 更新页面数据
+      this.setData({
+        assignments: assignments,
+      });
+    }
 
     this.setData({
       showGuide: false,
@@ -387,8 +417,7 @@ Page({
         assignment.status = "completed";
       } else if (
         app.globalData.courses[assignment.courseId - 1]?.status ===
-          "completed" ||
-        assignment.id === 1
+          "completed" 
       ) {
         assignment.status = "available";
       } else {
