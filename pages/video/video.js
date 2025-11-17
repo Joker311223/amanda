@@ -50,15 +50,30 @@ Page({
       clearInterval(this.data.playTimer)
     }
     
-    // 保存播放进度
-    this.saveVideoProgress()
+    // 保存播放进度（使用当前记录的时间）
+    this.saveVideoProgressSync()
+  },
+  
+  onHide() {
+    // 页面隐藏时也保存进度
+    this.saveVideoProgressSync()
   },
 
   onVideoEnded() {
-    console.log('yjc=>', 123123);
+    console.log('yjc=>视频播放完成');
     this.setData({
       isFinied: true
     })
+    
+    // 清除该课程的播放进度记录
+    try {
+      const progressData = wx.getStorageSync('videoProgress') || {}
+      delete progressData[this.data.courseId]
+      wx.setStorageSync('videoProgress', progressData)
+      console.log('yjc=>清除播放进度记录:', this.data.courseId)
+    } catch (error) {
+      console.error('清除播放进度失败:', error)
+    }
   },
 
   // 加载课程信息
@@ -431,15 +446,31 @@ Page({
     }
   },
 
-  // 保存视频播放进度
+  // 保存视频播放进度（同步方式，使用已记录的时间）
+  saveVideoProgressSync() {
+    try {
+      if (this.data.videoCurrentTime > 0) {
+        const progressData = wx.getStorageSync('videoProgress') || {}
+        progressData[this.data.courseId] = this.data.videoCurrentTime
+        wx.setStorageSync('videoProgress', progressData)
+        console.log('yjc=>保存播放进度:', this.data.courseId, this.data.videoCurrentTime)
+      }
+    } catch (error) {
+      console.error('保存播放进度失败:', error)
+    }
+  },
+  
+  // 保存视频播放进度（异步方式，获取实时时间）
   saveVideoProgress() {
     try {
       const videoContext = wx.createVideoContext('center', this)
       videoContext.currentTime((currentTime) => {
-        const progressData = wx.getStorageSync('videoProgress') || {}
-        progressData[this.data.courseId] = currentTime
-        wx.setStorageSync('videoProgress', progressData)
-        console.log('yjc=>保存播放进度:', this.data.courseId, currentTime)
+        if (currentTime > 0) {
+          const progressData = wx.getStorageSync('videoProgress') || {}
+          progressData[this.data.courseId] = currentTime
+          wx.setStorageSync('videoProgress', progressData)
+          console.log('yjc=>保存播放进度:', this.data.courseId, currentTime)
+        }
       })
     } catch (error) {
       console.error('保存播放进度失败:', error)
@@ -450,33 +481,52 @@ Page({
   loadVideoProgress(courseId) {
     try {
       const progressData = wx.getStorageSync('videoProgress') || {}
-      const currentTime = progressData[courseId] || 0
+      const savedTime = progressData[courseId] || 0
       
-      if (currentTime > 0) {
+      // 如果有保存的进度且不是接近结尾（留5秒缓冲），则恢复进度
+      if (savedTime > 5) {
         // 延迟设置，确保video组件已加载
         setTimeout(() => {
           const videoContext = wx.createVideoContext('center', this)
-          videoContext.seek(currentTime)
+          videoContext.seek(savedTime)
           this.setData({
-            videoCurrentTime: currentTime
+            videoCurrentTime: savedTime
           })
-          console.log('yjc=>恢复播放进度:', courseId, currentTime)
-        }, 500)
+          console.log('yjc=>恢复播放进度:', courseId, savedTime, '秒')
+          
+          // 显示提示
+          wx.showToast({
+            title: `继续播放 ${this.formatTime(savedTime)}`,
+            icon: 'none',
+            duration: 2000
+          })
+        }, 800)
       }
     } catch (error) {
       console.error('加载播放进度失败:', error)
     }
   },
+  
+  // 格式化时间显示（秒转为 mm:ss）
+  formatTime(seconds) {
+    const mins = Math.floor(seconds / 60)
+    const secs = Math.floor(seconds % 60)
+    return `${mins}:${secs.toString().padStart(2, '0')}`
+  },
 
   // 视频时间更新事件
   onVideoTimeUpdate(e) {
-    // 定期保存播放进度（每5秒保存一次）
     const currentTime = e.detail.currentTime
-    if (Math.floor(currentTime) % 5 === 0 && Math.floor(currentTime) !== Math.floor(this.data.videoCurrentTime)) {
-      this.setData({
-        videoCurrentTime: currentTime
-      })
-      this.saveVideoProgress()
+    
+    // 更新当前播放时间
+    this.setData({
+      videoCurrentTime: currentTime
+    })
+    
+    // 定期保存播放进度（每5秒保存一次）
+    if (Math.floor(currentTime) % 5 === 0 && Math.floor(currentTime) % 5 !== Math.floor(this.lastSaveTime || 0) % 5) {
+      this.lastSaveTime = currentTime
+      this.saveVideoProgressSync()
     }
   }
 })

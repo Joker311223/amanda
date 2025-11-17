@@ -13,10 +13,10 @@
       <!-- 模拟视频播放器 -->
       <view class="video-player">
         <!-- 未完成课程：带触摸层控制 -->
-        <video wx:if="{{!isCourseCompleted && videoUrl}}" autoplay id='center' controls="{{true}}" enable-progress-gesture="{{true}}" show-fullscreen-btn="{{true}}" show-play-btn="{{true}}" show-center-play-btn="{{true}}" enable-play-gesture="{{true}}" show-progress="{{false}}" src="{{videoUrl}}" class="video-placeholder" bindended="onVideoEnded" bindfullscreenchange="onFullscreenChange" />
+        <video wx:if="{{!isCourseCompleted && videoUrl}}" autoplay id='center' controls="{{true}}" enable-progress-gesture="{{true}}" show-fullscreen-btn="{{true}}" show-play-btn="{{true}}" show-center-play-btn="{{true}}" enable-play-gesture="{{true}}" show-progress="{{false}}" src="{{videoUrl}}" class="video-placeholder" bindended="onVideoEnded" bindfullscreenchange="onFullscreenChange" bindtimeupdate="onVideoTimeUpdate" bindplay="onVideoPlay" bindpause="onVideoPause" />
         <!-- 自定义控制按钮（非全屏时显示） -->
         <!-- 已完成课程：完整控制 -->
-        <video wx:if="{{isCourseCompleted && videoUrl}}" autoplay id='center' controls="{{true}}" enable-progress-gesture="{{true}}" show-fullscreen-btn="{{true}}" show-play-btn="{{true}}" show-center-play-btn="{{true}}" show-progress="{{true}}" src="{{videoUrl}}" class="video-placeholder" bindended="onVideoEnded" bindfullscreenchange="onFullscreenChange" />
+        <video wx:if="{{isCourseCompleted && videoUrl}}" autoplay id='center' controls="{{true}}" enable-progress-gesture="{{true}}" show-fullscreen-btn="{{true}}" show-play-btn="{{true}}" show-center-play-btn="{{true}}" show-progress="{{true}}" src="{{videoUrl}}" class="video-placeholder" bindended="onVideoEnded" bindfullscreenchange="onFullscreenChange" bindtimeupdate="onVideoTimeUpdate" bindplay="onVideoPlay" bindpause="onVideoPause" />
       </view>
     </view>
     <!-- 笔记功能 -->
