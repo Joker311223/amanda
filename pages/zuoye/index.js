@@ -529,42 +529,35 @@ Page({
 
   // 保存作业到云数据库
   saveAssignmentToCloud(earnedPoints) {
-    const db = wx.cloud.database()
+    const dbManager = require('../../utils/db-manager')
     const cloudUserId = wx.getStorageSync('cloudUserId')
-    const userInfo = app.globalData.userInfo
 
     // 获取所有答案
     const answers = this.loadAnswersFromStorage(this.data.zuoyeId)
 
     // 构建作业数据
     const assignmentData = {
-      userId: cloudUserId || '', // 用户云数据库ID
-      userName: userInfo ? userInfo.name : '',
       assignmentId: this.data.zuoyeId,
-      assignmentTitle: this.data.assignment.title,
-      assignmentCategory: this.data.assignment.category || '',
       answers: answers, // 所有答案
       problems: this.data.problems.map((problem, index) => ({
         question: problem.info || problem.question || problem.title,
         type: problem.type,
         answer: this.formatAnswerForCloud(answers[index])
       })),
-      earnedPoints: earnedPoints,
-      submitTime: db.serverDate(), // 服务器时间
-      completedAt: new Date().toISOString()
+      earnedPoints: earnedPoints
     }
 
-    // 保存到云数据库
-    db.collection('assigments').add({
-      data: assignmentData,
-      success: res => {
-        console.log('作业保存到云数据库成功', res)
-      },
-      fail: err => {
-        console.error('作业保存到云数据库失败', err)
-        // 不影响用户体验，静默失败
-      }
-    })
+    // 使用统一的数据库管理模块保存作业
+    if (cloudUserId) {
+      dbManager.updateAssignmentProgress(cloudUserId, this.data.zuoyeId, assignmentData)
+        .then(() => {
+          console.log('作业保存到云数据库成功')
+        })
+        .catch(err => {
+          console.error('作业保存到云数据库失败', err)
+          // 不影响用户体验，静默失败
+        })
+    }
   },
 
   // 格式化答案用于云存储

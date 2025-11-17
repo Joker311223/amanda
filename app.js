@@ -1258,20 +1258,83 @@ App({
     }
 
     // 检查是否首次使用
-    const isFirstTime = wx.getStorageSync("isFirstTime");
-    if (isFirstTime === "") {
-      this.globalData.isFirstTime = true;
-      this.globalData.hasSeenGuide = false;
-      this.globalData.noMoreGuide = false;
+    // 先从本地缓存检查
+    const localIsFirstTime = wx.getStorageSync("isFirstTime");
+    console.log('yjc=>localIsFirstTime', localIsFirstTime);
+    
+    if (localIsFirstTime === "") {
+      // 本地缓存中没有标记，需要从云数据库检查
+      this.checkFirstTimeFromCloud();
     } else {
+      // 本地缓存中有标记
       this.globalData.isFirstTime = false;
-      // 加载用户数据
+      // 加载用户数据（包括从云数据库拉取）
       this.loadUserData();
     }
   },
 
+  /**
+   * 从云数据库检查是否首次使用
+   * 根据 openId 判断用户是否已在云数据库中注册
+   * @returns {Promise} 返回检查结果
+   */
+  checkFirstTimeFromCloud() {
+    return new Promise((resolve, reject) => {
+      try {
+        const dbManager = require('./utils/db-manager');
+        
+        dbManager.checkIsFirstTime().then(result => {
+          if (result.isFirstTime) {
+            // 首次使用
+            console.log('首次使用，需要进行注册流程');
+            this.globalData.isFirstTime = true;
+            this.globalData.hasSeenGuide = false;
+            this.globalData.noMoreGuide = false;
+            // 标记本地缓存，下次启动时直接使用本地标记
+            wx.setStorageSync("isFirstTime", true);
+            resolve({ isFirstTime: true });
+          } else {
+            // 用户已注册，不是首次使用
+            console.log('用户已注册，从云数据库恢复数据');
+            this.globalData.isFirstTime = false;
+            
+            // 保存 cloudUserId 到本地
+            wx.setStorageSync('cloudUserId', result.user._id);
+            
+            // 标记本地缓存
+            wx.setStorageSync("isFirstTime", false);
+            
+            // 加载用户数据
+            this.loadUserData();
+            resolve({ isFirstTime: false });
+          }
+        }).catch(error => {
+          console.error('检查首次使用状态失败:', error);
+          // 出错时，假设是首次使用，让用户进行注册流程
+          this.globalData.isFirstTime = true;
+          this.globalData.hasSeenGuide = false;
+          this.globalData.noMoreGuide = false;
+          wx.setStorageSync("isFirstTime", true);
+          reject(error);
+        });
+      } catch (e) {
+        console.error('检查首次使用失败', e);
+        // 出错时，假设是首次使用
+        this.globalData.isFirstTime = true;
+        this.globalData.hasSeenGuide = false;
+        this.globalData.noMoreGuide = false;
+        wx.setStorageSync("isFirstTime", true);
+        reject(e);
+      }
+    });
+  },
+
   loadUserData() {
     try {
+      const dbManager = require('./utils/db-manager');
+      const cloudUserId = wx.getStorageSync("cloudUserId");
+      
+      // 先从本地加载数据
       const userInfo = wx.getStorageSync("userInfo");
       const learningProgress = wx.getStorageSync("learningProgress");
       const hasSeenGuide = wx.getStorageSync("hasSeenGuide");
@@ -1289,6 +1352,66 @@ App({
       if (noMoreGuide) {
         this.globalData.noMoreGuide = noMoreGuide;
       }
+
+      console.log('yjc=>loadUserData', );
+      // 如果有cloudUserId，则从云数据库拉取最新数据
+      if (cloudUserId) {
+        dbManager.pullUserDataFromCloud(cloudUserId).then(cloudData => {
+          // 更新全局数据为云端数据
+          if (cloudData.userInfo) {
+            this.globalData.userInfo = cloudData.userInfo;
+          }
+          if (cloudData.learningProgress) {
+            this.globalData.learningProgress = cloudData.learningProgress;
+          }
+          // 保存到本地
+          this.saveUserData();
+          console.log('云数据库数据拉取成功');
+        }).catch(error => {
+          console.error('从云数据库拉取数据失败，使用本地数据:', error);
+        });
+      } else if (!userInfo) {
+        // 如果没有本地缓存且没有cloudUserId，则检查用户是否在云数据库中已注册
+        // 这种情况通常发生在用户清除本地存储或首次登录时
+        dbManager.checkUserRegistration().then(registeredUser => {
+          if (registeredUser) {
+            // 用户已在云数据库中注册，拉取云端数据
+            console.log('用户已注册，从云数据库拉取数据');
+            
+            // 保存cloudUserId到本地
+            wx.setStorageSync('cloudUserId', registeredUser._id);
+            
+            // 更新全局数据
+            this.globalData.userInfo = {
+              name: registeredUser.name,
+              gender: registeredUser.gender,
+              birthDate: registeredUser.birthDate,
+              phone: registeredUser.phone,
+              wechat: registeredUser.wechat
+            };
+            
+            this.globalData.learningProgress = registeredUser.learningProgress || {
+              currentWeek: 1,
+              currentDay: 1,
+              completedCourses: [],
+              completedAssignments: [],
+              totalExperience: 0,
+              happinessScore: 0
+            };
+            
+            // 保存到本地
+            this.saveUserData();
+            console.log('用户数据从云数据库恢复成功');
+          } else {
+            // 用户未注册，这是首次使用
+            console.log('用户未注册，需要进行注册流程');
+            this.globalData.isFirstTime = true;
+          }
+        }).catch(error => {
+          console.error('检查用户注册状态失败:', error);
+          // 检查失败时，保持现有状态
+        });
+      }
     } catch (e) {
       console.error("加载用户数据失败", e);
     }
@@ -1301,6 +1424,22 @@ App({
       wx.setStorageSync("isFirstTime", false);
       wx.setStorageSync("hasSeenGuide", this.globalData.hasSeenGuide);
       wx.setStorageSync("noMoreGuide", this.globalData.noMoreGuide);
+
+      // 同时同步到云数据库
+      const dbManager = require('./utils/db-manager');
+      const cloudUserId = wx.getStorageSync("cloudUserId");
+      
+      if (cloudUserId) {
+        const learningProgress = this.globalData.learningProgress;
+        dbManager.updateBatchProgress(
+          cloudUserId,
+          learningProgress.completedCourses,
+          learningProgress.completedAssignments,
+          learningProgress.totalExperience
+        ).catch(error => {
+          console.error('同步学习进度到云数据库失败:', error);
+        });
+      }
     } catch (e) {
       console.error("保存用户数据失败", e);
     }

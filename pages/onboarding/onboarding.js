@@ -30,16 +30,60 @@ Page({
       inviteCode: false
     },
     showSuccessModal: false,
+    isPageReady: false, // 页面是否准备好显示
     VALID_INVITE_CODE: 'DBT2025' // 有效的邀请码
   },
 
   onLoad() {
     // 检查是否首次使用
-    if (!app.globalData.isFirstTime) {
-      // 如果不是首次使用，直接跳转到首页
-      wx.reLaunch({
-        url: '/pages/index/index'
-      })
+    // 如果本地缓存中没有标记，需要等待从云数据库检查完成
+    const localIsFirstTime = wx.getStorageSync("isFirstTime");
+    
+    if (localIsFirstTime === "") {
+      // 本地缓存中没有标记，需要等待云数据库检查
+      // 此时 app.checkFirstTimeFromCloud() 正在执行
+      // 我们需要等待它完成后再检查 isFirstTime
+      const checkInterval = setInterval(() => {
+        const isFirstTime = wx.getStorageSync("isFirstTime");
+        if (isFirstTime !== "") {
+          // 检查完成了
+          clearInterval(checkInterval);
+          
+          if (!app.globalData.isFirstTime) {
+            // 如果不是首次使用，直接跳转到首页（不显示页面）
+            wx.reLaunch({
+              url: '/pages/index/index'
+            })
+          } else {
+            // 是首次使用，显示页面
+            this.setData({
+              isPageReady: true
+            })
+          }
+        }
+      }, 100);
+      
+      // 设置超时，防止无限等待
+      setTimeout(() => {
+        clearInterval(checkInterval);
+        // 超时后显示页面（假设是首次使用）
+        this.setData({
+          isPageReady: true
+        })
+      }, 5000);
+    } else {
+      // 本地缓存中有标记，直接使用
+      if (!app.globalData.isFirstTime) {
+        // 如果不是首次使用，直接跳转到首页（不显示页面）
+        wx.reLaunch({
+          url: '/pages/index/index'
+        })
+      } else {
+        // 是首次使用，显示页面
+        this.setData({
+          isPageReady: true
+        })
+      }
     }
   },
 
@@ -257,40 +301,24 @@ Page({
 
   // 保存用户信息到云数据库
   saveUserToCloud() {
-    const db = wx.cloud.database()
+    const dbManager = require('../../utils/db-manager')
     const userInfo = this.data.userInfo
 
-    // 添加创建时间和openid
-    db.collection('users').add({
-      data: {
-        name: userInfo.name,
-        gender: userInfo.gender,
-        birthDate: userInfo.birthDate,
-        phone: userInfo.phone,
-        wechat: userInfo.wechat,
-        createTime: db.serverDate(), // 服务器时间
-        learningProgress: {
-          currentWeek: 1,
-          currentDay: 1,
-          completedCourses: [],
-          completedAssignments: [],
-          totalExperience: 0,
-          happinessScore: 0
-        }
-      },
-      success: res => {
-        console.log('用户信息保存到云数据库成功', res)
-        // 保存用户的云数据库ID到本地
-        wx.setStorageSync('cloudUserId', res._id)
-      },
-      fail: err => {
-        console.error('用户信息保存到云数据库失败', err)
-        wx.showToast({
-          title: '数据同步失败，请检查网络',
-          icon: 'none',
-          duration: 2000
-        })
-      }
+    // 使用统一的数据库管理模块保存用户
+    dbManager.createUser(userInfo).then(res => {
+      console.log('用户信息保存到云数据库成功', res)
+      wx.showToast({
+        title: '注册成功',
+        icon: 'success',
+        duration: 1500
+      })
+    }).catch(err => {
+      console.error('用户信息保存到云数据库失败', err)
+      wx.showToast({
+        title: '数据同步失败，请检查网络',
+        icon: 'none',
+        duration: 2000
+      })
     })
   },
 

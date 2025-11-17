@@ -1,4 +1,4 @@
-<view class="page-container">
+<view class="page-container" wx:if="{{isPageReady}}">
   <!-- 引导内容 -->
   <view wx:if="{{currentStep === 'intro'}}" class="intro-container fade-in">
     <view class="card">
