@@ -31,7 +31,7 @@ Page({
     },
     showSuccessModal: false,
     isPageReady: false, // 页面是否准备好显示
-    VALID_INVITE_CODE: 'DBT2025' // 有效的邀请码
+    VALID_INVITE_CODE: 'DBT2026' // 有效的邀请码
   },
 
   onLoad() {
