@@ -7,7 +7,7 @@
 
 **功能描述**:
 - 用户完成注册信息填写后，自动将用户信息保存到云数据库 `users` 集合
-- 保存的信息包括：姓名、性别、出生年月、手机号、微信号、学习进度等
+ - 保存的信息包括：姓名、性别、手机号、微信号、学习进度等
 - 同时保存云数据库返回的用户ID到本地存储，用于后续关联
 
 **代码实现**:
@@ -21,7 +21,6 @@ saveUserToCloud() {
     data: {
       name: userInfo.name,
       gender: userInfo.gender,
-      birthDate: userInfo.birthDate,
       phone: userInfo.phone,
       wechat: userInfo.wechat,
       createTime: db.serverDate(),
@@ -101,7 +100,6 @@ saveAssignmentToCloud(earnedPoints) {
   "_openid": "用户openid",
   "name": "张三",
   "gender": "male",
-  "birthDate": "2000-01",
   "phone": "13800138000",
   "wechat": "zhangsan123",
   "createTime": "2024-01-01T00:00:00.000Z",

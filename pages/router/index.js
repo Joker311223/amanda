@@ -13,6 +13,7 @@ Page({
     dialogType: "", // 'course' 或 'assignment'
     dialogParams: {}, // 存储跳转参数
     showGuide: false, // 是否显示导引
+    ifForbidShowGuide: false, // 是否禁止显示导引
     guideSteps: [], // 导引步骤
     showDebugButtons: false, // 是否显示debug按钮
     showCompletionTip: false, // 是否显示完成提示条
@@ -64,13 +65,18 @@ Page({
     const noMoreGuide = wx.getStorageSync("noMoreGuide");
     if (
       !app.globalData.isFirstTime &&
-      !noMoreGuide
+      !noMoreGuide && 
+      !this.data.ifForbidShowGuide
     ) {
       // 延迟显示导引，确保页面已完全渲染
       setTimeout(() => {
         this.showNewUserGuide();
       }, 800);
     }
+  },
+
+  onHide() {
+    this.setData({ifForbidShowGuide: true});
   },
 
   // 显示新手导引

@@ -49,7 +49,6 @@ if (isTestEnv) {
   "_openid": "...",
   "name": "...",
   "gender": "...",
-  "birthDate": "...",
   "phone": "...",
   "wechat": "...",
   "createTime": "...",

@@ -6,7 +6,6 @@ Page({
     userInfo: {
       name: '',
       gender: '',
-      birthDate: '',
       phone: '',
       wechat: '',
       inviteCode: ''
@@ -15,7 +14,6 @@ Page({
     errors: {
       name: '',
       gender: '',
-      birthDate: '',
       phone: '',
       wechat: '',
       inviteCode: ''
@@ -24,7 +22,6 @@ Page({
     touchedFields: {
       name: false,
       gender: false,
-      birthDate: false,
       phone: false,
       wechat: false,
       inviteCode: false
@@ -123,12 +120,6 @@ Page({
     })
   },
 
-  // 选择日期
-  onDateChange(e) {
-    this.setData({
-      'userInfo.birthDate': e.detail.value
-    })
-  },
 
   // 验证单个字段
   validateField(field) {
@@ -142,9 +133,6 @@ Page({
         break
       case 'gender':
         errors.gender = !userInfo.gender ? '请选择性别' : ''
-        break
-      case 'birthDate':
-        errors.birthDate = !userInfo.birthDate ? '请选择出生年月' : ''
         break
       case 'phone':
         const phoneRegex = /^1[3-9]\d{9}$/
@@ -184,12 +172,11 @@ Page({
 
   // 验证表单
   validateForm() {
-    const { name, gender, birthDate, phone, wechat, inviteCode } = this.data.userInfo
+    const { name, gender, phone, wechat, inviteCode } = this.data.userInfo
     const { VALID_INVITE_CODE } = this.data
     const errors = {
       name: '',
       gender: '',
-      birthDate: '',
       phone: '',
       wechat: '',
       inviteCode: ''
@@ -197,7 +184,6 @@ Page({
     const touchedFields = {
       name: true,
       gender: true,
-      birthDate: true,
       phone: true,
       wechat: true,
       inviteCode: true
@@ -211,11 +197,6 @@ Page({
     // 验证性别
     if (!gender) {
       errors.gender = '请选择性别'
-    }
-
-    // 验证出生年月
-    if (!birthDate) {
-      errors.birthDate = '请选择出生年月'
     }
 
     // 验证手机号格式（11位数字）
@@ -241,7 +222,7 @@ Page({
       errors.inviteCode = '邀请码错误，请联系项目负责人获取正确的邀请码'
     }
 
-    const isValid = !errors.name && !errors.gender && !errors.birthDate && !errors.phone && !errors.wechat && !errors.inviteCode
+    const isValid = !errors.name && !errors.gender && !errors.phone && !errors.wechat && !errors.inviteCode
 
     this.setData({
       isFormValid: isValid,
@@ -262,7 +243,6 @@ Page({
 
       if (errors.name) errorMessages.push(errors.name)
       if (errors.gender) errorMessages.push(errors.gender)
-      if (errors.birthDate) errorMessages.push(errors.birthDate)
       if (errors.phone) errorMessages.push(errors.phone)
       if (errors.wechat) errorMessages.push(errors.wechat)
       if (errors.inviteCode) errorMessages.push(errors.inviteCode)

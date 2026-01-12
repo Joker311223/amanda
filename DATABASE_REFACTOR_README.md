@@ -87,7 +87,6 @@ const dbManager = require('../../utils/db-manager');
 const userInfo = {
   name: '张三',
   gender: 'male',
-  birthDate: '2000-01',
   phone: '13800138000',
   wechat: 'wechat_id'
 };

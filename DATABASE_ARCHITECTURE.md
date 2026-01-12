@@ -41,7 +41,6 @@
   // 用户注册信息
   "name": "用户姓名",
   "gender": "male/female",
-  "birthDate": "出生年月，格式：YYYY-MM",
   "phone": "手机号",
   "wechat": "微信号",
   "createTime": "创建时间（服务器时间）",

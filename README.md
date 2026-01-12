@@ -97,7 +97,6 @@ pages/
 {
   name: "用户姓名",
   gender: "male/female",
-  birthDate: "1990-01-01",
   phone: "手机号",
   wechat: "微信号"
 }

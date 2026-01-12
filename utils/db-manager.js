@@ -155,7 +155,6 @@ class DBManager {
         // 用户注册信息
         name: userInfo.name,
         gender: userInfo.gender,
-        birthDate: userInfo.birthDate,
         phone: userInfo.phone,
         wechat: userInfo.wechat,
         createTime: db.serverDate(),
