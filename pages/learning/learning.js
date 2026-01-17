@@ -42,16 +42,28 @@ Page({
 
   // 更新课程状态
   updateCourseStatus(courses, completedCourseIds) {
+    const assignments = app.globalData.assignments;
+    const completedAssignments = app.globalData.learningProgress.completedAssignments;
+
     courses.forEach((course, index) => {
       if (completedCourseIds.includes(course.id)) {
         course.status = "completed";
-      } else if (
-        index === 0 ||
-        completedCourseIds.includes(courses[index - 1].id)
-      ) {
+      } else if (index === 0) {
         course.status = "available";
       } else {
-        course.status = "locked";
+        // 检查前一门课程是否完成
+        const prevCourse = courses[index - 1];
+        const isPrevCompleted = completedCourseIds.includes(prevCourse.id);
+        
+        // 检查前一门课程的作业是否完成
+        const prevCourseAssignments = assignments.filter(a => a.courseId === prevCourse.id);
+        const isPrevAssignmentsCompleted = prevCourseAssignments.every(a => completedAssignments.includes(a.id));
+
+        if (isPrevCompleted && isPrevAssignmentsCompleted) {
+          course.status = "available";
+        } else {
+          course.status = "locked";
+        }
       }
     });
     console.log("yjc=>courses", courses);
@@ -119,7 +131,7 @@ Page({
 
     if (course.status === "locked") {
       wx.showToast({
-        title: "课程尚未解锁",
+        title: "请先完成上一课及作业",
         icon: "none",
       });
       return;

@@ -275,8 +275,8 @@ Page({
           iconUrl: course.icon,
           title: "课程尚未解锁",
           desc: prevCourse
-            ? `需要先完成「${prevCourse.title}」才能解锁这门课程哦！`
-            : "需要先完成前面的课程才能解锁哦！",
+            ? `需要先完成「${prevCourse.title}」及其作业才能解锁这门课程哦！`
+            : "需要先完成前面的课程和作业才能解锁哦！",
           info: "按顺序学习效果更好！",
           confirmText: "我知道了",
           showCancel: false,
@@ -389,7 +389,7 @@ Page({
     // 检查课程状态，如果是 locked 则不允许跳转
     if (status === "locked") {
       wx.showToast({
-        title: "该课程尚未解锁",
+        title: "请先完成上一课及作业",
         icon: "none",
         duration: 2000,
       });
@@ -404,17 +404,28 @@ Page({
   // 更新课程状态
   updateCourseStatus(courses, completedCourseIds) {
     console.log("yjc=>completedCourseIds", completedCourseIds);
+    const assignments = app.globalData.assignments;
+    const completedAssignments = app.globalData.learningProgress.completedAssignments;
 
     courses.forEach((course, index) => {
       if (completedCourseIds.includes(course.id)) {
         course.status = "completed";
-      } else if (
-        index === 0 ||
-        completedCourseIds.includes(courses[index - 1].id)
-      ) {
+      } else if (index === 0) {
         course.status = "available";
       } else {
-        course.status = "locked";
+        // 检查前一门课程是否完成
+        const prevCourse = courses[index - 1];
+        const isPrevCompleted = completedCourseIds.includes(prevCourse.id);
+        
+        // 检查前一门课程的作业是否完成
+        const prevCourseAssignments = assignments.filter(a => a.courseId === prevCourse.id);
+        const isPrevAssignmentsCompleted = prevCourseAssignments.every(a => completedAssignments.includes(a.id));
+
+        if (isPrevCompleted && isPrevAssignmentsCompleted) {
+          course.status = "available";
+        } else {
+          course.status = "locked";
+        }
       }
     });
     console.log("yjc=>coursecourse", courses);

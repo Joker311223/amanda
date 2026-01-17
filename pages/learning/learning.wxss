@@ -460,7 +460,32 @@
   color: #999;
 }
 
-/* 响应式调整 */
+/* 动画类 */
+.anim-shake {
+  animation: shake-mini 2s ease-in-out infinite;
+}
+
+/* 作业图标抖动动画 - 增强版：跳动+摇摆+放大 */
+@keyframes shake-mini {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  10% {
+    transform: translateY(-10rpx) rotate(-15deg) scale(1.2);
+  }
+  20% {
+    transform: translateY(-5rpx) rotate(10deg) scale(1.2);
+  }
+  30% {
+    transform: translateY(-10rpx) rotate(-15deg) scale(1.2);
+  }
+  40% {
+    transform: translateY(-5rpx) rotate(10deg) scale(1.2);
+  }
+  50% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
 @media screen and (max-width: 375px) {
   .course-header {
     padding: 20rpx;

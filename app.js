@@ -1446,14 +1446,53 @@ App({
     }
   },
 
+  // 检查课程关联的作业是否全部完成
+  areCourseAssignmentsCompleted(courseId) {
+    const assignments = this.globalData.assignments;
+    const completedAssignments = this.globalData.learningProgress.completedAssignments;
+    
+    // 找到该课程的所有作业
+    const courseAssignments = assignments.filter(a => a.courseId === courseId);
+    
+    // 如果没有作业，视为已完成
+    if (courseAssignments.length === 0) {
+      return true;
+    }
+    
+    // 检查是否所有作业ID都在已完成列表中
+    return courseAssignments.every(a => completedAssignments.includes(a.id));
+  },
+
   // 解锁下一个课程
   unlockNextCourse() {
     const courses = this.globalData.courses;
-    const completedCount =
-      this.globalData.learningProgress.completedCourses.length;
+    const completedCourses = this.globalData.learningProgress.completedCourses;
 
-    if (completedCount < courses.length) {
-      courses[completedCount].status = "available";
+    // 遍历所有课程，更新状态
+    for (let i = 0; i < courses.length; i++) {
+      const course = courses[i];
+      
+      // 如果课程已经完成，保持完成状态
+      if (completedCourses.includes(course.id)) {
+        continue;
+      }
+      
+      // 如果是第一门课，总是解锁
+      if (i === 0) {
+        course.status = "available";
+        continue;
+      }
+      
+      // 对于后续课程，检查前一门课程是否完成以及作业是否完成
+      const prevCourse = courses[i - 1];
+      const isPrevCourseCompleted = completedCourses.includes(prevCourse.id);
+      const isPrevAssignmentsCompleted = this.areCourseAssignmentsCompleted(prevCourse.id);
+      
+      if (isPrevCourseCompleted && isPrevAssignmentsCompleted) {
+        course.status = "available";
+      } else {
+        course.status = "locked";
+      }
     }
   },
 
@@ -1497,6 +1536,7 @@ App({
           // 使用传入的earnedPoints，如果没有则使用assignment.experience，最后才用默认值30
           const points = earnedPoints || assignment.experience || 30;
           learningProgress.totalExperience += points;
+          this.unlockNextCourse();
           this.saveUserData();
         }
       }

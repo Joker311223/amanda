@@ -76,7 +76,7 @@
         <view class="assignment-title">
           <view class="assignment-status-icon">
             <image wx:if="{{item.status === 'completed'}}" src="/images/xuexi-wancheng.svg" mode="aspectFit" />
-            <image wx:elif="{{item.status === 'available'}}" src="/images/xuexi-daikaifa.svg" mode="aspectFit" />
+            <image wx:elif="{{item.status === 'available'}}" src="/images/xuexi-daikaifa.svg" mode="aspectFit" class="anim-shake" />
             <image wx:else src="/images/xuexi-suoding.svg" mode="aspectFit" />
           </view>
           <text class="assignment-title-text">{{item.title}}</text>
