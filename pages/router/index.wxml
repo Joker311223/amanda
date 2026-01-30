@@ -1,6 +1,6 @@
 <view class="page-container">
   <!-- 手动导引按钮 -->
-  <view class="guide-trigger-btn" bindtap="showGuideManually">
+  <view class="guide-trigger-btn" bindtap="showGuideManually" wx:if="{{completedCount <= 3}}">
     <text class="guide-icon">❓</text>
   </view>
 

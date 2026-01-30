@@ -1260,7 +1260,6 @@ App({
     // 检查是否首次使用
     // 先从本地缓存检查
     const localIsFirstTime = wx.getStorageSync("isFirstTime");
-    console.log('yjc=>localIsFirstTime', localIsFirstTime);
     
     if (localIsFirstTime === "") {
       // 本地缓存中没有标记，需要从云数据库检查
@@ -1354,7 +1353,6 @@ App({
         this.globalData.noMoreGuide = noMoreGuide;
       }
 
-      console.log('yjc=>loadUserData', );
       // 如果有cloudUserId，则从云数据库拉取最新数据
       if (cloudUserId) {
         dbManager.pullUserDataFromCloud(cloudUserId).then(cloudData => {
@@ -1500,6 +1498,7 @@ App({
   completeCourse(courseId) {
     console.log("yjc=>courseId", courseId);
     const progress = this.globalData.learningProgress;
+    console.log('yjc=>progress', progress);
     const course = this.globalData.courses?.[courseId]
     if (!progress.completedCourses.includes(courseId)) {
       progress.completedCourses.push(courseId);
@@ -1514,18 +1513,16 @@ App({
 
   // 根据课程解锁作业
   unlockAssignmentsByCourse(courseId) {
+    console.log('yjc=>unlockAssignmentsByCourse', );
     const assignments = this.globalData.assignments;
     assignments.forEach((assignment) => {
-      console.log("yjc=>assignment", assignment);
       if (assignment.courseId === courseId) {
         assignment.status = "available";
       }
     });
-    console.log("yjc=>assignments", assignments);
   },
 
   finishWork(workId, earnedPoints) {
-    console.log("yjc=>workId", workId, "earnedPoints", earnedPoints);
     const assignments = this.globalData.assignments;
     const learningProgress = this.globalData.learningProgress;
     assignments.forEach((assignment) => {

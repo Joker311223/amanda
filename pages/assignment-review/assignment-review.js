@@ -61,8 +61,6 @@ Page({
 
   // 格式化答案显示
   formatAnswer(answer) {
-    console.log("yjc=>formatAnswer", typeof answer);
-    console.log("yjc=>formatAnswer", answer);
     if (answer === undefined || answer === null || answer === "") {
       return "暂无答案";
     }

@@ -89,10 +89,7 @@ Page({
       const savedAnswer = savedAnswers[currentQuestion];
 
       if (currentProblem.type === "multiple") {
-        console.log(
-          "yjc=>多选题currentProblem.options",
-          currentProblem.options
-        );
+      
         answer = [];
         // 为多选题的每个选项添加selected属性
         if (currentProblem.options) {
@@ -105,7 +102,6 @@ Page({
         }
         // 恢复已保存的答案
         if (Array.isArray(savedAnswer) && savedAnswer.length > 0) {
-          console.log("yjc=>多选题1", answer);
 
           answer = savedAnswer;
           currentProblem.options.forEach((option) => {
@@ -134,7 +130,6 @@ Page({
             ? savedAnswer
             : currentProblem.min || 0;
       } else {
-        console.log("yjc=>多选题", answer);
         // 文本或单选题
         answer =
           savedAnswer !== undefined &&
@@ -436,7 +431,6 @@ Page({
             return { title: option, selected: false };
           });
         }
-        console.log("yjc=>answer", answer);
         // 恢复之前选中的选项
         if (Array.isArray(answer) && answer.length > 0) {
           currentProblem.options.forEach((option) => {

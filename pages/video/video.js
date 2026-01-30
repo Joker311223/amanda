@@ -32,7 +32,6 @@ Page({
     const course = courses.find(c => c.id === courseId)
     const videoUrl = course.url
 
-    console.log('yjc=>videoUrl', videoUrl);
     this.setData({
       courseId: courseId,
       videoUrl: videoUrl
@@ -60,7 +59,6 @@ Page({
   },
 
   onVideoEnded() {
-    console.log('yjc=>视频播放完成');
     this.setData({
       isFinied: true
     })
@@ -70,14 +68,12 @@ Page({
       const progressData = wx.getStorageSync('videoProgress') || {}
       delete progressData[this.data.courseId]
       wx.setStorageSync('videoProgress', progressData)
-      console.log('yjc=>清除播放进度记录:', this.data.courseId)
     } catch (error) {
       console.error('清除播放进度失败:', error)
     }
     
     // 如果课程还未完成，自动执行完成课程操作
     if (!this.data.isCourseCompleted) {
-      console.log('yjc=>自动完成课程:', this.data.courseId)
       // 延迟500ms执行，让用户看到视频结束的画面
       setTimeout(() => {
         this.completeCourse()
@@ -301,6 +297,7 @@ Page({
 
   // 完成课程
   completeCourse() {
+    console.log('yjc=>completeCourse', );
     // 标记课程为已完成
     app.completeCourse(this.data.courseId)
 
@@ -462,7 +459,6 @@ Page({
         const progressData = wx.getStorageSync('videoProgress') || {}
         progressData[this.data.courseId] = this.data.videoCurrentTime
         wx.setStorageSync('videoProgress', progressData)
-        console.log('yjc=>保存播放进度:', this.data.courseId, this.data.videoCurrentTime)
       }
     } catch (error) {
       console.error('保存播放进度失败:', error)
@@ -478,7 +474,6 @@ Page({
           const progressData = wx.getStorageSync('videoProgress') || {}
           progressData[this.data.courseId] = currentTime
           wx.setStorageSync('videoProgress', progressData)
-          console.log('yjc=>保存播放进度:', this.data.courseId, currentTime)
         }
       })
     } catch (error) {
@@ -501,7 +496,6 @@ Page({
           this.setData({
             videoCurrentTime: savedTime
           })
-          console.log('yjc=>恢复播放进度:', courseId, savedTime, '秒')
           
           // 显示提示
           wx.showToast({

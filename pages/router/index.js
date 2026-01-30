@@ -24,18 +24,10 @@ Page({
 
   // 加载数据
   loadData() {
-    console.log(
-      "yjc=>app.globalData.learningProgress",
-      app.globalData.learningProgress
-    );
     const learningProgress = app.globalData.learningProgress;
     const skillCards = app.globalData.skillCards;
     const assignments = app.globalData.assignments;
 
-    console.log(
-      "yjc=>更新 totalExperience 为:",
-      learningProgress.totalExperience
-    );
     this.setData({
       totalExperience: learningProgress.totalExperience,
       skillCards: skillCards,
@@ -62,11 +54,15 @@ Page({
 
     // 检查是否需要显示导引（只有在用户选择不再提示时才不显示）
     // 注意：需要检查本地存储中的noMoreGuide，确保最新的设置被读取
+    // 如果已经学习了超过3个课程，就不再自动显示导引
     const noMoreGuide = wx.getStorageSync("noMoreGuide");
+    const completedCoursesCount = app.globalData.learningProgress.completedCourses.length;
+    
     if (
       !app.globalData.isFirstTime &&
       !noMoreGuide && 
-      !this.data.ifForbidShowGuide
+      !this.data.ifForbidShowGuide &&
+      completedCoursesCount <= 3
     ) {
       // 延迟显示导引，确保页面已完全渲染
       setTimeout(() => {
@@ -403,7 +399,6 @@ Page({
 
   // 更新课程状态
   updateCourseStatus(courses, completedCourseIds) {
-    console.log("yjc=>completedCourseIds", completedCourseIds);
     const assignments = app.globalData.assignments;
     const completedAssignments = app.globalData.learningProgress.completedAssignments;
 
@@ -428,7 +423,6 @@ Page({
         }
       }
     });
-    console.log("yjc=>coursecourse", courses);
   },
 
   // 更新课程状态
@@ -449,7 +443,6 @@ Page({
 
   // 加载课程数据
   loadCourses() {
-    console.log("yjc=>loadCourses");
     const learningProgress = app.globalData.learningProgress;
     const assignments = app.globalData.assignments;
     const allCourses = app.globalData.courses;

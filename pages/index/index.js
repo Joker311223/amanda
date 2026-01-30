@@ -90,7 +90,6 @@ Page({
     // 使用统一的数据库管理模块获取用户数据
     dbManager.getUser(cloudUserId).then(user => {
       if (user && user.createTime) {
-        console.log('yjc=>user.createTime', user.createTime);
         // 获取注册时间
         const createTime = new Date(user.createTime)
         const now = new Date()

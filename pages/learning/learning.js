@@ -66,7 +66,6 @@ Page({
         }
       }
     });
-    console.log("yjc=>courses", courses);
   },
 
   // 更新课程状态
@@ -174,7 +173,6 @@ Page({
 
   // 查看作业
   viewAssignment(e) {
-    console.log("yjc=>viewAssignment");
     const zuoyeId = e.currentTarget.dataset.zuoyeId;
     wx.navigateTo({
       url: `/pages/assignment-review/assignment-review?assignmentId=${zuoyeId}`,
