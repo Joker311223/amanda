@@ -1499,8 +1499,8 @@ App({
     console.log("yjc=>courseId", courseId);
     const progress = this.globalData.learningProgress;
     console.log('yjc=>progress', progress);
-    const course = this.globalData.courses?.[courseId]
-    if (!progress.completedCourses.includes(courseId)) {
+    const course = this.globalData.courses.find(c => c.id === courseId);
+    if (course && !progress.completedCourses.includes(courseId)) {
       progress.completedCourses.push(courseId);
       progress.totalExperience += course.experience;
     }

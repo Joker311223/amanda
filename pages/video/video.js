@@ -314,9 +314,12 @@ Page({
 
   // 查看详情
   viewDetails() {
+    const course = this.data.currentCourse;
+    if (!course) return;
+    
     wx.showModal({
       title: '学习详情',
-      content: `恭喜完成《${this.data.currentCourse.title}》课程！\n\n获得经验：${this.data.currentCourse.experience}分\n课程时长：${this.data.currentCourse.duration}\n\n继续保持学习的热情，每一步都是成长！`,
+      content: `恭喜完成《${course.title}》课程！\n\n获得经验：${course.experience}分\n课程时长：${course.duration}\n\n继续保持学习的热情，每一步都是成长！`,
       showCancel: false,
       confirmText: '知道了'
     })
