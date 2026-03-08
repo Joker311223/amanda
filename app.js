@@ -1252,6 +1252,12 @@ App({
       env: "cloud1-6gnh2toe07d2c577", // 替换为你的环境ID
     });
 
+    // 检查是否从特定路径进入，如果是则不进行默认跳转
+    const isDefaultEntry = !options || !options.path || options.path === 'pages/onboarding/onboarding';
+    if (isDefaultEntry) {
+      this.checkEntryPage(options);
+    }
+
     // 检查跳链参数中是否包含 debug=true
     if (options && (options.debug === 'true'|| options.query.debug)) {
       this.globalData.debugMode = true;
@@ -1269,6 +1275,47 @@ App({
       this.globalData.isFirstTime = false;
       // 加载用户数据（包括从云数据库拉取）
       this.loadUserData();
+    }
+  },
+
+  /**
+   * 检查云端配置的入口页面并跳转
+   */
+  async checkEntryPage(options) {
+    try {
+      const dbManager = require('./utils/db-manager');
+      const config = await dbManager.getAppConfig();
+      
+      if (config && config.entryPage) {
+        // 规范化路径
+        let targetUrl = config.entryPage;
+        console.log('yjc=>targetUrl',targetUrl );
+        if (!targetUrl.startsWith('/')) {
+          targetUrl = '/' + targetUrl;
+        }
+        
+        // 检查当前是否已经在目标页面，避免重复跳转
+        const currentPath = options && options.path;
+        if (currentPath && (currentPath === config.entryPage || '/' + currentPath === targetUrl)) {
+          console.log('已经在目标页面，无需跳转');
+          return;
+        }
+
+        console.log('发现云端配置入口页面:', config.entryPage);
+        
+        // 执行跳转
+        wx.reLaunch({
+          url: targetUrl,
+          success: () => {
+            console.log('成功跳转到云端配置页面');
+          },
+          fail: (err) => {
+            console.error('跳转到云端配置页面失败，请检查路径是否正确:', err);
+          }
+        });
+      }
+    } catch (error) {
+      console.error('检查云端入口配置失败:', error);
     }
   },
 

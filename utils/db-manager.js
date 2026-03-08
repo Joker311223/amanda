@@ -485,6 +485,26 @@ class DBManager {
   }
 
   /**
+   * 获取应用配置
+   * @returns {Promise} 返回应用配置数据
+   */
+  async getAppConfig() {
+    try {
+      const db = this.getDB();
+      // 假设配置存储在 app_config 集合中，且只有一条记录
+      const res = await db.collection('app_config').where({}).get();
+      console.log('yjc=>res',res );
+      if (res.data && res.data.length > 0) {
+        return res.data[0];
+      }
+      return null;
+    } catch (error) {
+      console.error('获取应用配置失败:', error);
+      return null;
+    }
+  }
+
+  /**
    * 清空用户数据（仅用于测试）
    * @param {String} userId - 用户ID
    * @returns {Promise}
