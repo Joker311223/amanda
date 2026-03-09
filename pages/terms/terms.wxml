@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="header">
+    <text class="title">{{title}}</text>
+  </view>
+  <view class="content">
+    <block wx:for="{{content}}" wx:key="index">
+      <view class="section">
+        <text class="section-title" wx:if="{{item.title}}">{{item.title}}</text>
+        <text class="section-content">{{item.text}}</text>
+      </view>
+    </block>
+  </view>
+  <view class="footer">
+    <button class="btn-back" bindtap="goBack">返回</button>
+  </view>
+</view>

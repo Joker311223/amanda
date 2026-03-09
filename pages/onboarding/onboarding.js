@@ -24,6 +24,7 @@ Page({
       inviteCode: false
     },
     showSuccessModal: false,
+    isAgreed: false,
     isPageReady: false, // 页面是否准备好显示
     VALID_INVITE_CODE: 'DBT2026' // 有效的邀请码
   },
@@ -114,6 +115,21 @@ Page({
     const gender = e.currentTarget.dataset.gender
     this.setData({
       'userInfo.gender': gender
+    })
+  },
+
+  // 协议勾选变化
+  onAgreementChange(e) {
+    this.setData({
+      isAgreed: e.detail.value.length > 0
+    })
+  },
+
+  // 跳转到协议页面
+  goToAgreement(e) {
+    const type = e.currentTarget.dataset.type
+    wx.navigateTo({
+      url: `/pages/terms/terms?type=${type}`
     })
   },
 
@@ -210,6 +226,16 @@ Page({
 
   // 提交用户信息
   submitUserInfo(e) {
+    // 检查是否同意协议
+    if (!this.data.isAgreed) {
+      wx.showToast({
+        title: '请先阅读并同意用户服务协议和隐私政策',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+
     // 在提交时进行验证
     this.validateForm()
     

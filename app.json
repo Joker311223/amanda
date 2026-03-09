@@ -14,7 +14,8 @@
     "pages/video/video",
     "pages/assignment-detail/assignment-detail",
     "pages/skill-card/skill-card",
-    "pages/cover/cover"
+    "pages/cover/cover",
+    "pages/terms/terms"
   ],
   "window": {
     "backgroundTextStyle": "light",

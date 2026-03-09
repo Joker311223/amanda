@@ -145,6 +145,54 @@
   border-radius: 15rpx;
 }
 
+.agreement-group {
+  margin: 30rpx 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.agreement-label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.agreement-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.agreement-link {
+  font-size: 24rpx;
+  color: #6BBF59;
+  text-decoration: underline;
+  margin: 0 4rpx;
+}
+
+checkbox .wx-checkbox-input {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: #6BBF59;
+  border-color: #6BBF59;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+  width: 32rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #fff;
+  background: transparent;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
 /* 弹窗样式 */
 .modal-overlay {
   position: fixed;
