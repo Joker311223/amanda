@@ -1,7 +1,9 @@
 const app = getApp()
+const dbManager = require('../../utils/db-manager')
 
 Page({
   data: {
+    isShowView: true, // 视频模块显示控制
     courseId: null,
     currentCourse: null,
     courseNumber: 0, // 课程序号
@@ -26,7 +28,7 @@ Page({
     videoCurrentTime: 0 // 视频当前播放时间（秒）
   },
 
-  onLoad(options) {
+  async onLoad(options) {
     const courseId = parseInt(options.courseId)
     const courses = app.globalData.courses;
     const course = courses.find(c => c.id === courseId)
@@ -41,6 +43,18 @@ Page({
     
     // 加载保存的播放进度
     this.loadVideoProgress(courseId)
+
+    // 获取云端配置
+    try {
+      const config = await dbManager.getAppConfig();
+      if (config && typeof config.isShowView === 'boolean') {
+        this.setData({
+          isShowView: config.isShowView
+        });
+      }
+    } catch (error) {
+      console.error('获取云端配置失败:', error);
+    }
   },
 
   onUnload() {

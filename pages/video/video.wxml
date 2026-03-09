@@ -8,7 +8,7 @@
     </view>
   </view>
   <!-- 视频播放区域 -->
-  <view class="video-section">
+  <view class="video-section" wx:if="{{isShowView}}">
     <view class="video-container">
       <!-- 模拟视频播放器 -->
       <view class="video-player">

@@ -118,23 +118,6 @@
           </view>
 
           <view class="form-group">
-            <text class="form-label">微信号</text>
-            <input
-              class="form-input {{errors.wechat ? 'input-error' : ''}}"
-              name="wechat"
-              placeholder="请输入微信号（6-20位）"
-              value="{{userInfo.wechat}}"
-              bindinput="onInputChange"
-              bindblur="onInputBlur"
-              data-field="wechat"
-              maxlength="20"
-            />
-            <text class="form-hint error-hint" wx:if="{{errors.wechat}}">
-              ❌ {{errors.wechat}}
-            </text>
-          </view>
-
-          <view class="form-group">
             <text class="form-label">邀请码 <text class="required-mark">*</text></text>
             <input
               class="form-input {{errors.inviteCode ? 'input-error' : ''}}"

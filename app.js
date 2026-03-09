@@ -1432,8 +1432,7 @@ App({
               name: registeredUser.name,
               gender: registeredUser.gender,
               birthDate: registeredUser.birthDate,
-              phone: registeredUser.phone,
-              wechat: registeredUser.wechat
+              phone: registeredUser.phone
             };
             
             this.globalData.learningProgress = registeredUser.learningProgress || {

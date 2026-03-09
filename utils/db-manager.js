@@ -156,7 +156,6 @@ class DBManager {
         name: userInfo.name,
         gender: userInfo.gender,
         phone: userInfo.phone,
-        wechat: userInfo.wechat,
         createTime: db.serverDate(),
         
         // 学习进度
@@ -415,8 +414,7 @@ class DBManager {
           name: user.name,
           gender: user.gender,
           birthDate: user.birthDate,
-          phone: user.phone,
-          wechat: user.wechat
+          phone: user.phone
         },
         learningProgress: user.learningProgress || {
           currentWeek: 1,

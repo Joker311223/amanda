@@ -7,7 +7,6 @@ Page({
       name: '',
       gender: '',
       phone: '',
-      wechat: '',
       inviteCode: ''
     },
     isFormValid: false,
@@ -15,7 +14,6 @@ Page({
       name: '',
       gender: '',
       phone: '',
-      wechat: '',
       inviteCode: ''
     },
     // 记录哪些字段已经显示过错误提示
@@ -23,7 +21,6 @@ Page({
       name: false,
       gender: false,
       phone: false,
-      wechat: false,
       inviteCode: false
     },
     showSuccessModal: false,
@@ -144,16 +141,6 @@ Page({
           errors.phone = ''
         }
         break
-      case 'wechat':
-        const wechatRegex = /^[a-zA-Z0-9_]{6,20}$/
-        if (!userInfo.wechat) {
-          errors.wechat = '请输入微信号'
-        } else if (!wechatRegex.test(userInfo.wechat)) {
-          errors.wechat = '微信号格式错误（需要6-20位字母、数字或下划线）'
-        } else {
-          errors.wechat = ''
-        }
-        break
       case 'inviteCode':
         if (!userInfo.inviteCode) {
           errors.inviteCode = '请输入邀请码'
@@ -172,20 +159,18 @@ Page({
 
   // 验证表单
   validateForm() {
-    const { name, gender, phone, wechat, inviteCode } = this.data.userInfo
+    const { name, gender, phone, inviteCode } = this.data.userInfo
     const { VALID_INVITE_CODE } = this.data
     const errors = {
       name: '',
       gender: '',
       phone: '',
-      wechat: '',
       inviteCode: ''
     }
     const touchedFields = {
       name: true,
       gender: true,
       phone: true,
-      wechat: true,
       inviteCode: true
     }
 
@@ -207,14 +192,6 @@ Page({
       errors.phone = '手机号格式错误（需要11位数字，以1开头）'
     }
 
-    // 验证微信号格式（6-20位字母数字下划线）
-    const wechatRegex = /^[a-zA-Z0-9_]{6,20}$/
-    if (!wechat) {
-      errors.wechat = '请输入微信号'
-    } else if (!wechatRegex.test(wechat)) {
-      errors.wechat = '微信号格式错误（需要6-20位字母、数字或下划线）'
-    }
-
     // 验证邀请码
     if (!inviteCode) {
       errors.inviteCode = '请输入邀请码'
@@ -222,7 +199,7 @@ Page({
       errors.inviteCode = '邀请码错误，请联系项目负责人获取正确的邀请码'
     }
 
-    const isValid = !errors.name && !errors.gender && !errors.phone && !errors.wechat && !errors.inviteCode
+    const isValid = !errors.name && !errors.gender && !errors.phone && !errors.inviteCode
 
     this.setData({
       isFormValid: isValid,
@@ -244,7 +221,6 @@ Page({
       if (errors.name) errorMessages.push(errors.name)
       if (errors.gender) errorMessages.push(errors.gender)
       if (errors.phone) errorMessages.push(errors.phone)
-      if (errors.wechat) errorMessages.push(errors.wechat)
       if (errors.inviteCode) errorMessages.push(errors.inviteCode)
 
       const errorMsg = errorMessages.join('；')
